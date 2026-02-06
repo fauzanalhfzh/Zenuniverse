@@ -21,7 +21,20 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'current_level_id',
+        'total_xp',
+        'current_xp',
     ];
+
+    public function currentLevel()
+    {
+        return $this->belongsTo(Level::class, 'current_level_id');
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(UserProgress::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
