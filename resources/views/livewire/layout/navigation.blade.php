@@ -25,7 +25,7 @@ new class extends Component
                     <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-background-dark transform group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-xl font-bold">rocket_launch</span>
                     </div>
-                    <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">TechUp</h2>
+                    <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Zenuniverses</h2>
                 </a>
             </div>
 

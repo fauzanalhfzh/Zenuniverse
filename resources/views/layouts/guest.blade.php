@@ -33,7 +33,7 @@
             <div>
                 <a href="/" wire:navigate class="flex flex-col items-center group">
                     <span class="text-5xl mb-2 transform group-hover:scale-110 transition duration-300">🚀</span>
-                    <h1 class="text-2xl font-bold text-white tracking-widest font-mono drop-shadow-md">TEKNOLOGI.CODING</h1>
+                    <h1 class="text-2xl font-bold text-white tracking-widest font-mono drop-shadow-md">Zenuniverses</h1>
                 </a>
             </div>
             

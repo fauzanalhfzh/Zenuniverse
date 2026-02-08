@@ -13,17 +13,30 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                display: ['Lexend', 'sans-serif'],
+                sans: ['Fredoka', 'Figtree', ...defaultTheme.fontFamily.sans],
+                display: ['Fredoka', 'Lexend', 'sans-serif'],
             },
             colors: {
-                "primary": "#13ec5b",
+                "primary": "#ff8a3d",
+                "secondary": "#6366f1",
+                "sky-base": "#e0f2fe",
+                "soft-text": "#334155",
+                "sky-blue": "#e0f2fe",
+                "soft-white": "#ffffff",
+                "accent-orange": "#ff8a3d",
+                "cloud-white": "#f8fafc",
+                "planet-purple": "#c084fc",
+                "planet-green": "#4ade80",
                 "primary-dark": "#0ea842",
                 "background-light": "#f6f8f6",
                 "background-dark": "#102216",
                 "card-light": "#ffffff",
                 "card-dark": "#1c3024",
                 "gray-750": "#2d3748", // Custom dark gray
+            },
+            borderRadius: {
+                "lg": "2.5rem",
+                "xl": "4rem",
             },
         },
     },

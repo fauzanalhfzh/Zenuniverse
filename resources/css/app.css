@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .bubbly-button {
+        box-shadow: 0 6px 0px #d97706;
+        transition: all 0.2s ease;
+    }
+    .bubbly-button:active {
+        box-shadow: 0 2px 0px #d97706;
+        transform: translateY(4px);
+    }
+    .cloud-shape {
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    }
+    .soft-glow {
+        filter: drop-shadow(0 0 15px rgba(255, 138, 61, 0.3));
+    }
+    .floating-cloud {
+        background: white;
+        border-radius: 50px;
+        position: absolute;
+        z-index: -1;
+        filter: blur(20px);
+        opacity: 0.7;
+    }
+}
+
+:root {
+    --sky-blue: #e0f2fe;
+    --soft-white: #ffffff;
+    --accent-orange: #ff8a3d;
+    --cloud-white: #f8fafc;
+    --planet-purple: #c084fc;
+    --planet-green: #4ade80;
+}
+
+body {
+    font-family: 'Fredoka', sans-serif;
+    overflow-x: hidden;
+}
