@@ -31,6 +31,8 @@
     --color-explorer-green: #4ade80;
     --color-expert-purple: #c084fc;
     --color-master-gold: #fbbf24;
+    --color-wa-green: #25D366;
+    --color-radio-red: #ef4444;
 
     --radius-lg: 2.5rem;
     --radius-xl: 4rem;
@@ -62,6 +64,40 @@
         z-index: -1;
         filter: blur(20px);
         opacity: 0.7;
+    }
+
+    .whatsapp-button {
+        box-shadow: 0 6px 0px #15803d;
+        transition: all 0.2s ease;
+    }
+
+    .whatsapp-button:active {
+        box-shadow: 0 2px 0px #15803d;
+        transform: translateY(4px);
+    }
+
+    .station-card {
+        border-radius: 3rem;
+        border: 8px solid white;
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+    .floating-element {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
     }
 }
 

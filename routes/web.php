@@ -6,6 +6,7 @@ use App\Livewire\Welcome;
 
 Route::get('/', Welcome::class)->name('home');
 Route::view('about', 'about')->name('about');
+Route::view('contact', 'contact')->name('contact');
 Route::view('learning-path', 'learning-path')->name('learning-path');
 
 Route::controller(\App\Http\Controllers\BlogController::class)->group(function () {

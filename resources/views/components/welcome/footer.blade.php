@@ -7,7 +7,7 @@
             <h2 class="text-3xl font-bold text-primary">ZenUniverse</h2>
         </div>
         
-        <p class="text-slate-500 dark:text-slate-500 text-lg font-bold">© 2026 ZenUniverse. Belajar Asik Keliling Galaksi!</p>
+        <p class="text-slate-500 dark:text-slate-500 text-lg font-bold">© {{ date('Y') }} ZenUniverse. Belajar Asik Keliling Galaksi!</p>
         
         <div class="flex gap-8">
             <a href="#" class="text-slate-400 hover:text-primary transition-colors">

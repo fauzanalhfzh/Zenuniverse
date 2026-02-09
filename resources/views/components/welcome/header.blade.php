@@ -13,7 +13,7 @@
             <a class="text-lg font-bold {{ request()->routeIs('about') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('about') }}" wire:navigate>Tentang Kami</a>
             <a class="text-lg font-bold {{ request()->routeIs('learning-path') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('learning-path') }}" wire:navigate>Alur Belajar</a>
             <a class="text-lg font-bold {{ request()->routeIs('blog.*') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('blog.index') }}" wire:navigate>Blog</a>
-            <a class="text-lg font-bold text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary transition-colors" href="#">Kontak</a>
+            <a class="text-lg font-bold {{ request()->routeIs('contact') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('contact') }}" wire:navigate>Kontak</a>
         </nav>
 
         <div class="flex items-center gap-4">
