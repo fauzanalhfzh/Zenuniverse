@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Welcome extends Component
 {
-    #[Layout('components.layouts.empty')]
+    #[Layout('components.layouts.landing')]
     public function render()
     {
         return view('livewire.welcome');

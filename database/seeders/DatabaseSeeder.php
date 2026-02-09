@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // Admin User
         User::factory()->create([
-            'name' => 'Admin Guru',
-            'email' => 'admin@lemmes.id',
+            'name' => 'Super Admin',
+            'email' => 'admin@zenuniverse.id',
             'password' => bcrypt('password'), // password default
+            'role' => 'admin',
             'current_level_id' => 3, // Level Mahir
             'total_xp' => 2000,
         ]);
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             LevelSeeder::class,
             CourseSeeder::class,
             LessonSeeder::class,
+            PostSeeder::class,
         ]);
     }
 }

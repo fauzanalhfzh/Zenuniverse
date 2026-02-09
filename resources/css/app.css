@@ -1,22 +1,60 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+/* Cache Bust: 2026-02-09 Test 1 */
+
+@plugin "@tailwindcss/forms";
+
+@theme {
+    --font-sans: "Figtree", sans-serif;
+    --font-display: "Lexend", sans-serif;
+    --font-fredoka: "Fredoka", sans-serif;
+
+    --color-primary: #ff8a3d;
+    --color-secondary: #6366f1;
+    --color-sky-base: #e0f2fe;
+    --color-soft-text: #334155;
+    --color-sky-blue: #e0f2fe;
+    --color-soft-white: #ffffff;
+    --color-accent-orange: #ff8a3d;
+    --color-cloud-white: #f8fafc;
+    --color-planet-purple: #c084fc;
+    --color-planet-green: #4ade80;
+    --color-primary-dark: #0ea842;
+    --color-background-light: #f6f8f6;
+    --color-background-dark: #102216;
+    --color-card-light: #ffffff;
+    --color-card-dark: #1c3024;
+    --color-gray-750: #2d3748;
+    --color-soft-yellow: #fef08a;
+    --color-cadet-blue: #38bdf8;
+    --color-explorer-green: #4ade80;
+    --color-expert-purple: #c084fc;
+    --color-master-gold: #fbbf24;
+
+    --radius-lg: 2.5rem;
+    --radius-xl: 4rem;
+}
 
 @layer utilities {
     .bubbly-button {
         box-shadow: 0 6px 0px #d97706;
         transition: all 0.2s ease;
     }
+
     .bubbly-button:active {
         box-shadow: 0 2px 0px #d97706;
         transform: translateY(4px);
     }
+
     .cloud-shape {
         border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     }
+
     .soft-glow {
         filter: drop-shadow(0 0 15px rgba(255, 138, 61, 0.3));
     }
+
     .floating-cloud {
         background: white;
         border-radius: 50px;
@@ -37,6 +75,5 @@
 }
 
 body {
-    font-family: 'Fredoka', sans-serif;
     overflow-x: hidden;
 }
