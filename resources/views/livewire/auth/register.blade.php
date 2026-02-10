@@ -1,54 +1,3 @@
-<?php
-
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
-
-new #[Layout('layouts.auth-custom')] class extends Component
-{
-    public string $name = '';
-    public string $email = '';
-    public string $password = '';
-    public string $password_confirmation = '';
-    public string $role = 'student'; // Default role
-    public int $step = 1;
-
-    public function nextStep(): void
-    {
-        $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'role' => ['required', 'string', 'in:student,teacher,parent'],
-        ]);
-
-        $this->step = 2;
-    }
-
-    public function register(): void
-    {
-        $validated = $this->validate([
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'role' => $this->role,
-            'password' => Hash::make($this->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
-    }
-}; ?>
-
 <div class="max-w-4xl mx-auto px-6 w-full">
     <!-- Progress Header -->
     <div class="mb-8">
@@ -83,60 +32,62 @@ new #[Layout('layouts.auth-custom')] class extends Component
                 <p class="text-slate-500 font-medium text-lg">Pilih karaktermu untuk memulai petualangan!</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <!-- Student -->
-                <label class="cursor-pointer group relative">
-                    <input type="radio" wire:model.live="role" value="student" class="peer sr-only">
-                    <div class="p-6 rounded-3xl border-4 text-center transition-all bg-slate-50 border-slate-100 peer-checked:border-primary peer-checked:bg-orange-50 hover:bg-white hover:shadow-xl group-hover:-translate-y-1 h-full flex flex-col items-center justify-center gap-4">
-                        <div class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-2">
-                             <span class="material-symbols-outlined text-5xl">school</span>
-                        </div>
-                        <div>
-                            <h3 class="font-black text-slate-800 text-xl group-hover:text-primary transition-colors">Siswa</h3>
-                            <p class="text-sm text-slate-400 font-bold mt-1">Aku mau belajar seru!</p>
-                        </div>
-                        <div class="w-6 h-6 rounded-full border-2 border-slate-300 mt-2 peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center">
-                            <div class="w-2.5 h-2.5 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
-                        </div>
-                    </div>
-                </label>
-
-                <!-- Teacher -->
-                <label class="cursor-pointer group relative">
-                     <input type="radio" wire:model.live="role" value="teacher" class="peer sr-only">
-                     <div class="p-6 rounded-3xl border-4 text-center transition-all bg-slate-50 border-slate-100 peer-checked:border-green-500 peer-checked:bg-green-50 hover:bg-white hover:shadow-xl group-hover:-translate-y-1 h-full flex flex-col items-center justify-center gap-4">
-                         <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-2">
-                              <span class="material-symbols-outlined text-5xl">cast_for_education</span>
-                         </div>
-                         <div>
-                             <h3 class="font-black text-slate-800 text-xl group-hover:text-green-600 transition-colors">Guru</h3>
-                             <p class="text-sm text-slate-400 font-bold mt-1">Saya ingin mengajar.</p>
-                         </div>
-                        <div class="w-6 h-6 rounded-full border-2 border-slate-300 mt-2 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center">
-                            <div class="w-2.5 h-2.5 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
-                        </div>
-                     </div>
-                 </label>
-
-                 <!-- Parent -->
-                 <label class="cursor-pointer group relative">
-                    <input type="radio" wire:model.live="role" value="parent" class="peer sr-only">
-                    <div class="p-6 rounded-3xl border-4 text-center transition-all bg-slate-50 border-slate-100 peer-checked:border-purple-500 peer-checked:bg-purple-50 hover:bg-white hover:shadow-xl group-hover:-translate-y-1 h-full flex flex-col items-center justify-center gap-4">
-                        <div class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mb-2">
-                             <span class="material-symbols-outlined text-5xl">family_restroom</span>
-                        </div>
-                        <div>
-                            <h3 class="font-black text-slate-800 text-xl group-hover:text-purple-600 transition-colors">Orang Tua</h3>
-                            <p class="text-sm text-slate-400 font-bold mt-1">Pantau belajar anak.</p>
-                        </div>
-                        <div class="w-6 h-6 rounded-full border-2 border-slate-300 mt-2 peer-checked:bg-purple-500 peer-checked:border-purple-500 flex items-center justify-center">
-                             <div class="w-2.5 h-2.5 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
-                        </div>
-                    </div>
-                </label>
-            </div>
-
             <form wire:submit="nextStep" class="space-y-6 max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Student -->
+                    <label class="cursor-pointer group relative" wire:key="role-student">
+                        <input type="radio" wire:model="role" name="role" value="student" class="peer sr-only">
+                        <div class="p-6 rounded-3xl border-4 text-center transition-all bg-slate-50 border-slate-100 peer-checked:border-primary peer-checked:bg-orange-50 hover:bg-white hover:shadow-xl group-hover:-translate-y-1 h-full flex flex-col items-center justify-center gap-4">
+                            <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 mb-2">
+                                 <span class="material-symbols-outlined text-4xl">school</span>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-800 text-lg group-hover:text-primary transition-colors">Siswa</h3>
+                                <p class="text-[10px] text-slate-400 font-bold mt-1">Aku mau belajar!</p>
+                            </div>
+                            <div class="w-5 h-5 rounded-full border-2 border-slate-300 mt-1 peer-checked:bg-primary peer-checked:border-primary flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <!-- Teacher -->
+                    <label class="cursor-pointer group relative" wire:key="role-teacher">
+                         <input type="radio" wire:model="role" name="role" value="teacher" class="peer sr-only">
+                         <div class="p-6 rounded-3xl border-4 text-center transition-all bg-slate-50 border-slate-100 peer-checked:border-green-500 peer-checked:bg-green-50 hover:bg-white hover:shadow-xl group-hover:-translate-y-1 h-full flex flex-col items-center justify-center gap-4">
+                             <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600 mb-2">
+                                  <span class="material-symbols-outlined text-4xl">cast_for_education</span>
+                             </div>
+                             <div>
+                                 <h3 class="font-black text-slate-800 text-lg group-hover:text-green-600 transition-colors">Guru</h3>
+                                 <p class="text-[10px] text-slate-400 font-bold mt-1">Saya mau mengajar.</p>
+                             </div>
+                            <div class="w-5 h-5 rounded-full border-2 border-slate-300 mt-1 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                            </div>
+                         </div>
+                     </label>
+
+                     <!-- Parent -->
+                     <label class="cursor-pointer group relative" wire:key="role-parent">
+                        <input type="radio" wire:model="role" name="role" value="parent" class="peer sr-only">
+                        <div class="p-6 rounded-3xl border-4 text-center transition-all bg-slate-50 border-slate-100 peer-checked:border-purple-500 peer-checked:bg-purple-50 hover:bg-white hover:shadow-xl group-hover:-translate-y-1 h-full flex flex-col items-center justify-center gap-4">
+                            <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 mb-2">
+                                 <span class="material-symbols-outlined text-4xl">family_restroom</span>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-slate-800 text-lg group-hover:text-purple-600 transition-colors">Orang Tua</h3>
+                                <p class="text-[10px] text-slate-400 font-bold mt-1">Pantau anak.</p>
+                            </div>
+                            <div class="w-5 h-5 rounded-full border-2 border-slate-300 mt-1 peer-checked:bg-purple-500 peer-checked:border-purple-500 flex items-center justify-center">
+                                 <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <x-input-error :messages="$errors->get('role')" class="mb-4 text-center" />
+
                 <div class="space-y-2">
                     <label class="block text-slate-600 font-bold ml-2" for="name">Nama Lengkap</label>
                     <div class="relative">

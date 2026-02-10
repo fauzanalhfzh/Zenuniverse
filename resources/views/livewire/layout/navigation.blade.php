@@ -1,21 +1,3 @@
-<?php
-
-use App\Livewire\Actions\Logout;
-use Livewire\Volt\Component;
-
-new class extends Component
-{
-    /**
-     * Log the current user out of the application.
-     */
-    public function logout(Logout $logout): void
-    {
-        $logout();
-
-        $this->redirect('/', navigate: true);
-    }
-}; ?>
-
 <div class="sticky top-0 z-50 w-full border-b border-[#e7f3eb] dark:border-[#2a4533] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header class="flex h-16 items-center justify-between">
@@ -50,7 +32,7 @@ new class extends Component
                     <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-lg">
                         🧑‍💻
                     </div>
-                    <span class="text-sm font-bold text-slate-700 dark:text-gray-200">{{ auth()->user()->total_xp ?? 0 }} XP</span>
+                    <span class="text-sm font-bold text-slate-700 dark:text-gray-200">{{ auth()->user()?->total_xp ?? 0 }} XP</span>
                 </div>
 
                 <!-- Profile Dropdown -->
@@ -65,11 +47,12 @@ new class extends Component
                         <x-dropdown-link :href="route('profile')" wire:navigate>
                             {{ __('Profile') }}
                         </x-dropdown-link>
-                        <button wire:click="logout" class="w-full text-start">
-                            <x-dropdown-link>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out cursor-pointer">
                                 {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </button>
+                            </button>
+                        </form>
                     </x-slot>
                 </x-dropdown>
             </div>

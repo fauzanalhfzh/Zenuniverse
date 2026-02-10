@@ -1,29 +1,3 @@
-<?php
-
-use App\Livewire\Forms\LoginForm;
-use Illuminate\Support\Facades\Session;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
-
-new #[Layout('layouts.auth-custom')] class extends Component
-{
-    public LoginForm $form;
-
-    /**
-     * Handle an incoming authentication request.
-     */
-    public function login(): void
-    {
-        $this->validate();
-
-        $this->form->authenticate();
-
-        Session::regenerate();
-
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
-    }
-}; ?>
-
 <div class="max-w-6xl mx-auto px-6 w-full">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div class="hidden lg:flex flex-col items-center text-center space-y-8 relative">

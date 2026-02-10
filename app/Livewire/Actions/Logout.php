@@ -12,6 +12,7 @@ class Logout
      */
     public function __invoke(): void
     {
+        \Illuminate\Support\Facades\Log::info('Logout action invoked');
         Auth::guard('web')->logout();
 
         Session::invalidate();
