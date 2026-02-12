@@ -17,7 +17,7 @@
             <span class="material-symbols-outlined">dashboard</span>
             <span>Beranda</span>
         </a>
-        <a href="#" class="{{ $active === 'learn' ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
+        <a href="{{ route('learning-center') }}" class="{{ $active === 'learn' ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
             <span class="material-symbols-outlined">import_contacts</span>
             <span>Belajar</span>
         </a>
