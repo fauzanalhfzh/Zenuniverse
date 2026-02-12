@@ -52,62 +52,40 @@
 
     <!-- Learning Path Grid -->
     <div class="max-w-6xl mx-auto pb-12">
-        <div class="flex items-center justify-between mb-8">
-            <h4 class="text-3xl font-black text-slate-800">Jalur Belajarmu</h4>
-            <button class="text-primary font-bold hover:underline flex items-center gap-1">
-                Lihat Semua Katalog <span class="material-symbols-outlined">chevron_right</span>
-            </button>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Card 1: Intro to Tech (Linked) -->
-            @php
-                $techStatus = $progress['intro-to-tech'] ?? 'start';
-                $isTechCompleted = $techStatus === 'completed';
-            @endphp
-            <a href="{{ route('missions.intro-to-tech') }}" wire:navigate class="planet-card bg-white rounded-[2.5rem] border-4 border-slate-50 p-6 shadow-sm hover:shadow-md hover:border-orange-200 flex flex-col group cursor-pointer">
-                <div class="size-20 rounded-3xl bg-blue-100 flex items-center justify-center mb-6 self-center group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-4xl text-blue-500">public</span>
+        @foreach($courses as $course)
+            <div class="mb-12">
+                <div class="flex items-center justify-between mb-8">
+                    <h4 class="text-3xl font-black text-slate-800">{{ $course->title }}</h4>
+                    <p class="text-slate-500 font-medium">{{ $course->description }}</p>
                 </div>
-                <h5 class="text-xl font-bold text-slate-800 mb-2">Dunia Teknologi</h5>
-                <p class="text-sm text-slate-500 font-medium mb-6 flex-1">Pengenalan seru tentang apa itu teknologi.</p>
-                <div class="space-y-3 mt-auto">
-                    <div class="flex justify-between text-xs font-bold">
-                        <span class="text-slate-400">Status</span>
-                        <span @class(['text-primary', 'text-green-500' => $isTechCompleted])>
-                            {{ $isTechCompleted ? 'Selesai ✅' : 'Mulai Baru' }}
-                        </span>
-                    </div>
-                    <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div @class(['h-full w-0 transition-all duration-1000', 'bg-slate-200' => !$isTechCompleted, 'bg-green-500 w-full' => $isTechCompleted])></div>
-                    </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($course->lessons as $lesson)
+                        @php
+                            $status = $progress[$lesson->slug] ?? 'start';
+                            $isCompleted = $status === 'completed';
+                        @endphp
+                        <a href="{{ route('missions.player', ['slug' => $lesson->slug]) }}" wire:navigate class="planet-card bg-white rounded-[2.5rem] border-4 border-slate-50 p-6 shadow-sm hover:shadow-md hover:border-orange-200 flex flex-col group cursor-pointer">
+                            <div class="size-20 rounded-3xl bg-blue-100 flex items-center justify-center mb-6 self-center group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-4xl text-blue-500">{{ $lesson->icon ?? 'public' }}</span>
+                            </div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-2">{{ $lesson->title }}</h5>
+                            <p class="text-sm text-slate-500 font-medium mb-6 flex-1">{{ $lesson->content }}</p>
+                            <div class="space-y-3 mt-auto">
+                                <div class="flex justify-between text-xs font-bold">
+                                    <span class="text-slate-400">Status</span>
+                                    <span @class(['text-primary', 'text-green-500' => $isCompleted])>
+                                        {{ $isCompleted ? 'Selesai ✅' : 'Mulai Baru' }}
+                                    </span>
+                                </div>
+                                <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                                    <div @class(['h-full transition-all duration-1000', 'bg-slate-200 w-0' => !$isCompleted, 'bg-green-500 w-full' => $isCompleted])></div>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-            </a>
-
-            <!-- Unit 2: Dasar Internet -->
-            @php
-                $netStatus = $progress['intro-to-internet'] ?? 'start';
-                $isNetCompleted = $netStatus === 'completed';
-            @endphp
-            <a href="{{ route('missions.intro-to-internet') }}" wire:navigate class="planet-card bg-white rounded-[2.5rem] border-4 border-slate-50 p-6 shadow-sm hover:shadow-md hover:border-blue-200 flex flex-col group cursor-pointer">
-                <div class="size-20 rounded-3xl bg-blue-100 flex items-center justify-center mb-6 self-center group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-4xl text-blue-500">language</span>
-                </div>
-                <h5 class="text-xl font-bold text-slate-800 mb-2 font-black">Dasar Internet</h5>
-                <p class="text-sm text-slate-500 font-medium mb-6 flex-1 font-bold">Jelajahi Dunia Maya dan cara kerjanya.</p>
-                <div class="space-y-3 mt-auto">
-                    <div class="flex justify-between text-xs font-bold">
-                        <span class="text-slate-400">Status</span>
-                        <span @class(['text-primary font-black', 'text-green-500' => $isNetCompleted])>
-                            {{ $isNetCompleted ? 'Selesai ✅' : 'Mulai Baru' }}
-                        </span>
-                    </div>
-                    <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div @class(['h-full w-0 transition-all duration-1000', 'bg-slate-200' => !$isNetCompleted, 'bg-green-500 w-full' => $isNetCompleted])></div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        </div>
+            </div>
+        @endforeach
     </div>
 </div>

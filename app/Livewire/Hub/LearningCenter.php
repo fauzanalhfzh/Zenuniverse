@@ -8,10 +8,12 @@ use Livewire\Attributes\Layout;
 #[Layout('components.layouts.student', ['title' => 'Pusat Belajar', 'active' => 'learn'])]
 class LearningCenter extends Component
 {
-    public $progress = [];
+    public $courses = [];
 
     public function mount()
     {
+        $this->courses = \App\Models\Course::with('lessons')->orderBy('order')->get();
+
         if (auth()->check()) {
             $this->progress = auth()->user()->progress()
                 ->whereNotNull('mission_slug')

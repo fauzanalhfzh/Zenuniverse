@@ -26,7 +26,7 @@ class IntroToTech extends Component
             'image' => 'images/hero.png',
             'content' => 'Halo Penjelajah! 👋
             
-            Tahukah kamu? Teknologi itu bukan cuma robot atau komputer canggih loh. Yuk, kita cari tahu apa sebenarnya teknologi itu!',
+Tahukah kamu? Teknologi itu bukan cuma robot atau komputer canggih loh. Yuk, kita cari tahu apa sebenarnya teknologi itu!',
             'button_text' => 'Siap Belajar!',
         ],
         [
@@ -35,7 +35,7 @@ class IntroToTech extends Component
             'image' => 'images/hero.png',
             'content' => 'Teknologi adalah **alat atau cara** yang diciptakan manusia untuk membuat pekerjaan kita menjadi lebih **mudah dan cepat**.
             
-            Jadi, pensil yang kamu pakai untuk menulis juga termasuk teknologi!',
+Jadi, pensil yang kamu pakai untuk menulis juga termasuk teknologi!',
             'button_text' => 'Wah, Benarkah?',
         ],
         [
@@ -55,7 +55,7 @@ class IntroToTech extends Component
             'image' => 'images/hero.png',
             'content' => 'Ada teknologi yang **sederhana** (tidak butuh listrik) seperti roda, gunting, dan palu.
             
-            Ada juga yang **canggih** (butuh listrik & komputer) seperti HP, satelit, dan internet.',
+Ada juga yang **canggih** (butuh listrik & komputer) seperti HP, satelit, dan internet.',
             'button_text' => 'Paham!',
         ],
         [
@@ -75,10 +75,10 @@ class IntroToTech extends Component
             'image' => 'images/hero.png',
             'content' => 'Bayangkan kalau tidak ada lampu, malam pasti gelap gulita! 🌑
             
-            Teknologi membantu kita:
-            ✅ Menghemat waktu
-            ✅ Menjaga kesehatan
-            ✅ Berkomunikasi jarak jauh',
+Teknologi membantu kita:
+✅ Menghemat waktu
+✅ Menjaga kesehatan
+✅ Berkomunikasi jarak jauh',
             'button_text' => 'Masuk Akal!',
         ],
         [
@@ -87,7 +87,7 @@ class IntroToTech extends Component
             'image' => 'images/hero.png',
             'content' => 'Sekarang kamu sudah paham dasar teknologi.
             
-            Siapa tahu, suatu saat nanti KAMU yang akan menciptakan teknologi baru untuk membantu dunia! Semangat!',
+Siapa tahu, suatu saat nanti KAMU yang akan menciptakan teknologi baru untuk membantu dunia! Semangat!',
             'button_text' => 'Selesai Misi',
         ],
     ];

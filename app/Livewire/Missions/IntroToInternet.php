@@ -24,9 +24,9 @@ class IntroToInternet extends Component
             'type' => 'intro',
             'title' => 'Selamat Datang di Dunia Internet! 🌐',
             'image' => 'images/hero.png',
-            'content' => 'Halo Penjelajah Digital! 👩‍🚀
+            'content' => 'Halo Penjelajah Digital! 👩‍🚀   
             
-            Pernah dengar kata "Internet"? Pasti sering dong! Tapi, tahukah kamu apa sebenarnya internet itu?',
+Pernah dengar kata "Internet"? Pasti sering dong! Tapi, tahukah kamu apa sebenarnya internet itu?',
             'button_text' => 'Ayo Cari Tahu!',
         ],
         [
@@ -35,7 +35,7 @@ class IntroToInternet extends Component
             'image' => 'images/hero.png',
             'content' => 'Bayangkan ada jaring laba-laba raksasa yang menyelimuti seluruh bumi.
             
-            Setiap titik di jaring itu adalah **komputer** (seperti laptopmu atau HP). Internet adalah **benang** yang menghubungkan semuanya!',
+Setiap titik di jaring itu adalah **komputer** (seperti laptopmu atau HP). Internet adalah **benang** yang menghubungkan semuanya!',
             'button_text' => 'Wah, Besar Sekali!',
         ],
         [
@@ -55,7 +55,7 @@ class IntroToInternet extends Component
             'image' => 'images/hero.png',
             'content' => 'Saat kamu mengirim pesan WA atau nonton YouTube, data dikirim dalam bentuk **paket-paket kecil**.
             
-            Paket ini terbang lewat kabel di bawah laut atau sinyal udara (WiFi) super cepat sampai ke tujuan! 🚀',
+Paket ini terbang lewat kabel di bawah laut atau sinyal udara (WiFi) super cepat sampai ke tujuan! 🚀',
             'button_text' => 'Canggih!',
         ],
         [
@@ -75,7 +75,7 @@ class IntroToInternet extends Component
             'image' => 'images/hero.png',
             'content' => 'Internet itu tempat umum, seperti jalan raya. Ada orang baik, ada juga yang jahat.
             
-            **Aturan Emas:** JANGAN BERIKAN Password atau Alamat Rumah kepada orang asing di internet!',
+**Aturan Emas:** JANGAN BERIKAN Password atau Alamat Rumah kepada orang asing di internet!',
             'button_text' => 'Siap, Kapten!',
         ],
         [
@@ -95,7 +95,7 @@ class IntroToInternet extends Component
             'image' => 'images/hero.png',
             'content' => 'Selamat! Kamu sudah paham dasar-dasar internet dan cara aman menggunakannya.
             
-            Dunia digital yang luas menunggumu. Gunakan internet untuk belajar dan berkarya ya!',
+Dunia digital yang luas menunggumu. Gunakan internet untuk belajar dan berkarya ya!',
             'button_text' => 'Selesai Misi',
         ],
     ];

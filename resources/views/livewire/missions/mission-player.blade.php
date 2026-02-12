@@ -27,7 +27,6 @@
             animation: fade-in-up 0.5s ease-out forwards;
         }
         .font-display { font-family: 'Fredoka', sans-serif; }
-        /* Ensure markdown paragraphs are centered */
         .prose-custom p { margin-bottom: 1rem; }
     </style>
 
@@ -65,11 +64,14 @@
 
     {{-- Main Content --}}
     <main class="relative z-10 w-full max-w-4xl flex-1 flex flex-col items-center justify-center p-8 text-center space-y-10">
+        
         @if($currentSlide['type'] === 'intro')
             <div wire:key="slide-intro-{{ $step }}" class="flex flex-col items-center space-y-6 animate-fade-in-up w-full">
-                <div class="relative">
-                    <img alt="Illustration" class="w-64 h-64 md:w-80 md:h-80 object-contain floating" src="{{ asset($currentSlide['image']) }}"/>
-                </div>
+                @if($currentSlide['image'])
+                    <div class="relative">
+                        <img alt="Illustration" class="w-64 h-64 md:w-80 md:h-80 object-contain floating" src="{{ asset($currentSlide['image']) }}"/>
+                    </div>
+                @endif
 
                 <div class="space-y-6 max-w-2xl">
                     <h1 class="font-display text-4xl md:text-6xl font-bold text-slate-800 dark:text-white leading-tight">
@@ -100,9 +102,10 @@
         @endif
 
         @if($currentSlide['type'] === 'quiz')
-            <div wire:key="slide-quiz-{{ $step }}" class="flex flex-col items-center space-y-8 w-full max-w-2xl">
+            <div wire:key="slide-quiz-{{ $step }}" class="flex flex-col items-center space-y-8 animate-fade-in-up w-full max-w-2xl">
                 <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-white/50 dark:border-slate-700 w-full">
-                    <h2 class="text-3xl font-display font-bold text-slate-800 dark:text-white mb-8">{{ $currentSlide['question'] }}</h2>
+                    <h2 class="text-3xl font-display font-bold text-slate-800 dark:text-white mb-8">{{ $currentSlide['title'] }}</h2>
+                    <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">{{ $currentSlide['content'] }}</p>
                     
                     <div class="space-y-4">
                         @foreach($currentSlide['options'] as $option)
@@ -125,7 +128,7 @@
                                     'border-green-600 bg-green-500 text-white border-none' => $isChecked && $option['correct'],
                                     'border-red-500 bg-red-500 text-white border-none' => $isChecked && $selectedAnswer === $option['id'] && !$option['correct']
                                 ])>
-                                    {{ chr(64 + $loop->iteration) }}
+                                    {{ $option['id'] }}
                                 </div>
                                 <span>{{ $option['text'] }}</span>
                             </button>

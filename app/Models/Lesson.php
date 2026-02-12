@@ -12,8 +12,10 @@ class Lesson extends Model
     protected $fillable = [
         'course_id',
         'title',
+        'slug',
+        'icon',
         'content',
-        'video_url', // Video support included
+        'video_url',
         'order',
         'xp_reward',
     ];
@@ -21,6 +23,11 @@ class Lesson extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function slides()
+    {
+        return $this->hasMany(MissionSlide::class)->orderBy('order');
     }
 
     public function questions()
