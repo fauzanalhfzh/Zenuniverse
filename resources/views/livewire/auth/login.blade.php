@@ -36,8 +36,8 @@
                     <div class="space-y-2">
                         <label class="block text-slate-600 font-bold ml-2" for="email">Email atau Nama Pengguna</label>
                         <div class="relative">
-                            <input wire:model="form.email" id="email" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium" type="email" name="email" required autofocus autocomplete="username" placeholder="kapten@zenuniverse.id" />
-                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                            <input wire:model="form.email" id="email" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="text" name="email" required autofocus autocomplete="username" placeholder="kapten@zenuniverse.id" />
+                            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                 <span class="material-symbols-outlined">person</span>
                             </div>
                         </div>
@@ -47,8 +47,8 @@
                     <div class="space-y-2">
                         <label class="block text-slate-600 font-bold ml-2" for="password">Kata Sandi</label>
                         <div class="relative">
-                            <input wire:model="form.password" id="password" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
-                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                            <input wire:model="form.password" id="password" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+                            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                 <span class="material-symbols-outlined">key</span>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                         <div class="flex justify-between items-center pt-1 px-2">
                             <label for="remember" class="inline-flex items-center">
                                 <input wire:model="form.remember" id="remember" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                                <span class="ms-2 text-sm text-gray-600">{{ __('Ingat Saya') }}</span>
+                                <span class="ms-2 text-sm text-gray-600">Ingat Saya</span>
                             </label>
 
                             @if (Route::has('password.request'))

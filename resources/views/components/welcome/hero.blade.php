@@ -1,5 +1,5 @@
 <section class="relative px-6 py-12 md:py-24">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 md:gap-16 items-center">
         <div class="space-y-8 text-center lg:text-left">
             <div class="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white dark:bg-slate-800 shadow-md border-2 border-blue-100 dark:border-slate-700 text-primary font-bold text-lg">
                 <span class="material-symbols-outlined text-xl">star</span>
@@ -29,22 +29,9 @@
         </div>
 
         <!-- Hero Image Area -->
-        <div class="relative">
+        <div class="relative lg:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-blue-200/30 dark:bg-purple-900/30 blur-[100px] rounded-full"></div>
-            <div class="relative bg-white/60 dark:bg-slate-800/60 backdrop-blur-md p-6 md:p-12 rounded-[4rem] border-8 border-white dark:border-slate-700 shadow-xl aspect-square flex items-center justify-center overflow-hidden transition-colors duration-500">
-                <!-- Placeholder Image - Using generation tool logic, sticking to mockup URL for now or a placeholder -->
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF5Wc58uqrZLOcAMMPTi744lEnr8F7UISKzw1XBa3zrDvc-H3NCE83ZOuB_LCU5OjTpex7Mu82dRPBQADeCEilogLt0inD02SxMydy9GXQnewHWrR4NLAUL71u7xdPVzTH62TfagJXCQem0_7rdiVO-HKd5N7u0pkoTUBIZ1V_4UQ3DzCxzdrujPbGnq8ogtT05ebgsFJbM5rTHfDZdjW-LPcV3-AbNh_DQlI1n-dgG3yRI8AuQian86HtFo33t7F_PQHiJL0ivww" alt="Chibi astronaut mascot" class="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500">
-                
-                <div class="absolute bottom-8 right-8 bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-slate-600 p-6 rounded-[2.5rem] shadow-xl flex items-center gap-4 animate-bounce">
-                    <div class="size-14 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg">
-                        <span class="material-symbols-outlined text-white text-3xl">emoji_events</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Level Kamu</p>
-                        <p class="text-3xl font-black text-slate-800 dark:text-white">24</p>
-                    </div>
-                </div>
-            </div>
+            <img src="{{ asset('images/hero.png') }}" alt="Chibi astronaut mascot" class="w-full h-full object-cover drop-shadow-2xl hover:scale-105 transition-transform duration-500">
         </div>
     </div>
 </section>

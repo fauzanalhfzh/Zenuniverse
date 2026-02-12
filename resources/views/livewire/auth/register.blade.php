@@ -143,24 +143,30 @@
             </div>
 
             <form wire:submit="register" class="space-y-6 max-w-md mx-auto">
-                 <div class="space-y-2">
+                 <div class="space-y-2" x-data="{ show: false, password: @entangle('password') }" wire:key="register-password-wrapper">
                     <label class="block text-slate-600 font-bold ml-2" for="password">Kata Sandi</label>
-                    <div class="relative">
-                        <input wire:model="password" id="password" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="password" name="password" required placeholder="••••••••" />
+                    <div class="relative" wire:ignore>
+                        <input x-model="password" id="password" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" :type="show ? 'text' : 'password'" name="password" required placeholder="••••••••" />
                         <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                             <span class="material-symbols-outlined">key</span>
                         </div>
+                        <button type="button" @click="show = !show" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors focus:outline-none">
+                            <span class="material-symbols-outlined" x-text="show ? 'visibility_off' : 'visibility'">visibility</span>
+                        </button>
                     </div>
                     <x-input-error :messages="$errors->get('password')" class="mt-2 ml-2" />
                 </div>
 
-                <div class="space-y-2">
+                <div class="space-y-2" x-data="{ show: false, password_confirmation: @entangle('password_confirmation') }" wire:key="register-confirm-wrapper">
                     <label class="block text-slate-600 font-bold ml-2" for="password_confirmation">Konfirmasi Kata Sandi</label>
-                    <div class="relative">
-                        <input wire:model="password_confirmation" id="password_confirmation" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="password" name="password_confirmation" required placeholder="Ketik ulang sandi..." />
+                    <div class="relative" wire:ignore>
+                        <input x-model="password_confirmation" id="password_confirmation" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" :type="show ? 'text' : 'password'" name="password_confirmation" required placeholder="Ketik ulang sandi..." />
                         <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                             <span class="material-symbols-outlined">lock_reset</span>
                         </div>
+                        <button type="button" @click="show = !show" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors focus:outline-none">
+                            <span class="material-symbols-outlined" x-text="show ? 'visibility_off' : 'visibility'">visibility</span>
+                        </button>
                     </div>
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 ml-2" />
                 </div>

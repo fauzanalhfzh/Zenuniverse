@@ -30,6 +30,6 @@ class StudentDashboard extends Component
             'levels' => $levels,
             'courses' => $currentLevelCourses,
             'catalogLevels' => $catalogLevels,
-        ]);
+        ])->layout('components.layouts.student');
     }
 }
