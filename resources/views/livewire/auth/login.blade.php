@@ -3,11 +3,11 @@
         <div class="hidden lg:flex flex-col items-center text-center space-y-8 relative">
             <div class="relative w-full max-w-md aspect-square">
                 <div class="absolute inset-0 bg-blue-200/30 blur-[80px] rounded-full"></div>
-                <img alt="Chibi astronaut mascot floating" class="relative z-10 w-full h-full object-contain drop-shadow-2xl animate-bounce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF5Wc58uqrZLOcAMMPTi744lEnr8F7UISKzw1XBa3zrDvc-H3NCE83ZOuB_LCU5OjTpex7Mu82dRPBQADeCEilogLt0inD02SxMydy9GXQnewHWrR4NLAUL71u7xdPVzTH62TfagJXCQem0_7rdiVO-HKd5N7u0pkoTUBIZ1V_4UQ3DzCxzdrujPbGnq8ogtT05ebgsFJbM5rTHfDZdjW-LPcV3-AbNh_DQlI1n-dgG3yRI8AuQian86HtFo33t7F_PQHiJL0ivww" style="animation-duration: 3s;"/>
-                <div class="absolute top-10 -right-4 bg-white border-4 border-yellow-200 px-6 py-3 rounded-full shadow-xl flex items-center gap-2 transform rotate-6">
+                <img alt="Chibi astronaut mascot floating" class="relative z-10 w-full h-full object-cover drop-shadow-2xl animate-bounce" src="{{ asset('images/hero.png') }}" style="animation-duration: 3s;"/>
+                {{-- <div class="absolute top-10 -right-4 bg-white border-4 border-yellow-200 px-6 py-3 rounded-full shadow-xl flex items-center gap-2 transform rotate-6 z-99">
                     <span class="material-symbols-outlined text-yellow-500 text-3xl">star</span>
                     <span class="text-slate-600 font-bold text-lg">Siap Belajar?</span>
-                </div>
+                </div> --}}
             </div>
             <div class="space-y-4">
                 <h1 class="text-5xl font-extrabold text-slate-800 tracking-tight">

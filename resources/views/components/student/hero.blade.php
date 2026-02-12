@@ -22,7 +22,7 @@
         </div>
         <div class="flex justify-center md:justify-end">
             <div class="relative w-full max-w-[280px] aspect-square">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF5Wc58uqrZLOcAMMPTi744lEnr8F7UISKzw1XBa3zrDvc-H3NCE83ZOuB_LCU5OjTpex7Mu82dRPBQADeCEilogLt0inD02SxMydy9GXQnewHWrR4NLAUL71u7xdPVzTH62TfagJXCQem0_7rdiVO-HKd5N7u0pkoTUBIZ1V_4UQ3DzCxzdrujPbGnq8ogtT05ebgsFJbM5rTHfDZdjW-LPcV3-AbNh_DQlI1n-dgG3yRI8AuQian86HtFo33t7F_PQHiJL0ivww" alt="Mascot" class="w-full h-full object-contain">
+                <img src="{{ asset('images/hero.png') }}" alt="Mascot" class="w-full h-full object-contain">
             </div>
         </div>
     </div>

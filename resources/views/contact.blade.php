@@ -29,7 +29,7 @@
                         </div>
                         <div class="space-y-6">
                             <div class="aspect-square bg-sky-50 dark:bg-sky-900/30 rounded-[2.5rem] border-4 border-dashed border-sky-200 dark:border-sky-800 flex items-center justify-center overflow-hidden">
-                                <img alt="Chibi astronaut mascot" class="w-4/5 h-4/5 object-contain drop-shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF5Wc58uqrZLOcAMMPTi744lEnr8F7UISKzw1XBa3zrDvc-H3NCE83ZOuB_LCU5OjTpex7Mu82dRPBQADeCEilogLt0inD02SxMydy9GXQnewHWrR4NLAUL71u7xdPVzTH62TfagJXCQem0_7rdiVO-HKd5N7u0pkoTUBIZ1V_4UQ3DzCxzdrujPbGnq8ogtT05ebgsFJbM5rTHfDZdjW-LPcV3-AbNh_DQlI1n-dgG3yRI8AuQian86HtFo33t7F_PQHiJL0ivww"/>
+                                <img alt="Chibi astronaut mascot" class="w-4/5 h-4/5 object-contain drop-shadow-xl" src="{{ asset('images/hero.png') }}"/>
                             </div>
                             <div class="space-y-4">
                                 <h3 class="text-2xl font-bold text-slate-800 dark:text-white">Kotak Pos Galaksi</h3>

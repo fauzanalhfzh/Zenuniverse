@@ -38,7 +38,7 @@
                 </div>
                 <div class="relative min-h-[500px] bg-sky-100 flex items-center justify-center p-12">
                     <div class="absolute inset-0 bg-gradient-to-br from-transparent to-white/40"></div>
-                    <img alt="Friendly astronaut helping kids" class="relative z-10 w-full h-full object-contain drop-shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF5Wc58uqrZLOcAMMPTi744lEnr8F7UISKzw1XBa3zrDvc-H3NCE83ZOuB_LCU5OjTpex7Mu82dRPBQADeCEilogLt0inD02SxMydy9GXQnewHWrR4NLAUL71u7xdPVzTH62TfagJXCQem0_7rdiVO-HKd5N7u0pkoTUBIZ1V_4UQ3DzCxzdrujPbGnq8ogtT05ebgsFJbM5rTHfDZdjW-LPcV3-AbNh_DQlI1n-dgG3yRI8AuQian86HtFo33t7F_PQHiJL0ivww"/>
+                    <img alt="Friendly astronaut helping kids" class="relative z-10 w-full h-full object-contain drop-shadow-2xl" src="{{ asset('images/hero.png') }}"/>
                     <div class="absolute top-10 right-10 w-32 h-32 bg-yellow-200/50 rounded-full blur-2xl"></div>
                     <div class="absolute bottom-10 left-10 w-40 h-40 bg-purple-200/50 rounded-full blur-2xl"></div>
                 </div>
