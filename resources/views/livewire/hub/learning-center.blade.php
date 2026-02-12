@@ -61,6 +61,10 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Card 1: Intro to Tech (Linked) -->
+            @php
+                $techStatus = $progress['intro-to-tech'] ?? 'start';
+                $isTechCompleted = $techStatus === 'completed';
+            @endphp
             <a href="{{ route('missions.intro-to-tech') }}" wire:navigate class="planet-card bg-white rounded-[2.5rem] border-4 border-slate-50 p-6 shadow-sm hover:shadow-md hover:border-orange-200 flex flex-col group cursor-pointer">
                 <div class="size-20 rounded-3xl bg-blue-100 flex items-center justify-center mb-6 self-center group-hover:scale-110 transition-transform">
                     <span class="material-symbols-outlined text-4xl text-blue-500">public</span>
@@ -70,15 +74,21 @@
                 <div class="space-y-3 mt-auto">
                     <div class="flex justify-between text-xs font-bold">
                         <span class="text-slate-400">Status</span>
-                        <span class="text-primary">Mulai Baru</span>
+                        <span @class(['text-primary', 'text-green-500' => $isTechCompleted])>
+                            {{ $isTechCompleted ? 'Selesai ✅' : 'Mulai Baru' }}
+                        </span>
                     </div>
                     <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="bg-slate-200 h-full w-0"></div>
+                        <div @class(['h-full w-0 transition-all duration-1000', 'bg-slate-200' => !$isTechCompleted, 'bg-green-500 w-full' => $isTechCompleted])></div>
                     </div>
                 </div>
             </a>
 
             <!-- Unit 2: Dasar Internet -->
+            @php
+                $netStatus = $progress['intro-to-internet'] ?? 'start';
+                $isNetCompleted = $netStatus === 'completed';
+            @endphp
             <a href="{{ route('missions.intro-to-internet') }}" wire:navigate class="planet-card bg-white rounded-[2.5rem] border-4 border-slate-50 p-6 shadow-sm hover:shadow-md hover:border-blue-200 flex flex-col group cursor-pointer">
                 <div class="size-20 rounded-3xl bg-blue-100 flex items-center justify-center mb-6 self-center group-hover:scale-110 transition-transform">
                     <span class="material-symbols-outlined text-4xl text-blue-500">language</span>
@@ -88,10 +98,12 @@
                 <div class="space-y-3 mt-auto">
                     <div class="flex justify-between text-xs font-bold">
                         <span class="text-slate-400">Status</span>
-                        <span class="text-primary font-black">Mulai Baru</span>
+                        <span @class(['text-primary font-black', 'text-green-500' => $isNetCompleted])>
+                            {{ $isNetCompleted ? 'Selesai ✅' : 'Mulai Baru' }}
+                        </span>
                     </div>
                     <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="bg-slate-200 h-full w-0"></div>
+                        <div @class(['h-full w-0 transition-all duration-1000', 'bg-slate-200' => !$isNetCompleted, 'bg-green-500 w-full' => $isNetCompleted])></div>
                     </div>
                 </div>
             </a>

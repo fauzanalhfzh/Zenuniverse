@@ -133,6 +133,21 @@ class IntroToInternet extends Component
             $this->step++;
             $this->resetStep();
         } else {
+            // Save Progress
+            if (auth()->check()) {
+                \App\Models\UserProgress::updateOrCreate(
+                    [
+                        'user_id' => auth()->id(),
+                        'mission_slug' => 'intro-to-internet',
+                    ],
+                    [
+                        'status' => 'completed',
+                        'xp_earned' => 100,
+                        'completed_at' => now(),
+                    ]
+                );
+            }
+            
             return redirect()->route('learning-center');
         }
     }
