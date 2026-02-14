@@ -6,6 +6,23 @@ use Livewire\Component;
 
 class StudentDashboard extends Component
 {
+    public function getGreeting($user)
+    {
+        $hour = date('H');
+        $timeGreeting = match(true) {
+            $hour < 12 => 'Selamat Pagi',
+            $hour < 15 => 'Selamat Siang',
+            $hour < 18 => 'Selamat Sore',
+            default => 'Selamat Malam',
+        };
+
+        if ($user->age_group === '4-7') {
+            return "Halo, " . explode(' ', $user->name)[0] . "! 🌟";
+        }
+
+        return "$timeGreeting, " . explode(' ', $user->name)[0] . "!";
+    }
+
     public function render()
     {
         $user = auth()->user()->load(['currentLevel', 'progress']);
@@ -24,8 +41,11 @@ class StudentDashboard extends Component
                 $query->orderBy('order');
             }])
             ->get();
+            
+        $greeting = $this->getGreeting($user);
 
         return view('livewire.student-dashboard', [
+            'greeting' => $greeting,
             'user' => $user,
             'levels' => $levels,
             'courses' => $currentLevelCourses,

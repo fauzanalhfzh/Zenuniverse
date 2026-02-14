@@ -1,6 +1,43 @@
 <div class="max-w-6xl mx-auto">
     {{-- Hero Section --}}
-    <x-student.hero :name="$user->name" :progress="80" />
+    {{-- Header Section with Streak --}}
+    <div class="flex justify-between items-end mb-8 animate-fade-in-up">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight mb-2">
+                {{ $greeting }}
+            </h1>
+            <p class="text-slate-500 font-medium">Siap untuk petualangan barumu hari ini? 🚀</p>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <!-- Streak Counter -->
+            <div class="sound-hover group relative bg-orange-100/50 hover:bg-orange-100 border-2 border-orange-200 hover:border-orange-300 rounded-2xl p-3 flex items-center gap-3 transition-all cursor-help" title="Streak Belajar">
+                <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-orange-500/30 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined font-bold">local_fire_department</span>
+                </div>
+                <div class="pr-2">
+                    <div class="text-md font-black text-orange-600 leading-none">{{ $user->current_streak }} Hari</div>
+                    <div class="text-[10px] font-bold text-orange-400 uppercase tracking-wider">Streak</div>
+                </div>
+                
+                <!-- Tooltip -->
+                <div class="absolute -bottom-12 right-0 w-48 bg-slate-800 text-white text-xs p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 text-center">
+                    Belajar setiap hari untuk menjaga apimu tetap menyala! 🔥
+                </div>
+            </div>
+
+            <!-- XP Badge -->
+            <div class="sound-hover bg-blue-100/50 border-2 border-blue-200 rounded-2xl p-3 flex items-center gap-3">
+                 <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                    <span class="material-symbols-outlined font-bold">bolt</span>
+                </div>
+                <div class="pr-2">
+                    <div class="text-md font-black text-blue-600 leading-none">{{ $user->current_xp ?? 0 }} XP</div>
+                    <div class="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Total XP</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2 space-y-8">

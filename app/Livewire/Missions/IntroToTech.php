@@ -113,8 +113,11 @@ Siapa tahu, suatu saat nanti KAMU yang akan menciptakan teknologi baru untuk mem
         $this->isCorrect = $this->selectedAnswer === $correctOption['id'];
         $this->isChecked = true;
 
-        if (! $this->isCorrect) {
+        if ($this->isCorrect) {
+            $this->dispatch('play-sound', sound: 'success');
+        } else {
             $this->hearts = max(0, $this->hearts - 1);
+            $this->dispatch('play-sound', sound: 'error');
         }
     }
 
@@ -138,6 +141,8 @@ Siapa tahu, suatu saat nanti KAMU yang akan menciptakan teknologi baru untuk mem
                         'completed_at' => now(),
                     ]
                 );
+                
+                $this->dispatch('play-sound', sound: 'fanfare');
             }
 
             return redirect()->route('learning-center');

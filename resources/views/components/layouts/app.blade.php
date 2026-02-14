@@ -21,10 +21,12 @@
 
         <!-- Styles & Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="{{ asset('js/SoundManager.js') }}"></script>
     </head>
     <body class="font-sans antialiased"
         x-data="{ 
             darkMode: localStorage.getItem('darkMode') === 'true',
+            ...Alpine.data('soundManager')(),
             toggleTheme() {
                 this.darkMode = !this.darkMode;
                 localStorage.setItem('darkMode', this.darkMode);
@@ -35,7 +37,7 @@
                 }
             }
         }"
-        x-init="$watch('darkMode', val => val ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')); if(darkMode) document.documentElement.classList.add('dark');"
+        x-init="$watch('darkMode', val => val ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')); if(darkMode) document.documentElement.classList.add('dark'); init();"
     >
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             {{-- Navigation Bar --}}

@@ -24,9 +24,13 @@ class User extends Authenticatable implements FilamentUser
         'role',
         'email',
         'password',
+        'age_group',
         'current_level_id',
         'total_xp',
         'current_xp',
+        'current_streak',
+        'longest_streak',
+        'last_activity_at',
     ];
 
     public function currentLevel()
@@ -58,6 +62,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_activity_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

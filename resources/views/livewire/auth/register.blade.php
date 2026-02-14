@@ -86,6 +86,35 @@
                     </label>
                 </div>
 
+                {{-- Age Group Selection (Only for Students) --}}
+                <div x-data="{ role: @entangle('role') }" x-show="role === 'student'" class="mb-8 animate-fade-in-up">
+                    <label class="block text-slate-600 font-bold ml-2 mb-4">Berapa Umurmu?</label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <label class="cursor-pointer group relative">
+                            <input type="radio" wire:model="age_group" name="age_group" value="4-7" class="peer sr-only">
+                            <div class="p-4 rounded-2xl border-4 text-center transition-all bg-white border-slate-100 peer-checked:border-orange-400 peer-checked:bg-orange-50 hover:shadow-lg h-full flex flex-col items-center justify-center gap-2">
+                                <span class="text-3xl">🧸</span>
+                                <span class="font-bold text-slate-700">4-7 Thn</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer group relative">
+                            <input type="radio" wire:model="age_group" name="age_group" value="8-12" class="peer sr-only">
+                            <div class="p-4 rounded-2xl border-4 text-center transition-all bg-white border-slate-100 peer-checked:border-blue-400 peer-checked:bg-blue-50 hover:shadow-lg h-full flex flex-col items-center justify-center gap-2">
+                                <span class="text-3xl">🚀</span>
+                                <span class="font-bold text-slate-700">8-12 Thn</span>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer group relative">
+                            <input type="radio" wire:model="age_group" name="age_group" value="12-16" class="peer sr-only">
+                            <div class="p-4 rounded-2xl border-4 text-center transition-all bg-white border-slate-100 peer-checked:border-purple-400 peer-checked:bg-purple-50 hover:shadow-lg h-full flex flex-col items-center justify-center gap-2">
+                                <span class="text-3xl">💻</span>
+                                <span class="font-bold text-slate-700">12-16 Thn</span>
+                            </div>
+                        </label>
+                    </div>
+                    <x-input-error :messages="$errors->get('age_group')" class="mt-2 text-center" />
+                </div>
+
                 <x-input-error :messages="$errors->get('role')" class="mb-4 text-center" />
 
                 <div class="space-y-2">
