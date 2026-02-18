@@ -14,317 +14,589 @@ class LessonSeeder extends Seeder
         $course = Course::where('title', 'Dasar Pemrograman Web')->first();
 
         if ($course) {
-            // Lesson 1
-            $lesson1 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Apa itu HTML?',
-                'slug' => 'apa-itu-html',
-                'content' => 'HTML (HyperText Markup Language) adalah bahasa standar untuk membuat halaman web. HTML menyusun struktur konten pada website.',
-                'video_url' => 'https://www.youtube.com/embed/H1Q_x3z6-aA', // Dummy video
-                'order' => 1,
-                'xp_reward' => 20,
-            ]);
-
-            // Slide for Lesson 1
-            $lesson1->slides()->create([
-                'type' => 'text',
-                'title' => 'Apa itu HTML?',
-                'content' => 'HTML adalah bahasa markup standar untuk membuat halaman Web. HTML menggambarkan struktur halaman Web menggunakan markup.',
-                'order' => 1,
-            ]);
-
-            // Quiz for Lesson 1
-            $lesson1->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Singkat',
-                'content' => 'Apa kepanjangan dari HTML?',
-                'options' => [
-                    ['id' => 'A', 'text' => 'HyperTech Markup Language', 'correct' => false],
-                    ['id' => 'B', 'text' => 'HyperText Markup Language', 'correct' => true],
-                    ['id' => 'C', 'text' => 'HighText Machine Learning', 'correct' => false],
-                    ['id' => 'D', 'text' => 'HyperTool Multi Language', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 2
-            $lesson2 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Struktur Halaman HTML',
-                'slug' => 'struktur-halaman-html',
-                'content' => 'Setiap halaman HTML memiliki struktur dasar yang terdiri dari tag html, head, dan body.',
-                'video_url' => null,
-                'order' => 2,
-                'xp_reward' => 30,
-            ]);
-
-            $lesson2->slides()->create([
-                'type' => 'text',
-                'title' => 'Struktur Dasar',
-                'content' => 'Setiap halaman HTML memiliki struktur dasar: <html>, <head>, dan <body>.',
-                'order' => 1,
-            ]);
-
-            $lesson2->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Struktur',
-                'content' => 'Tag mana yang berisi konten utama?',
-                'options' => [
-                    ['id' => 'A', 'text' => '<head>', 'correct' => false],
-                    ['id' => 'B', 'text' => '<title>', 'correct' => false],
-                    ['id' => 'C', 'text' => '<body>', 'correct' => true],
-                    ['id' => 'D', 'text' => '<footer>', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 3
-            $lesson3 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Tag Heading',
-                'slug' => 'tag-heading',
-                'content' => 'HTML memiliki 6 tingkatan heading, dari <h1> sampai <h6>.',
-                'video_url' => null,
-                'order' => 3,
-                'xp_reward' => 25,
-            ]);
-
-            $lesson3->slides()->create([
-                'type' => 'text',
-                'title' => 'Heading HTML',
-                'content' => 'Heading HTML didefinisikan dengan tag <h1> hingga <h6>. <h1> mendefinisikan heading paling penting.',
-                'order' => 1,
-            ]);
-
-            $lesson3->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Heading',
-                'content' => 'Manakah h1 yang memiliki ukuran paling besar?',
-                'options' => [
-                    ['id' => 'A', 'text' => '<h6>', 'correct' => false],
-                    ['id' => 'B', 'text' => '<h3>', 'correct' => false],
-                    ['id' => 'C', 'text' => '<h1>', 'correct' => true],
-                    ['id' => 'D', 'text' => '<header>', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 4
-            $lesson4 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Paragraf dan Teks',
-                'slug' => 'paragraf-dan-teks',
-                'content' => 'Gunakan tag <p> untuk membuat paragraf. Tag <b> atau <strong> untuk menebalkan teks.',
-                'video_url' => null,
-                'order' => 4,
-                'xp_reward' => 25,
-            ]);
-
-            $lesson4->slides()->create([
-                'type' => 'text',
-                'title' => 'Paragraf',
-                'content' => 'Tag <p> mendefinisikan sebuah paragraf. Browser secara otomatis menambahkan margin sebelum dan sesudah paragraf.',
-                'order' => 1,
-            ]);
-
-            $lesson4->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Paragraf',
-                'content' => 'Tag HTML untuk membuat paragraf adalah...',
-                'options' => [
-                    ['id' => 'A', 'text' => '<para>', 'correct' => false],
-                    ['id' => 'B', 'text' => '<p>', 'correct' => true],
-                    ['id' => 'C', 'text' => '<pg>', 'correct' => false],
-                    ['id' => 'D', 'text' => '<text>', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 5
-            $lesson5 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Membuat Link',
-                'slug' => 'membuat-link',
-                'content' => 'Gunakan tag <a> dengan atribut href untuk membuat link ke halaman lain.',
-                'video_url' => null,
-                'order' => 5,
-                'xp_reward' => 30,
-            ]);
-
-            $lesson5->slides()->create([
-                'type' => 'text',
-                'title' => 'Hyperlink',
-                'content' => 'Tag <a> mendefinisikan hyperlink. Atribut href menentukan URL tujuan link.',
-                'order' => 1,
-            ]);
-
-            $lesson5->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Link',
-                'content' => 'Atribut apa yang digunakan untuk link?',
-                'options' => [
-                    ['id' => 'A', 'text' => 'src', 'correct' => false],
-                    ['id' => 'B', 'text' => 'link', 'correct' => false],
-                    ['id' => 'C', 'text' => 'href', 'correct' => true],
-                    ['id' => 'D', 'text' => 'to', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 6
-            $lesson6 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Menambahkan Gambar',
-                'slug' => 'menambahkan-gambar',
-                'content' => 'Gunakan tag <img> dengan atribut src untuk menampilkan gambar.',
-                'video_url' => null,
-                'order' => 6,
-                'xp_reward' => 30,
-            ]);
-
-            $lesson6->slides()->create([
-                'type' => 'text',
-                'title' => 'Gambar HTML',
-                'content' => 'Tag <img> digunakan untuk menyematkan gambar dalam halaman HTML. Atribut src menentukan jalur ke gambar.',
-                'order' => 1,
-            ]);
-
-            $lesson6->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Gambar',
-                'content' => 'Apakah tag <img> perlu penutup?',
-                'options' => [
-                    ['id' => 'A', 'text' => 'Ya', 'correct' => false],
-                    ['id' => 'B', 'text' => 'Tidak', 'correct' => true],
-                    ['id' => 'C', 'text' => 'Kadang', 'correct' => false],
-                    ['id' => 'D', 'text' => 'Tergantung', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 7
-            $lesson7 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Membuat List',
-                'slug' => 'membuat-list',
-                'content' => 'Gunakan <ul> untuk list tidak berurutan dan <ol> untuk list berurutan.',
-                'video_url' => null,
-                'order' => 7,
-                'xp_reward' => 35,
-            ]);
-
-            $lesson7->slides()->create([
-                'type' => 'text',
-                'title' => 'List HTML',
-                'content' => 'HTML mendukung list berurutan (<ol>), tidak berurutan (<ul>), dan list definisi (<dl>).',
-                'order' => 1,
-            ]);
-
-            $lesson7->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis List',
-                'content' => 'Tag untuk list bernomor?',
-                'options' => [
-                    ['id' => 'A', 'text' => '<ul>', 'correct' => false],
-                    ['id' => 'B', 'text' => '<dl>', 'correct' => false],
-                    ['id' => 'C', 'text' => '<list>', 'correct' => false],
-                    ['id' => 'D', 'text' => '<ol>', 'correct' => true],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 8
-            $lesson8 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Tabel Sederhana',
-                'slug' => 'tabel-sederhana',
-                'content' => 'Tabel dibuat dengan <table>, baris dengan <tr>, dan sel dengan <td>.',
-                'video_url' => null,
-                'order' => 8,
-                'xp_reward' => 40,
-            ]);
-
-            $lesson8->slides()->create([
-                'type' => 'text',
-                'title' => 'Tabel HTML',
-                'content' => 'Tabel HTML memungkinkan pengembang web untuk menyusun data ke dalam baris dan kolom.',
-                'order' => 1,
-            ]);
-
-            $lesson8->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Tabel',
-                'content' => 'Tag untuk baris tabel?',
-                'options' => [
-                    ['id' => 'A', 'text' => '<td>', 'correct' => false],
-                    ['id' => 'B', 'text' => '<tr>', 'correct' => true],
-                    ['id' => 'C', 'text' => '<th>', 'correct' => false],
-                    ['id' => 'D', 'text' => '<tb>', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 9
-            $lesson9 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'Formulir HTML',
-                'slug' => 'formulir-html',
-                'content' => 'Tag <form> membungkus elemen input seperti text field, checkbox, dan tombol.',
-                'video_url' => null,
-                'order' => 9,
-                'xp_reward' => 45,
-            ]);
-
-            $lesson9->slides()->create([
-                'type' => 'text',
-                'title' => 'Formulir',
-                'content' => 'Elemen <form> digunakan untuk mengumpulkan input pengguna. Elemen ini sering dikirim ke server untuk diproses.',
-                'order' => 1,
-            ]);
-
-            $lesson9->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Form',
-                'content' => 'Input teks pendek?',
-                'options' => [
-                    ['id' => 'A', 'text' => '<input type="text">', 'correct' => true],
-                    ['id' => 'B', 'text' => '<textarea>', 'correct' => false],
-                    ['id' => 'C', 'text' => '<submit>', 'correct' => false],
-                    ['id' => 'D', 'text' => '<field>', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
-
-            // Lesson 10
-            $lesson10 = Lesson::create([
-                'course_id' => $course->id,
-                'title' => 'HTML Semantik',
-                'slug' => 'html-semantik',
-                'content' => 'Elemen semantik seperti <header>, <nav>, <article>, <footer> memberikan makna pada struktur web.',
-                'video_url' => null,
-                'order' => 10,
-                'xp_reward' => 50,
-            ]);
-
-            $lesson10->slides()->create([
-                'type' => 'text',
-                'title' => 'Semantik',
-                'content' => 'Elemen semantik mendeskripsikan maknanya dengan jelas kepada browser dan pengembang.',
-                'order' => 1,
-            ]);
-
-            $lesson10->slides()->create([
-                'type' => 'quiz',
-                'title' => 'Kuis Semantik',
-                'content' => 'Tag untuk navigasi?',
-                'options' => [
-                    ['id' => 'A', 'text' => '<div class="nav">', 'correct' => false],
-                    ['id' => 'B', 'text' => '<navigation>', 'correct' => false],
-                    ['id' => 'C', 'text' => '<nav>', 'correct' => true],
-                    ['id' => 'D', 'text' => '<menu>', 'correct' => false],
-                ],
-                'order' => 2,
-            ]);
+            $this->createLesson1($course);
+            $this->createLesson2($course);
+            $this->createLesson3($course);
+            $this->createLesson4($course);
+            $this->createLesson5($course);
+            $this->createLesson6($course);
+            $this->createLesson7($course);
+            $this->createLesson8($course);
+            $this->createLesson9($course);
+            $this->createLesson10($course);
         }
+
+        // Get Course "Logika Pemrograman Dasar"
+        $logicCourse = Course::where('title', 'Logika Pemrograman Dasar')->first();
+
+        if ($logicCourse) {
+            $this->createLogicLesson1($logicCourse); // Algoritma
+            $this->createLogicLesson2($logicCourse); // Variabel
+            $this->createLogicLesson3($logicCourse); // Kondisional
+            $this->createLogicLesson4($logicCourse); // Perulangan
+            $this->createLogicLesson5($logicCourse); // Pseudocode
+        }
+    }
+
+    private function createLogicLesson1($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'apa-itu-algoritma'],
+            [
+            'course_id' => $course->id, 'title' => 'Apa itu Algoritma?',
+            'content' => 'Langkah-langkah logis penyelesaian masalah.', 'video_url' => null, 'order' => 1, 'xp_reward' => 20,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Definisi Algoritma', 'content' => 'Algoritma adalah urutan langkah-langkah logis untuk menyelesaikan suatu masalah secara sistematis.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Apa tujuan utama algoritma?', [['id'=>'A','text'=>'Membuat kopi','correct'=>false], ['id'=>'B','text'=>'Menyelesaikan masalah','correct'=>true]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Resep Masakan', 'content' => 'Algoritma mirip dengan resep masakan: ada bahan (input), proses memasak (langkah), dan hidangan (output).']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Algoritma mirip dengan?', [['id'=>'A','text'=>'Resep masakan','correct'=>true], ['id'=>'B','text'=>'Kamus','correct'=>false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Ciri Algoritma', 'content' => 'Algoritma harus jelas, terdefinisi, dan memiliki akhir (berhenti).']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Apakah algoritma boleh tidak berhenti?', [['id'=>'A','text'=>'Boleh','correct'=>false], ['id'=>'B','text'=>'Tidak, harus berhenti','correct'=>true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Flowchart', 'content' => 'Flowchart adalah diagram yang menggambarkan langkah-langkah algoritma.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Diagram algoritma disebut?', [['id'=>'A','text'=>'Instagram','correct'=>false], ['id'=>'B','text'=>'Flowchart','correct'=>true]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Pentingnya Logika', 'content' => 'Sebelum menulis kode (coding), kita harus menyusun algoritmanya terlebih dahulu.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Urutan yang benar adalah?', [['id'=>'A','text'=>'Coding dulu, baru mikir','correct'=>false], ['id'=>'B','text'=>'Algoritma dulu, baru coding','correct'=>true]]);
+    }
+
+    private function createLogicLesson2($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'variabel-tipe-data'],
+            [
+            'course_id' => $course->id, 'title' => 'Variabel & Tipe Data',
+            'content' => 'Wadah penyimpanan data.', 'video_url' => null, 'order' => 2, 'xp_reward' => 30,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Variabel?', 'content' => 'Variabel adalah "wadah" untuk menyimpan nilai atau data dalam program.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Fungsi variabel adalah?', [['id'=>'A','text'=>'Menyimpan data','correct'=>true], ['id'=>'B','text'=>'Menghapus data','correct'=>false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Analogi Kotak', 'content' => 'Bayangkan variabel sebagai kotak kardus yang bisa kita isi barang dan diberi label nama.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Variabel seperti?', [['id'=>'A','text'=>'Kotak penyimpanan','correct'=>true], ['id'=>'B','text'=>'Bola lampu','correct'=>false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Integer', 'content' => 'Integer adalah tipe data untuk bilangan bulat (contoh: 5, 10, -3).']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Contoh integer?', [['id'=>'A','text'=>'3.14','correct'=>false], ['id'=>'B','text'=>'100','correct'=>true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'String', 'content' => 'String adalah tipe data untuk teks (contoh: "Halo Dunia").']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Tipe data untuk teks?', [['id'=>'A','text'=>'Integer','correct'=>false], ['id'=>'B','text'=>'String','correct'=>true]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Boolean', 'content' => 'Boolean hanya memiliki dua nilai: Benar (True) atau Salah (False).']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Nilai boolean?', [['id'=>'A','text'=>'True/False','correct'=>true], ['id'=>'B','text'=>'A/B/C','correct'=>false]]);
+    }
+
+    private function createLogicLesson3($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'logika-if-else'],
+            [
+            'course_id' => $course->id, 'title' => 'Logika If/Else',
+            'content' => 'Pengambilan keputusan.', 'video_url' => null, 'order' => 3, 'xp_reward' => 35,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Percabangan', 'content' => 'Program bisa mengambil keputusan berdasarkan kondisi tertentu menggunakan "If" (Jika).']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'If digunakan untuk?', [['id'=>'A','text'=>'Mengulang','correct'=>false], ['id'=>'B','text'=>'Cek kondisi','correct'=>true]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Analogi Hujan', 'content' => 'JIKA hujan, MAKA bawa payung. JIKA TIDAK, pakai topi.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Jika hujan maka?', [['id'=>'A','text'=>'Bawa payung','correct'=>true], ['id'=>'B','text'=>'Siram tanaman','correct'=>false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Else', 'content' => '"Else" (Lainnya) dijalankan jika kondisi "If" tidak terpenuhi.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Kapan Else jalan?', [['id'=>'A','text'=>'Saat kondisi If salah','correct'=>true], ['id'=>'B','text'=>'Saat kondisi If benar','correct'=>false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Operator Perbandingan', 'content' => 'Kita menggunakan operator seperti > (lebih besar), < (lebih kecil), == (sama dengan).']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Simbol sama dengan?', [['id'=>'A','text'=>'==','correct'=>true], ['id'=>'B','text'=>'=','correct'=>false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Nested If', 'content' => 'Kita bisa memasukkan If di dalam If (If bersarang) untuk logika kompleks.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'If di dalam If disebut?', [['id'=>'A','text'=>'Double If','correct'=>false], ['id'=>'B','text'=>'Nested If','correct'=>true]]);
+    }
+
+    private function createLogicLesson4($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'perulangan-loop'],
+            [
+            'course_id' => $course->id, 'title' => 'Perulangan (Loop)',
+            'content' => 'Melakukan hal berulang.', 'video_url' => null, 'order' => 4, 'xp_reward' => 35,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Kenapa Loop?', 'content' => 'Loop digunakan untuk menjalankan kode yang sama berkali-kali tanpa menulis ulang.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Fungsi loop?', [['id'=>'A','text'=>'Mengulang kode','correct'=>true], ['id'=>'B','text'=>'Stop program','correct'=>false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'For Loop', 'content' => 'For Loop digunakan ketika kita tahu pasti berapa kali kita ingin mengulang (misal: 5 kali).']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Loop untuk jumlah pasti?', [['id'=>'A','text'=>'For Loop','correct'=>true], ['id'=>'B','text'=>'While Loop','correct'=>false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'While Loop', 'content' => 'While Loop berjalan SELAMA kondisi masih benar (bisa tidak berhenti jika salah logika).']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Loop selama kondisi benar?', [['id'=>'A','text'=>'If','correct'=>false], ['id'=>'B','text'=>'While','correct'=>true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Infinite Loop', 'content' => 'Hati-hati dengan Infinite Loop, di mana program tidak pernah berhenti berulang!']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Loop tanpa henti disebut?', [['id'=>'A','text'=>'Infinite Loop','correct'=>true], ['id'=>'B','text'=>'Mega Loop','correct'=>false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Efisiensi', 'content' => 'Menggunakan Loop membuat kode lebih pendek, rapi, dan mudah diatur.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Manfaat loop?', [['id'=>'A','text'=>'Kode lebih pendek','correct'=>true], ['id'=>'B','text'=>'Kode lebih rumit','correct'=>false]]);
+    }
+
+    private function createLogicLesson5($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'pseudocode'],
+            [
+            'course_id' => $course->id, 'title' => 'Pseudocode',
+            'content' => 'Kode semu.', 'video_url' => null, 'order' => 5, 'xp_reward' => 40,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Pseudocode?', 'content' => 'Pseudocode adalah "kode semu", deskripsi algoritma yang mirip kode tapi bisa dibaca manusia.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Pseudocode adalah?', [['id'=>'A','text'=>'Bahasa mesin','correct'=>false], ['id'=>'B','text'=>'Kode semu','correct'=>true]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Tujuan', 'content' => 'Tujuannya untuk merencanakan logika program tanpa memikirkan aturan sintaks bahasa pemrograman tertentu.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Fokus pseudocode?', [['id'=>'A','text'=>'Logika','correct'=>true], ['id'=>'B','text'=>'Tanda baca','correct'=>false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Bahasa Bebas', 'content' => 'Pseudocode bisa ditulis dalam bahasa Indonesia atau Inggris, yang penting jelas.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Bahasa pseudocode?', [['id'=>'A','text'=>'Harus Inggris','correct'=>false], ['id'=>'B','text'=>'Bebas asal jelas','correct'=>true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Struktur', 'content' => 'Meski bebas, biasanya tetap menggunakan kata kunci seperti IF, ELSE, WHILE, PRINT.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Kata kunci umum?', [['id'=>'A','text'=>'IF, ELSE','correct'=>true], ['id'=>'B','text'=>'JUMP, RUN','correct'=>false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Jembatan', 'content' => 'Pseudocode adalah jembatan antara bahasa manusia dan bahasa pemrograman.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Pseudocode menjembatani?', [['id'=>'A','text'=>'Manusia & Mesin','correct'=>true], ['id'=>'B','text'=>'Laut & Darat','correct'=>false]]);
+    }
+
+    private function createLesson1($course) {
+        // dump('Creating Lesson 1 for course: ' . $course->title);
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'apa-itu-html'],
+            [
+            'course_id' => $course->id,
+            'title' => 'Apa itu HTML?',
+            'content' => 'HTML (HyperText Markup Language) adalah bahasa standar untuk membuat halaman web.',
+            'video_url' => 'https://www.youtube.com/embed/H1Q_x3z6-aA',
+            'order' => 1,
+            'xp_reward' => 20,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu HTML?', 'content' => 'HTML adalah singkatan dari HyperText Markup Language.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Apa kepanjangan dari HTML?', [
+            ['id' => 'A', 'text' => 'HyperTech Markup Language', 'correct' => false],
+            ['id' => 'B', 'text' => 'HyperText Markup Language', 'correct' => true],
+            ['id' => 'C', 'text' => 'HighText Machine Learning', 'correct' => false],
+        ]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Sejarah Singkat', 'content' => 'HTML diciptakan oleh Tim Berners-Lee pada tahun 1991.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Siapa penemu HTML?', [
+            ['id' => 'A', 'text' => 'Elon Musk', 'correct' => false],
+            ['id' => 'B', 'text' => 'Tim Berners-Lee', 'correct' => true],
+            ['id' => 'C', 'text' => 'Mark Zuckerberg', 'correct' => false],
+        ]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Bukan Bahasa Pemrograman', 'content' => 'HTML adalah bahasa markup, bukan bahasa pemrograman. Ia tidak memiliki logika seperti if/else.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Apakah HTML bahasa pemrograman?', [
+            ['id' => 'A', 'text' => 'Ya', 'correct' => false],
+            ['id' => 'B', 'text' => 'Tidak, itu bahasa markup', 'correct' => true],
+        ]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Struktur Web', 'content' => 'HTML digunakan untuk membuat kerangka atau struktur dari sebuah halaman web.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Apa fungsi utama HTML?', [
+            ['id' => 'A', 'text' => 'Membuat database', 'correct' => false],
+            ['id' => 'B', 'text' => 'Membuat struktur web', 'correct' => true],
+            ['id' => 'C', 'text' => 'Mengirim email', 'correct' => false],
+        ]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Ekstensi File', 'content' => 'File HTML biasanya disimpan dengan ekstensi .html atau .htm.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Apa ekstensi file HTML?', [
+            ['id' => 'A', 'text' => '.exe', 'correct' => false],
+            ['id' => 'B', 'text' => '.html', 'correct' => true],
+            ['id' => 'C', 'text' => '.doc', 'correct' => false],
+        ]);
+    }
+
+    private function createLesson2($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'struktur-halaman-html'],
+            [
+            'course_id' => $course->id,
+            'title' => 'Struktur Halaman HTML',
+            'content' => 'Setiap halaman HTML memiliki struktur dasar yang terdiri dari tag html, head, dan body.',
+            'video_url' => null, 'order' => 2, 'xp_reward' => 30,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Doctype', 'content' => '<!DOCTYPE html> memberi tahu browser bahwa ini adalah dokumen HTML5.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Apa fungsi <!DOCTYPE html>?', [
+            ['id' => 'A', 'text' => 'Deklarasi versi HTML', 'correct' => true],
+            ['id' => 'B', 'text' => 'Membuat link', 'correct' => false],
+        ]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Tag <html>', 'content' => 'Tag <html> adalah akar (root) dari dokumen HTML.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Elemen apa yang membungkus seluruh konten HTML?', [
+            ['id' => 'A', 'text' => '<html>', 'correct' => true],
+            ['id' => 'B', 'text' => '<body>', 'correct' => false],
+        ]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Tag <head>', 'content' => '<head> berisi meta-data, judul, dan link CSS yang tidak tampil di konten utama.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Di mana kita meletakkan judul halaman?', [
+            ['id' => 'A', 'text' => '<body>', 'correct' => false],
+            ['id' => 'B', 'text' => '<head>', 'correct' => true],
+        ]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Tag <body>', 'content' => '<body> berisi semua konten yang terlihat oleh pengguna seperti teks dan gambar.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Konten yang tampil di browser ada di dalam tag?', [
+            ['id' => 'A', 'text' => '<head>', 'correct' => false],
+            ['id' => 'B', 'text' => '<body>', 'correct' => true],
+        ]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Case Insensitive', 'content' => 'Tag HTML tidak sensitif huruf besar/kecil, tapi disarankan menggunakan huruf kecil.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Apakah <BODY> valid dalam HTML?', [
+            ['id' => 'A', 'text' => 'Ya', 'correct' => true],
+            ['id' => 'B', 'text' => 'Tidak', 'correct' => false],
+        ]);
+    }
+
+    private function createLesson3($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'tag-heading'],
+            [
+            'course_id' => $course->id, 'title' => 'Tag Heading',
+            'content' => 'HTML memiliki 6 tingkatan heading.', 'video_url' => null, 'order' => 3, 'xp_reward' => 25,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Heading?', 'content' => 'Heading digunakan untuk judul dan sub-judul pada halaman web.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Fungsi utama heading?', [['id'=>'A','text'=>'Menebalkan teks','correct'=>false], ['id'=>'B','text'=>'Struktur judul','correct'=>true]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Tingkatan', 'content' => 'Ada 6 tingkatan: <h1> (terbesar) sampai <h6> (terkecil).']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Berapa banyak tingkatan heading?', [['id'=>'A','text'=>'4','correct'=>false], ['id'=>'B','text'=>'6','correct'=>true]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Hierarki', 'content' => 'Gunakan <h1> hanya satu kali per halaman untuk judul utama.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Heading terbesar adalah?', [['id'=>'A','text'=>'<h1>','correct'=>true], ['id'=>'B','text'=>'<h6>','correct'=>false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'SEO', 'content' => 'Mesin pencari menggunakan heading untuk memahami struktur konten Anda.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Heading terkecil adalah?', [['id'=>'A','text'=>'<h1>','correct'=>false], ['id'=>'B','text'=>'<h6>','correct'=>true]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Ukuran Default', 'content' => 'Browser memberikan ukuran font berbeda untuk setiap heading secara default.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Bolehkah ada banyak <h1>?', [['id'=>'A','text'=>'Boleh, tapi tidak disarankan','correct'=>true], ['id'=>'B','text'=>'Ilegal','correct'=>false]]);
+    }
+
+    private function createLesson4($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'paragraf-dan-teks'],
+            [
+            'course_id' => $course->id, 'title' => 'Paragraf dan Teks',
+            'content' => 'Formatting teks dasar.', 'video_url' => null, 'order' => 4, 'xp_reward' => 25,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Paragraf', 'content' => 'Tag <p> digunakan untuk membuat paragraf teks.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Tag untuk paragraf?', [['id'=>'A','text'=>'<p>','correct'=>true], ['id'=>'B','text'=>'<para>','correct'=>false]]);
+        
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Bold Text', 'content' => 'Tag <b> atau <strong> membuat teks tebal.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Tag untuk teks tebal?', [['id'=>'A','text'=>'<b>','correct'=>true], ['id'=>'B','text'=>'<t>','correct'=>false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Italic Text', 'content' => 'Tag <i> atau <em> membuat teks miring.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Apa fungsi <em>?', [['id'=>'A','text'=>'Miring (Emphasis)','correct'=>true], ['id'=>'B','text'=>'Garis bawah','correct'=>false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Line Break', 'content' => 'Tag <br> digunakan untuk ganti baris tanpa membuat paragraf baru.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Tag untuk ganti baris?', [['id'=>'A','text'=>'<lb>','correct'=>false], ['id'=>'B','text'=>'<br>','correct'=>true]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Horizontal Rule', 'content' => 'Tag <hr> membuat garis horizontal pemisah.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Tag <hr> digunakan untuk?', [['id'=>'A','text'=>'Garis Horizontal','correct'=>true], ['id'=>'B','text'=>'Header','correct'=>false]]);
+    }
+
+    private function createLesson5($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'membuat-link'],
+            [
+            'course_id' => $course->id, 'title' => 'Membuat Link',
+            'content' => 'Hyperlink menghubungkan halaman web.', 'video_url' => null, 'order' => 5, 'xp_reward' => 30,
+        ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Anchor Tag', 'content' => 'Link dibuat menggunakan tag <a> (anchor).']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Tag untuk membuat link?', [['id'=>'A','text'=>'<a>','correct'=>true], ['id'=>'B','text'=>'<link>','correct'=>false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Atribut Href', 'content' => 'href (Hypertext Reference) menentukan tujuan link.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Atribut tujuan link?', [['id'=>'A','text'=>'src','correct'=>false], ['id'=>'B','text'=>'href','correct'=>true]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Target Blank', 'content' => 'target="_blank" membuka link di tab baru.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Membuka di tab baru?', [['id'=>'A','text'=>'target="_blank"','correct'=>true], ['id'=>'B','text'=>'new="tab"','correct'=>false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Link Internal', 'content' => 'Link bisa mengarah ke halaman lain dalam satu website.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Apa arti "a" pada tag <a>?', [['id'=>'A','text'=>'Anchor','correct'=>true], ['id'=>'B','text'=>'Attach','correct'=>false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Link Eksternal', 'content' => 'Link bisa mengarah ke website lain (missal google.com).']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Bisakah link berupa gambar?', [['id'=>'A','text'=>'Bisa','correct'=>true], ['id'=>'B','text'=>'Tidak','correct'=>false]]);
+    }
+
+    private function createLesson6($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'menambahkan-gambar'],
+            [
+            'course_id' => $course->id, 'title' => 'Menambahkan Gambar',
+            'content' => 'Visualisasi dengan gambar.', 'video_url' => null, 'order' => 6, 'xp_reward' => 30,
+        ]);
+
+        // 1.
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Image Tag', 'content' => 'Gambar ditambahkan dengan tag <img>.']);
+        // 2.
+        $this->createQuiz($lesson, 2, 'Tag untuk gambar?', [['id'=>'A','text'=>'<image>','correct'=>false], ['id'=>'B','text'=>'<img>','correct'=>true]]);
+
+        // 3.
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Atribut Source', 'content' => 'src menentukan path atau URL gambar.']);
+        // 4.
+        $this->createQuiz($lesson, 4, 'Atribut lokasi gambar?', [['id'=>'A','text'=>'href','correct'=>false], ['id'=>'B','text'=>'src','correct'=>true]]);
+
+        // 5.
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Alt Text', 'content' => 'alt menyediakan teks alternatif jika gambar gagal dimuat.']);
+        // 6.
+        $this->createQuiz($lesson, 6, 'Fungsi atribut alt?', [['id'=>'A','text'=>'Teks alternatif','correct'=>true], ['id'=>'B','text'=>'Judul gambar','correct'=>false]]);
+
+        // 7.
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Ukuran', 'content' => 'width dan height bisa mengatur ukuran gambar.']);
+        // 8.
+        $this->createQuiz($lesson, 8, 'Atribut lebar gambar?', [['id'=>'A','text'=>'width','correct'=>true], ['id'=>'B','text'=>'size','correct'=>false]]);
+
+        // 9.
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Self Closing', 'content' => 'Tag <img> tidak memiliki tag penutup (void element).']);
+        // 10.
+        $this->createQuiz($lesson, 10, 'Apakah <img> butuh </img>?', [['id'=>'A','text'=>'Ya','correct'=>false], ['id'=>'B','text'=>'Tidak','correct'=>true]]);
+    }
+
+    private function createLesson7($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'membuat-list'],
+            [
+            'course_id' => $course->id, 'title' => 'Membuat List',
+            'content' => 'Daftar item.', 'video_url' => null, 'order' => 7, 'xp_reward' => 35,
+        ]);
+
+        // 1.
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Ordered List', 'content' => '<ol> membuat daftar berurutan (nomor).']);
+        // 2.
+        $this->createQuiz($lesson, 2, 'Tag list berurutan?', [['id'=>'A','text'=>'<ol>','correct'=>true], ['id'=>'B','text'=>'<ul>','correct'=>false]]);
+
+        // 3.
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Unordered List', 'content' => '<ul> membuat daftar tidak berurutan (bullet).']);
+        // 4.
+        $this->createQuiz($lesson, 4, 'Tag list bullet?', [['id'=>'A','text'=>'<ol>','correct'=>false], ['id'=>'B','text'=>'<ul>','correct'=>true]]);
+
+        // 5.
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'List Item', 'content' => '<li> digunakan untuk setiap item dalam list.']);
+        // 6.
+        $this->createQuiz($lesson, 6, 'Tag item list?', [['id'=>'A','text'=>'<item>','correct'=>false], ['id'=>'B','text'=>'<li>','correct'=>true]]);
+
+        // 7.
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Nesting', 'content' => 'List bisa bersarang (list di dalam list).']);
+        // 8.
+        $this->createQuiz($lesson, 8, 'Apa kepanjangan <ul>?', [['id'=>'A','text'=>'Unordered List','correct'=>true], ['id'=>'B','text'=>'Under List','correct'=>false]]);
+
+        // 9.
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Tipe Marker', 'content' => 'Kita bisa mengubah tipe bullet/nomor dengan CSS atau atribut type.']);
+        // 10.
+        $this->createQuiz($lesson, 10, 'Apa kepanjangan <ol>?', [['id'=>'A','text'=>'Ordered List','correct'=>true], ['id'=>'B','text'=>'Org List','correct'=>false]]);
+    }
+
+    private function createLesson8($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'tabel-sederhana'],
+            [
+            'course_id' => $course->id, 'title' => 'Tabel Sederhana',
+            'content' => 'Data tabular.', 'video_url' => null, 'order' => 8, 'xp_reward' => 40,
+        ]);
+
+        // 1.
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Table Tag', 'content' => '<table> adalah wadah utama tabel.']);
+        // 2.
+        $this->createQuiz($lesson, 2, 'Tag utama tabel?', [['id'=>'A','text'=>'<table>','correct'=>true], ['id'=>'B','text'=>'<tab>','correct'=>false]]);
+
+        // 3.
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Table Row', 'content' => '<tr> mendefinisikan baris tabel.']);
+        // 4.
+        $this->createQuiz($lesson, 4, 'Tag baris tabel?', [['id'=>'A','text'=>'<td>','correct'=>false], ['id'=>'B','text'=>'<tr>','correct'=>true]]);
+
+        // 5.
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Table Data', 'content' => '<td> mendefinisikan sel data standar.']);
+        // 6.
+        $this->createQuiz($lesson, 6, 'Tag sel data biasa?', [['id'=>'A','text'=>'<td>','correct'=>true], ['id'=>'B','text'=>'<da>','correct'=>false]]);
+
+        // 7.
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Table Header', 'content' => '<th> mendefinisikan sel header/judul (biasanya tebal).']);
+        // 8.
+        $this->createQuiz($lesson, 8, 'Tag sel header?', [['id'=>'A','text'=>'<th>','correct'=>true], ['id'=>'B','text'=>'<head>','correct'=>false]]);
+
+        // 9.
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Border', 'content' => 'Tabel butuh CSS untuk menampilkan garis batas dengan rapi.']);
+        // 10.
+        $this->createQuiz($lesson, 10, '<tr> singkatan dari?', [['id'=>'A','text'=>'Table Row','correct'=>true], ['id'=>'B','text'=>'Table Right','correct'=>false]]);
+    }
+
+    private function createLesson9($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'formulir-html'],
+            [
+            'course_id' => $course->id, 'title' => 'Formulir HTML',
+            'content' => 'Input pengguna.', 'video_url' => null, 'order' => 9, 'xp_reward' => 45,
+        ]);
+
+        // 1.
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Form Tag', 'content' => '<form> membungkus elemen-elemen input.']);
+        // 2.
+        $this->createQuiz($lesson, 2, 'Tag pembungkus form?', [['id'=>'A','text'=>'<form>','correct'=>true], ['id'=>'B','text'=>'<input>','correct'=>false]]);
+
+        // 3.
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Input Text', 'content' => '<input type="text"> untuk isian satu baris.']);
+        // 4.
+        $this->createQuiz($lesson, 4, 'Input teks pendek?', [['id'=>'A','text'=>'<textarea>','correct'=>false], ['id'=>'B','text'=>'<input type="text">','correct'=>true]]);
+
+        // 5.
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Label', 'content' => '<label> memberikan keterangan pada input.']);
+        // 6.
+        $this->createQuiz($lesson, 6, 'Memberi nama pada input?', [['id'=>'A','text'=>'<label>','correct'=>true], ['id'=>'B','text'=>'<name>','correct'=>false]]);
+
+        // 7.
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Button', 'content' => '<button> atau <input type="submit"> untuk mengirim form.']);
+        // 8.
+        $this->createQuiz($lesson, 8, 'Tombol kirim data?', [['id'=>'A','text'=>'Submit','correct'=>true], ['id'=>'B','text'=>'Send','correct'=>false]]);
+
+        // 9.
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Atribut Action', 'content' => 'action menentukan ke mana data dikirim.']);
+        // 10.
+        $this->createQuiz($lesson, 10, 'Input password?', [['id'=>'A','text'=>'type="secret"','correct'=>false], ['id'=>'B','text'=>'type="password"','correct'=>true]]);
+    }
+
+    private function createLesson10($course) {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'html-semantik'],
+            [
+            'course_id' => $course->id, 'title' => 'HTML Semantik',
+            'content' => 'Makna elemen.', 'video_url' => null, 'order' => 10, 'xp_reward' => 50,
+        ]);
+
+        // 1.
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Semantik?', 'content' => 'Semantik berarti "memiliki makna". Elemen semantik menjelaskan artinya kepada browser.']);
+        // 2.
+        $this->createQuiz($lesson, 2, 'Mengapa pakai semantik?', [['id'=>'A','text'=>'SEO & Aksesibilitas','correct'=>true], ['id'=>'B','text'=>'Biar keren','correct'=>false]]);
+
+        // 3.
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Non-Semantik', 'content' => '<div> dan <span> adalah contoh elemen non-semantik (tidak punya arti khusus).']);
+        // 4.
+        $this->createQuiz($lesson, 4, 'Contoh non-semantik?', [['id'=>'A','text'=>'<span>','correct'=>true], ['id'=>'B','text'=>'<footer>','correct'=>false]]);
+
+        // 5.
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => '<header> & <footer>', 'content' => 'Digunakan untuk bagian kepala dan kaki halaman/artikel.']);
+        // 6.
+        $this->createQuiz($lesson, 6, 'Untuk bagian bawah web?', [['id'=>'A','text'=>'<bottom>','correct'=>false], ['id'=>'B','text'=>'<footer>','correct'=>true]]);
+
+        // 7.
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => '<nav>', 'content' => 'Digunakan khusus untuk blok navigasi/menu.']);
+        // 8.
+        $this->createQuiz($lesson, 8, 'Contoh elemen semantik?', [['id'=>'A','text'=>'<div>','correct'=>false], ['id'=>'B','text'=>'<nav>','correct'=>true]]);
+
+        // 9.
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => '<article>', 'content' => 'Untuk konten mandiri seperti posting blog atau berita.']);
+        // 10.
+        $this->createQuiz($lesson, 10, 'Untuk artikel blog?', [['id'=>'A','text'=>'<article>','correct'=>true], ['id'=>'B','text'=>'<section>','correct'=>false]]);
+    }
+
+    private function createQuiz($lesson, $order, $question, $options) {
+        $lesson->slides()->firstOrCreate(
+            ['order' => $order],
+            [
+            'type' => 'quiz',
+            'title' => 'Kuis',
+            'content' => $question,
+            'options' => $options,
+        ]);
     }
 }

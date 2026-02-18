@@ -10,6 +10,7 @@ Route::get('/', Welcome::class)->name('home');
 Route::view('about', 'about')->name('about');
 Route::view('contact', 'contact')->name('contact');
 Route::view('learning-path', 'learning-path')->name('learning-path');
+Route::get('tracks', App\Livewire\CourseSelection::class)->name('tracks');
 
 Route::controller(\App\Http\Controllers\BlogController::class)->group(function () {
     Route::get('/blog', 'index')->name('blog.index');

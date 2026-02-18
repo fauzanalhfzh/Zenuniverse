@@ -21,6 +21,7 @@
 
         <!-- Styles & Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="font-fredoka antialiased text-soft-text selection:bg-primary/20 flex h-screen overflow-hidden bg-slate-50/50"
         x-data="{ 
@@ -51,5 +52,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @livewireScripts
     </body>
 </html>

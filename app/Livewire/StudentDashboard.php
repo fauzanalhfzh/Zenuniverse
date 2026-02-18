@@ -14,10 +14,26 @@ class StudentDashboard extends Component
 
     public function mount()
     {
-        if (! $this->selectedCourseId) {
-            $firstCourse = Course::orderBy('order')->first();
-            if ($firstCourse) {
-                $this->selectedCourseId = $firstCourse->id;
+        $user = auth()->user();
+
+        // 1. Try to get from URL (temporary override)
+        if ($this->selectedCourseId) {
+            return;
+        }
+
+        // 2. Try to get from User Profile (persisted)
+        if ($user && $user->active_course_id) {
+            $this->selectedCourseId = $user->active_course_id;
+            return;
+        }
+
+        // 3. Fallback to first course
+        $firstCourse = Course::orderBy('order')->first();
+        if ($firstCourse) {
+            $this->selectedCourseId = $firstCourse->id;
+            // Optional: Auto-save this default to user
+            if ($user && !$user->active_course_id) {
+                $user->update(['active_course_id' => $firstCourse->id]);
             }
         }
     }

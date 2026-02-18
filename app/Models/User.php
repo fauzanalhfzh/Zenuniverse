@@ -31,6 +31,7 @@ class User extends Authenticatable implements FilamentUser
         'current_streak',
         'longest_streak',
         'last_activity_at',
+        'active_course_id',
     ];
 
     public function currentLevel()

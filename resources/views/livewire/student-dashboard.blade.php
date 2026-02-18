@@ -4,22 +4,24 @@
         {{-- MAIN: Lesson Path --}}
         <div class="flex-1">
             {{-- Course Selection Header --}}
-            <div class="flex items-center gap-4 mb-8 overflow-x-auto pb-2">
-                @foreach($availableCourses as $course)
-                    <button wire:click="selectCourse('{{ $course->id }}')" 
-                            wire:key="course-{{ $course->id }}"
-                            type="button"
-                            wire:loading.class="opacity-50 cursor-wait"
-                            class="flex-shrink-0 flex items-center gap-3 px-5 py-3 rounded-2xl transition-all cursor-pointer {{ $selectedCourseId == $course->id ? 'bg-primary text-white shadow-lg shadow-orange-500/30 scale-105' : 'bg-white text-slate-500 hover:bg-slate-50 border-2 border-slate-100' }}">
-                        <div class="size-8 rounded-lg {{ $selectedCourseId == $course->id ? 'bg-white/20' : 'bg-orange-100' }} flex items-center justify-center">
-                            <span class="material-symbols-outlined {{ $selectedCourseId == $course->id ? 'text-white' : 'text-primary' }}">{{ $course->icon ?? 'school' }}</span>
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                     {{-- Current Course Indicator --}}
+                     <div class="flex items-center gap-3 px-5 py-3 rounded-2xl bg-primary text-white shadow-lg shadow-orange-500/30 transition-transform hover:scale-105 cursor-default">
+                        <div class="size-8 rounded-lg bg-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white">{{ $currentCourse->title == 'Dasar Pemrograman Web' ? 'language' : ($currentCourse->icon ?? 'school') }}</span>
                         </div>
                         <div class="text-left">
-                            <p class="text-[10px] font-bold uppercase tracking-wider opacity-80">Track</p>
-                            <p class="font-black text-sm whitespace-nowrap">{{ $course->title }}</p>
+                            <p class="text-[10px] font-bold uppercase tracking-wider opacity-80">Track Saat Ini</p>
+                            <p class="font-black text-sm whitespace-nowrap">{{ $currentCourse->title }}</p>
                         </div>
-                    </button>
-                @endforeach
+                    </div>
+                </div>
+
+                <a href="{{ route('tracks') }}" class="group flex items-center gap-2 px-4 py-2 rounded-xl text-slate-500 hover:text-primary hover:bg-orange-50 font-bold text-sm transition-all">
+                    <span class="material-symbols-outlined group-hover:rotate-180 transition-transform duration-500">swap_horiz</span>
+                    Ganti Jalur
+                </a>
             </div>
 
             {{-- Greeting --}}

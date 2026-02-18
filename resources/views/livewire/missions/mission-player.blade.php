@@ -166,14 +166,29 @@
 
     {{-- Dark Mode Toggle --}}
     <div class="fixed bottom-6 left-6 z-50" x-data="{ 
+        darkMode: localStorage.getItem('darkMode') === 'true',
         toggle() {
-            let dark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('darkMode', dark);
+            this.darkMode = !this.darkMode;
+            document.documentElement.classList.toggle('dark', this.darkMode);
+            localStorage.setItem('darkMode', this.darkMode);
+        },
+        init() {
+            if (this.darkMode) {
+                document.documentElement.classList.add('dark');
+            }
         }
     }">
-        <button @click="toggle()" class="p-4 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-blue-100 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined block dark:hidden">dark_mode</span>
-            <span class="material-symbols-outlined hidden dark:block">light_mode</span>
+        <button @click="toggle()" 
+            class="group relative w-12 h-12 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 shadow-lg shadow-slate-200/50 dark:shadow-black/30 hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center overflow-hidden">
+            
+            <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 dark:from-blue-400/10 dark:to-purple-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+            <span class="material-symbols-outlined text-[20px] transition-all duration-500 rotate-0 scale-100 dark:-rotate-90 dark:scale-0 absolute">
+                dark_mode
+            </span>
+            <span class="material-symbols-outlined text-[20px] transition-all duration-500 rotate-90 scale-0 dark:rotate-0 dark:scale-100 absolute text-yellow-400">
+                light_mode
+            </span>
         </button>
     </div>
 </div>
