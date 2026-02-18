@@ -27,8 +27,16 @@ class Register extends Component
 
     public int $step = 1;
 
+    public function updatedEmail($value): void
+    {
+        $this->email = strtolower(trim($value));
+    }
+
     public function nextStep(): void
     {
+        $this->name = trim($this->name);
+        $this->email = strtolower(trim($this->email));
+
         $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],

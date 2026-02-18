@@ -2,54 +2,87 @@
 
 namespace App\Livewire;
 
+use App\Models\Course;
+use App\Models\Level;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 class StudentDashboard extends Component
 {
-    public function getGreeting($user)
+    #[Url]
+    public $selectedCourseId;
+
+    public function mount()
     {
-        $hour = date('H');
-        $timeGreeting = match(true) {
-            $hour < 12 => 'Selamat Pagi',
-            $hour < 15 => 'Selamat Siang',
-            $hour < 18 => 'Selamat Sore',
-            default => 'Selamat Malam',
-        };
-
-        if ($user->age_group === '4-7') {
-            return "Halo, " . explode(' ', $user->name)[0] . "! 🌟";
+        if (! $this->selectedCourseId) {
+            $firstCourse = Course::orderBy('order')->first();
+            if ($firstCourse) {
+                $this->selectedCourseId = $firstCourse->id;
+            }
         }
+    }
 
-        return "$timeGreeting, " . explode(' ', $user->name)[0] . "!";
+    public function selectCourse($courseId)
+    {
+        $this->selectedCourseId = (int) $courseId;
+        \Log::info('Select Course Triggered: ' . $this->selectedCourseId);
     }
 
     public function render()
     {
         $user = auth()->user()->load(['currentLevel', 'progress']);
-        
-        $levels = \App\Models\Level::orderBy('order')->get();
-        
-        // Courses for current level map
-        $currentLevelCourses = \App\Models\Course::where('level_id', $user->current_level_id ?? 1)
-            ->orderBy('order')
-            ->with(['lessons', 'lessons.questions'])
-            ->get();
 
-        // Catalog: All courses grouped by level
-        $catalogLevels = \App\Models\Level::orderBy('order')
-            ->with(['courses' => function($query) {
-                $query->orderBy('order');
-            }])
-            ->get();
-            
-        $greeting = $this->getGreeting($user);
+        // 1. Get ALL available courses
+        $availableCourses = Course::orderBy('order')->get();
+        
+        \Log::info('Available Course IDs: ' . $availableCourses->pluck('id')->implode(', '));
+
+        // 2. Determine Current Course based on selection
+        // Use loose comparison or loop to be extra safe
+        $currentCourse = $availableCourses->first(fn($c) => $c->id == $this->selectedCourseId);
+
+        \Log::info('Render - Selected ID: ' . $this->selectedCourseId . ' (Type: ' . gettype($this->selectedCourseId) . ')');
+        \Log::info('Render - Found Course: ' . ($currentCourse ? $currentCourse->title : 'None'));
+
+        // Fallback if selection invalid or empty
+        if (! $currentCourse && $availableCourses->isNotEmpty()) {
+            $currentCourse = $availableCourses->first();
+            $this->selectedCourseId = $currentCourse->id;
+            \Log::info('Render - Fallback to First: ' . $currentCourse->title);
+        }
+
+        // 3. Get lessons for SELECTED course
+        $lessons = $currentCourse
+            ? $currentCourse->lessons()->orderBy('order')->get()
+            : collect();
+
+        // Completed lesson IDs from user progress
+        $completedLessonIds = $user->progress
+            ->where('status', 'completed')
+            ->pluck('lesson_id')
+            ->toArray();
+
+        // Current lesson = first lesson not yet completed
+        $currentLessonId = null;
+        foreach ($lessons as $lesson) {
+            if (! in_array($lesson->id, $completedLessonIds)) {
+                $currentLessonId = $lesson->id;
+                break;
+            }
+        }
+
+        // If all completed, no current lesson
+        if ($currentLessonId === null && $lessons->count() > 0) {
+            $currentLessonId = null; // All done!
+        }
 
         return view('livewire.student-dashboard', [
-            'greeting' => $greeting,
             'user' => $user,
-            'levels' => $levels,
-            'courses' => $currentLevelCourses,
-            'catalogLevels' => $catalogLevels,
+            'availableCourses' => $availableCourses,
+            'currentCourse' => $currentCourse,
+            'lessons' => $lessons,
+            'completedLessonIds' => $completedLessonIds,
+            'currentLessonId' => $currentLessonId,
         ])->layout('components.layouts.student');
     }
 }

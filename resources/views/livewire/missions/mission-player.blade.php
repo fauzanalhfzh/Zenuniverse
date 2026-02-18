@@ -48,7 +48,7 @@
 
     {{-- Header --}}
     <header class="relative z-20 w-full max-w-5xl px-6 py-8 flex items-center justify-between">
-        <a href="{{ route('learning-center') }}" wire:navigate class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+        <a href="{{ route('dashboard') }}" wire:navigate class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
             <span class="material-symbols-outlined text-4xl">close</span>
         </a>
         
@@ -65,7 +65,7 @@
     {{-- Main Content --}}
     <main class="relative z-10 w-full max-w-4xl flex-1 flex flex-col items-center justify-center p-8 text-center space-y-10">
         
-        @if($currentSlide['type'] === 'intro')
+        @if($currentSlide['type'] === 'intro' || $currentSlide['type'] === 'text')
             <div wire:key="slide-intro-{{ $step }}" class="flex flex-col items-center space-y-6 animate-fade-in-up w-full">
                 @if($currentSlide['image'])
                     <div class="relative">

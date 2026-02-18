@@ -13,22 +13,11 @@
     </div>
 
     <nav class="flex-1 mt-4 px-4 space-y-2 overflow-y-auto custom-scrollbar">
-        <a href="{{ route('dashboard') }}" class="{{ $active === 'dashboard' ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span>Beranda</span>
+        <a href="{{ route('dashboard') }}" class="{{ ($active === 'dashboard' || $active === 'learn') ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
+            <span class="material-symbols-outlined">map</span>
+            <span>Peta Belajar</span>
         </a>
-        <a href="{{ route('learning-center') }}" class="{{ $active === 'learn' ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
-            <span class="material-symbols-outlined">import_contacts</span>
-            <span>Belajar</span>
-        </a>
-        <a href="#" class="{{ $active === 'challenge' ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
-            <span class="material-symbols-outlined">military_tech</span>
-            <span>Tantangan</span>
-        </a>
-        <a href="#" class="{{ $active === 'collection' ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
-            <span class="material-symbols-outlined">inventory_2</span>
-            <span>Koleksi</span>
-        </a>
+
         <a href="{{ route('profile') }}" class="{{ $active === 'profile' ? 'sidebar-item-active' : 'text-slate-400 hover:bg-slate-50' }} flex items-center gap-4 px-4 py-3 rounded-2xl font-bold transition-colors">
             <span class="material-symbols-outlined">person</span>
             <span>Profil</span>

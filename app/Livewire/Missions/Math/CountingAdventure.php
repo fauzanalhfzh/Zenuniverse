@@ -80,7 +80,7 @@ class CountingAdventure extends Component
     public function nextLevel()
     {
         if ($this->hearts <= 0) {
-            return redirect()->route('learning-center'); 
+            return redirect()->route('dashboard'); 
         }
 
         if ($this->currentLevel < $this->maxLevels) {
@@ -109,7 +109,7 @@ class CountingAdventure extends Component
         }
 
         $this->dispatch('play-sound', sound: 'fanfare');
-        return redirect()->route('learning-center');
+        return redirect()->route('dashboard');
     }
 
     public function render()

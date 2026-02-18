@@ -145,7 +145,7 @@ Siapa tahu, suatu saat nanti KAMU yang akan menciptakan teknologi baru untuk mem
                 $this->dispatch('play-sound', sound: 'fanfare');
             }
 
-            return redirect()->route('learning-center');
+            return redirect()->route('dashboard');
         }
     }
 

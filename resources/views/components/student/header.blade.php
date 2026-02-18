@@ -3,10 +3,6 @@
 <header class="h-20 bg-white/80 backdrop-blur-md border-b-4 border-orange-50 flex items-center justify-between px-8 z-40 sticky top-0">
     <div class="flex items-center gap-6">
         <h2 class="text-2xl font-black text-slate-800">{{ $title }}</h2>
-        <div class="hidden md:flex items-center gap-4 bg-slate-100 rounded-full px-4 py-1.5 border-2 border-slate-50">
-            <span class="material-symbols-outlined text-slate-400 text-xl">search</span>
-            <input type="text" placeholder="Cari petualangan..." class="bg-transparent border-none focus:ring-0 text-sm font-medium w-48 p-0">
-        </div>
     </div>
     
     <div class="flex items-center gap-6">
@@ -27,11 +23,6 @@
                 </div>
                 <span class="font-bold text-slate-700">{{ $level }}</span>
             </div>
-        </div>
-
-        <button class="relative">
-            <span class="material-symbols-outlined text-slate-400 text-3xl">notifications</span>
-            <span class="absolute top-0 right-0 size-3 bg-red-500 rounded-full border-2 border-white"></span>
-        </button>
+        </div>  
     </div>
 </header>

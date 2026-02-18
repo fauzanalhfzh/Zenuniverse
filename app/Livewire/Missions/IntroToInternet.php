@@ -148,7 +148,7 @@ Dunia digital yang luas menunggumu. Gunakan internet untuk belajar dan berkarya 
                 );
             }
             
-            return redirect()->route('learning-center');
+            return redirect()->route('dashboard');
         }
     }
 

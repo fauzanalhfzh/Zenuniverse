@@ -24,7 +24,7 @@ class MissionPlayer extends Component
         $this->slides = $this->mission->slides->toArray();
 
         if (empty($this->slides)) {
-            return redirect()->route('learning-center')->with('error', 'Misi ini belum memiliki slide.');
+            return redirect()->route('dashboard')->with('error', 'Misi ini belum memiliki slide.');
         }
     }
 
@@ -61,9 +61,10 @@ class MissionPlayer extends Component
                 \App\Models\UserProgress::updateOrCreate(
                     [
                         'user_id' => auth()->id(),
-                        'mission_slug' => $this->mission->slug,
+                        'lesson_id' => $this->mission->id,
                     ],
                     [
+                        'mission_slug' => $this->mission->slug,
                         'status' => 'completed',
                         'xp_earned' => $this->mission->xp_reward ?? 100,
                         'completed_at' => now(),
@@ -71,7 +72,7 @@ class MissionPlayer extends Component
                 );
             }
 
-            return redirect()->route('learning-center');
+            return redirect()->route('dashboard');
         }
     }
 

@@ -1,8 +1,8 @@
 <div class="min-h-screen flex flex-col bg-white max-w-2xl mx-auto shadow-2xl relative overflow-hidden">
     <!-- Top Bar -->
     <div class="px-6 py-6 flex items-center gap-4">
-        <a href="{{ route('learning-center') }}" wire:navigate class="text-slate-300 hover:text-slate-400 transition-colors">
-            <span class="material-symbols-outlined text-3xl font-bold">close</span>
+        <a href="{{ route('dashboard') }}" wire:navigate class="text-slate-300 hover:text-slate-400 transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
         </a>
         <div class="flex-1 h-4 bg-slate-100 rounded-full overflow-hidden">
             <div class="h-full bg-green-500 transition-all duration-500 ease-out rounded-full" style="width: {{ $progress }}%"></div>

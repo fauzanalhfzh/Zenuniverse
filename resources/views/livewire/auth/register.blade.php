@@ -120,7 +120,7 @@
                 <div class="space-y-2">
                     <label class="block text-slate-600 font-bold ml-2" for="name">Nama Lengkap</label>
                     <div class="relative">
-                        <input wire:model="name" id="name" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="text" name="name" required placeholder="Ketik nama kerenmu di sini..." />
+                        <input wire:model.live="name" id="name" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="text" name="name" required placeholder="Ketik nama kerenmu di sini..." />
                         <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                             <span class="material-symbols-outlined">badge</span>
                         </div>
@@ -131,7 +131,7 @@
                 <div class="space-y-2">
                     <label class="block text-slate-600 font-bold ml-2" for="email">Email</label>
                     <div class="relative">
-                        <input wire:model="email" id="email" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="email" name="email" required placeholder="contoh: astronot@zenuniverse.id" />
+                        <input wire:model.live="email" id="email" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="email" name="email" required placeholder="contoh: astronot@zenuniverse.id" />
                         <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                             <span class="material-symbols-outlined">mail</span>
                         </div>
@@ -140,9 +140,10 @@
                 </div>
 
                 <div class="pt-4">
-                    <button class="bubbly-button w-full py-4 rounded-2xl bg-primary text-white text-xl font-black hover:brightness-110 flex items-center justify-center gap-2" type="submit">
-                        Lanjut ke Misi
-                        <span class="material-symbols-outlined font-bold">arrow_forward</span>
+                    <button class="bubbly-button w-full py-4 rounded-2xl bg-primary text-white text-xl font-black hover:brightness-110 flex items-center justify-center gap-2 group" type="submit" wire:loading.attr="disabled">
+                        <span wire:loading.remove>Lanjut ke Misi</span>
+                        <span wire:loading>Memproses...</span>
+                        <span class="material-symbols-outlined font-bold group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </button>
                 </div>
                 
@@ -201,9 +202,10 @@
                 </div>
 
                 <div class="pt-6">
-                    <button class="bubbly-button w-full py-4 rounded-2xl bg-green-500 text-white text-xl font-black hover:brightness-110 flex items-center justify-center gap-2" type="submit">
-                        Mulai Petualangan!
-                        <span class="material-symbols-outlined font-bold">rocket_launch</span>
+                    <button class="bubbly-button w-full py-4 rounded-2xl bg-green-500 text-white text-xl font-black hover:brightness-110 flex items-center justify-center gap-2 group" type="submit" wire:loading.attr="disabled">
+                        <span wire:loading.remove>Mulai Petualangan!</span>
+                        <span wire:loading>Menyiapkan Roket...</span>
+                        <span class="material-symbols-outlined font-bold group-hover:rotate-12 transition-transform">rocket_launch</span>
                     </button>
                 </div>
             </form>

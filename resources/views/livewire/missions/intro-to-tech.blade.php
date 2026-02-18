@@ -49,7 +49,7 @@
 
     {{-- Header --}}
     <header class="relative z-20 w-full max-w-5xl px-6 py-8 flex items-center justify-between">
-        <a href="{{ route('learning-center') }}" wire:navigate class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+        <a href="{{ route('dashboard') }}" wire:navigate class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
             <span class="material-symbols-outlined text-4xl">close</span>
         </a>
         
