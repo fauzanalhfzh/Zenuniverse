@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Course;
 use App\Models\Level;
+use App\Models\User;
+use App\Models\UserProgress;
 use Livewire\Component;
 use Livewire\Attributes\Url;
 
@@ -41,7 +43,6 @@ class StudentDashboard extends Component
     public function selectCourse($courseId)
     {
         $this->selectedCourseId = (int) $courseId;
-        \Log::info('Select Course Triggered: ' . $this->selectedCourseId);
     }
 
     public function render()
@@ -50,21 +51,14 @@ class StudentDashboard extends Component
 
         // 1. Get ALL available courses
         $availableCourses = Course::orderBy('order')->get();
-        
-        \Log::info('Available Course IDs: ' . $availableCourses->pluck('id')->implode(', '));
 
         // 2. Determine Current Course based on selection
-        // Use loose comparison or loop to be extra safe
         $currentCourse = $availableCourses->first(fn($c) => $c->id == $this->selectedCourseId);
-
-        \Log::info('Render - Selected ID: ' . $this->selectedCourseId . ' (Type: ' . gettype($this->selectedCourseId) . ')');
-        \Log::info('Render - Found Course: ' . ($currentCourse ? $currentCourse->title : 'None'));
 
         // Fallback if selection invalid or empty
         if (! $currentCourse && $availableCourses->isNotEmpty()) {
             $currentCourse = $availableCourses->first();
             $this->selectedCourseId = $currentCourse->id;
-            \Log::info('Render - Fallback to First: ' . $currentCourse->title);
         }
 
         // 3. Get lessons for SELECTED course
@@ -92,6 +86,20 @@ class StudentDashboard extends Component
             $currentLessonId = null; // All done!
         }
 
+        // --- Gamification Data ---
+        $leaderboardRank = User::where('role', 'student')
+            ->where('total_xp', '>', $user->total_xp)
+            ->count() + 1;
+
+        $todayXpEarned = UserProgress::where('user_id', $user->id)
+            ->whereDate('completed_at', today())
+            ->sum('xp_earned');
+
+        $lessonsDoneToday = UserProgress::where('user_id', $user->id)
+            ->whereDate('completed_at', today())
+            ->where('status', 'completed')
+            ->count();
+
         return view('livewire.student-dashboard', [
             'user' => $user,
             'availableCourses' => $availableCourses,
@@ -99,6 +107,9 @@ class StudentDashboard extends Component
             'lessons' => $lessons,
             'completedLessonIds' => $completedLessonIds,
             'currentLessonId' => $currentLessonId,
+            'leaderboardRank' => $leaderboardRank,
+            'todayXpEarned' => $todayXpEarned,
+            'lessonsDoneToday' => $lessonsDoneToday,
         ])->layout('components.layouts.student');
     }
 }

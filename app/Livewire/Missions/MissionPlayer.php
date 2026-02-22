@@ -3,9 +3,9 @@
 namespace App\Livewire\Missions;
 
 use App\Models\Lesson;
+use App\Services\LessonService;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
-use Illuminate\Support\Facades\Log;
 
 #[Layout('components.layouts.empty')]
 class MissionPlayer extends Component
@@ -56,20 +56,9 @@ class MissionPlayer extends Component
             $this->step++;
             $this->resetStep();
         } else {
-            // Save Progress
+            // Save Progress via Service
             if (auth()->check()) {
-                \App\Models\UserProgress::updateOrCreate(
-                    [
-                        'user_id' => auth()->id(),
-                        'lesson_id' => $this->mission->id,
-                    ],
-                    [
-                        'mission_slug' => $this->mission->slug,
-                        'status' => 'completed',
-                        'xp_earned' => $this->mission->xp_reward ?? 100,
-                        'completed_at' => now(),
-                    ]
-                );
+                app(LessonService::class)->completeMission(auth()->user(), $this->mission);
             }
 
             return redirect()->route('dashboard');

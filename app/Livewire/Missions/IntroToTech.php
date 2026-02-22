@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Missions;
 
-use Illuminate\Support\Facades\Log;
+use App\Services\LessonService;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -102,7 +102,6 @@ Siapa tahu, suatu saat nanti KAMU yang akan menciptakan teknologi baru untuk mem
 
     public function checkAnswer()
     {
-        Log::info('checkAnswer called', ['step' => $this->step, 'answer' => $this->selectedAnswer]);
         if ($this->selectedAnswer === null) {
             return;
         }
@@ -123,24 +122,17 @@ Siapa tahu, suatu saat nanti KAMU yang akan menciptakan teknologi baru untuk mem
 
     public function nextStep()
     {
-        Log::info('nextStep called', ['current_step' => $this->step]);
         if ($this->step < count($this->slides) - 1) {
             $this->step++;
             $this->resetStep();
         } else {
-            // Save Progress
+            // Save Progress via Service
             if (auth()->check()) {
-                \App\Models\UserProgress::updateOrCreate(
-                    [
-                        'user_id' => auth()->id(),
-                        'mission_slug' => 'intro-to-tech',
-                    ],
-                    [
-                        'status' => 'completed',
-                        'xp_earned' => 100, // Example XP
-                        'completed_at' => now(),
-                    ]
+                $mission = \App\Models\Lesson::firstOrCreate(
+                    ['slug' => 'intro-to-tech'],
+                    ['title' => 'Intro to Tech', 'course_id' => 1, 'order' => 1, 'xp_reward' => 100]
                 );
+                app(LessonService::class)->completeMission(auth()->user(), $mission);
                 
                 $this->dispatch('play-sound', sound: 'fanfare');
             }

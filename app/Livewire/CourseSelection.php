@@ -29,26 +29,8 @@ class CourseSelection extends Component
     public function render()
     {
         return view('livewire.course-selection', [
-            'studentCourses' => Course::orderBy('order')->get(),
-            // Placeholder for teacher courses
-            'teacherCourses' => collect([
-                [
-                    'id' => 999,
-                    'title' => 'Panduan Mengajar',
-                    'icon' => 'cast_for_education',
-                    'description' => 'Pelajari cara efektif menyampaikan materi pemrograman kepada siswa.',
-                    'lessons_count' => 5,
-                    'students_count' => 120,
-                ],
-                [
-                    'id' => 998,
-                    'title' => 'Manajemen Kelas',
-                    'icon' => 'groups',
-                    'description' => 'Strategi mengelola kelas interaktif dan menyenangkan.',
-                    'lessons_count' => 3,
-                    'students_count' => 85,
-                ],
-            ]),
+            'studentCourses' => Course::where('type', 'student')->orderBy('order')->get(),
+            'teacherCourses' => Course::where('type', 'teacher')->orderBy('order')->get(),
         ]);
     }
 }

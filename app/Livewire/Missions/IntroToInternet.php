@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Missions;
 
+use App\Services\LessonService;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Illuminate\Support\Facades\Log;
 
 #[Layout('components.layouts.empty')]
 class IntroToInternet extends Component
@@ -110,7 +110,6 @@ Dunia digital yang luas menunggumu. Gunakan internet untuk belajar dan berkarya 
 
     public function checkAnswer()
     {
-        Log::info('checkAnswer (internet) called', ['step' => $this->step, 'answer' => $this->selectedAnswer]);
         if ($this->selectedAnswer === null) {
             return;
         }
@@ -128,24 +127,17 @@ Dunia digital yang luas menunggumu. Gunakan internet untuk belajar dan berkarya 
 
     public function nextStep()
     {
-        Log::info('nextStep (internet) called', ['current_step' => $this->step]);
         if ($this->step < count($this->slides) - 1) {
             $this->step++;
             $this->resetStep();
         } else {
-            // Save Progress
+            // Save Progress via Service
             if (auth()->check()) {
-                \App\Models\UserProgress::updateOrCreate(
-                    [
-                        'user_id' => auth()->id(),
-                        'mission_slug' => 'intro-to-internet',
-                    ],
-                    [
-                        'status' => 'completed',
-                        'xp_earned' => 100,
-                        'completed_at' => now(),
-                    ]
+                $mission = \App\Models\Lesson::firstOrCreate(
+                    ['slug' => 'intro-to-internet'],
+                    ['title' => 'Intro to Internet', 'course_id' => 1, 'order' => 2, 'xp_reward' => 100]
                 );
+                app(LessonService::class)->completeMission(auth()->user(), $mission);
             }
             
             return redirect()->route('dashboard');

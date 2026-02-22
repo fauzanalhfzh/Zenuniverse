@@ -28,7 +28,7 @@
                         <h3 class="text-5xl font-black text-slate-800 mb-4">{{ auth()->user()->name }}</h3>
                         <div class="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 text-primary rounded-xl border border-orange-100">
                             <span class="material-symbols-outlined text-sm font-fill-1">military_tech</span>
-                            <span class="text-sm font-black italic">Pangkat Saat Ini: Kapten</span>
+                            <span class="text-sm font-black italic">Pangkat Saat Ini: {{ $rankTitle }}</span>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
                             </div>
                             <div>
                                 <p class="text-[10px] font-black text-slate-400 uppercase">Misi Selesai</p>
-                                <p class="text-2xl font-black text-slate-800">42</p>
+                                <p class="text-2xl font-black text-slate-800">{{ number_format($completedCount) }}</p>
                             </div>
                         </div>
                     </div>
@@ -56,10 +56,10 @@
                     <div class="space-y-2">
                         <div class="flex justify-between items-center text-xs font-black uppercase tracking-widest text-slate-400">
                             <span>Progres Level {{ auth()->user()->currentLevel->order ?? 1 }}</span>
-                            <span class="text-primary">850 / 1000 XP</span>
+                            <span class="text-primary">{{ number_format($currentXp) }} / {{ number_format($nextLevelXp) }} XP</span>
                         </div>
                         <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden border border-slate-200">
-                            <div class="bg-primary h-full rounded-full transition-all duration-1000" style="width: 85%"></div>
+                            <div class="bg-primary h-full rounded-full transition-all duration-1000" style="width: {{ $xpPercent }}%"></div>
                         </div>
                     </div>
                 </div>

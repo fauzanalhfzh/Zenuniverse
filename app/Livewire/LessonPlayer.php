@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Lesson;
+use App\Services\LessonService;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -60,32 +61,7 @@ class LessonPlayer extends Component
     public function completeLesson()
     {
         $user = auth()->user();
-
-        // Cek apakah sudah pernah selesai
-        $existingProgress = \App\Models\UserProgress::where('user_id', $user->id)
-            ->where('lesson_id', $this->lesson->id)
-            ->first();
-
-        if (! $existingProgress) {
-            \App\Models\UserProgress::create([
-                'user_id' => $user->id,
-                'lesson_id' => $this->lesson->id,
-                'status' => 'completed',
-                'xp_earned' => $this->lesson->xp_reward,
-                'completed_at' => now(),
-            ]);
-
-            // Add XP to user
-            $user->increment('current_xp', $this->lesson->xp_reward);
-            $user->increment('total_xp', $this->lesson->xp_reward);
-
-            // Logic Level Up sederhana
-            if ($user->current_xp >= 1000) { // Contoh threshold
-                // $user->increment('current_level_id');
-                // $user->current_xp = 0;
-                // $user->save();
-            }
-        }
+        app(LessonService::class)->completeLesson($user, $this->lesson);
     }
 
     public function getNextLessonProperty()

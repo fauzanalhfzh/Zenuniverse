@@ -33,9 +33,23 @@
         <div class="pt-8 pb-4">
             <p class="px-4 text-xs font-black text-slate-300 uppercase tracking-widest mb-4">Pencapaian</p>
             <div class="px-4 py-3 bg-orange-50 rounded-2xl space-y-2">
-                <p class="text-sm font-bold text-primary">Kolektor Bintang</p>
-                <div class="w-full bg-orange-200 h-2 rounded-full overflow-hidden">
-                    <div class="bg-primary h-full w-[80%]"></div>
+                @php
+                    $user = auth()->user();
+                    $currentXp = $user?->total_xp ?? 0;
+                    $baseLevelXp = $user?->currentLevel?->xp_required ?? 0;
+                    
+                    $nextLevel = \App\Models\Level::where('order', '>', $user?->currentLevel?->order ?? 0)
+                        ->orderBy('order')
+                        ->first();
+                        
+                    $nextLevelXp = $nextLevel ? $nextLevel->xp_required : ($currentXp + 1000);
+                    $xpProgress = max(0, $currentXp - $baseLevelXp);
+                    $xpTarget = max(1, $nextLevelXp - $baseLevelXp);
+                    $xpPercent = min(100, ($xpProgress / $xpTarget) * 100);
+                @endphp
+                <p class="text-sm font-bold text-primary">🔥 Streak: {{ $user?->current_streak ?? 0 }} hari</p>
+                <div class="w-full bg-orange-200 h-2 rounded-full overflow-hidden" title="{{ $xpProgress }} / {{ $xpTarget }} to next level">
+                    <div class="bg-primary h-full transition-all" style="width: {{ $xpPercent }}%"></div>
                 </div>
             </div>
         </div>

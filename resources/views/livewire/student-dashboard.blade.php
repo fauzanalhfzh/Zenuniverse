@@ -125,14 +125,14 @@
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Papan Skor</p>
                 <div class="flex items-start gap-3">
                     <div class="flex-1">
-                        <p class="text-base font-black text-slate-800 leading-snug">Bagus!</p>
-                        <p class="text-base text-slate-400 mt-1 leading-relaxed">Kamu berada di peringkat ke-{{ $user->currentLevel->order ?? 1 }}. Terus belajar!</p>
+                        <p class="text-base font-black text-slate-800 leading-snug">Peringkat #{{ $leaderboardRank }}</p>
+                        <p class="text-base text-slate-400 mt-1 leading-relaxed">Kamu di peringkat ke-{{ $leaderboardRank }}. Terus belajar!</p>
                     </div>
                     <div class="size-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
                         <span class="material-symbols-outlined text-red-400 text-xl font-fill-1">emoji_events</span>
                     </div>
                 </div>
-                <a href="#" class="block mt-4 text-center text-primary text-sm font-bold uppercase tracking-wider hover:underline">
+                <a href="{{ route('leaderboard') }}" class="block mt-4 text-center text-primary text-sm font-bold uppercase tracking-wider hover:underline">
                     Ke Papan Skor
                 </a>
             </div>
@@ -148,7 +148,7 @@
                     {{-- Quest 1: Earn XP --}}
                     @php
                         $xpTarget = 10;
-                        $xpProgress = min($user->current_xp ?? 0, $xpTarget);
+                        $xpProgress = min($todayXpEarned, $xpTarget);
                         $xpPercent = ($xpProgress / $xpTarget) * 100;
                     @endphp
                     <div class="flex items-center gap-3">
@@ -167,9 +167,6 @@
                     </div>
 
                     {{-- Quest 2: Complete a lesson --}}
-                    @php
-                        $lessonsDoneToday = count($completedLessonIds) > 0 ? 1 : 0;
-                    @endphp
                     <div class="flex items-center gap-3">
                         <div class="size-9 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
                             <span class="material-symbols-outlined text-green-500 text-lg font-fill-1">check_circle</span>
@@ -178,9 +175,9 @@
                             <p class="text-base font-bold text-slate-700">Selesaikan 1 pelajaran</p>
                             <div class="flex items-center gap-2 mt-1">
                                 <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-green-400 h-full rounded-full transition-all" style="width: {{ $lessonsDoneToday * 100 }}%"></div>
+                                    <div class="bg-green-400 h-full rounded-full transition-all" style="width: {{ min($lessonsDoneToday, 1) * 100 }}%"></div>
                                 </div>
-                                <span class="text-[10px] font-bold text-slate-400">{{ $lessonsDoneToday }}/1</span>
+                                <span class="text-[10px] font-bold text-slate-400">{{ min($lessonsDoneToday, 1) }}/1</span>
                             </div>
                         </div>
                     </div>
