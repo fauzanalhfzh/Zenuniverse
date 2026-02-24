@@ -73,14 +73,14 @@
                         {{-- Lesson Node --}}
                         @if($isCompleted)
                             {{-- Completed: green with checkmark --}}
-                            <a href="{{ route('missions.player', $lesson->slug) }}" 
+                            <a href="{{ route('missions.player', $lesson->slug ?? 'temp-'.$lesson->id) }}" 
                                class="group size-16 rounded-full bg-green-500 border-4 border-green-400 shadow-lg flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
                                title="{{ $lesson->title }}">
                                 <span class="material-symbols-outlined text-white text-2xl font-fill-1">check</span>
                             </a>
                         @elseif($isCurrent)
                             {{-- Current: orange, highlighted, bouncing --}}
-                            <a href="{{ route('missions.player', $lesson->slug) }}" 
+                            <a href="{{ route('missions.player', $lesson->slug ?? 'temp-'.$lesson->id) }}" 
                                class="group size-20 rounded-full bg-primary border-4 border-orange-300 shadow-xl shadow-orange-300/40 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer animate-bounce" style="animation-duration: 2s;"
                                title="{{ $lesson->title }}">
                                 <span class="material-symbols-outlined text-white text-3xl font-fill-1">{{ $lesson->icon ?? 'star' }}</span>

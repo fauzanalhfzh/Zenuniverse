@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LevelSeeder::class,
             CourseSeeder::class,
+            TeacherCourseSeeder::class,
             LessonSeeder::class,
             PostSeeder::class,
         ]);

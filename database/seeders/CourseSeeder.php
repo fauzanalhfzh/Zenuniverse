@@ -27,5 +27,16 @@ class CourseSeeder extends Seeder
             'order' => 2,
             'xp_reward' => 100,
         ]);
+
+        Course::create([
+            'level_id' => 1,
+            'title' => 'Matematika Dasar',
+            'description' => 'Petualangan angka! Belajar berhitung, tambah, dan kurang dengan cara yang seru.',
+            'type' => 'student',
+            'icon' => 'calculate',
+            'order' => 3,
+            'xp_reward' => 100,
+        ]);
+
     }
 }

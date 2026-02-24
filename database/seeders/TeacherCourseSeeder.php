@@ -36,7 +36,7 @@ class TeacherCourseSeeder extends Seeder
                     ['title' => 'Gamifikasi dalam Pembelajaran', 'icon' => 'sports_esports', 'xp_reward' => 100],
                     ['title' => 'Menangani Siswa Beragam', 'icon' => 'diversity_3', 'xp_reward' => 75],
                     ['title' => 'Proyek Akhir: Rencana Mengajar', 'icon' => 'task_alt', 'xp_reward' => 150],
-                ]
+                ],
             ],
             [
                 'title' => 'Manajemen Kelas Digital',
@@ -55,8 +55,8 @@ class TeacherCourseSeeder extends Seeder
                     ['title' => 'Mengajar dengan Bandwidth Rendah', 'icon' => 'signal_cellular_alt', 'xp_reward' => 100],
                     ['title' => 'Analisis Progres Siswa', 'icon' => 'monitoring', 'xp_reward' => 75],
                     ['title' => 'Proyek Akhir: Simulasi Kelas', 'icon' => 'task_alt', 'xp_reward' => 150],
-                ]
-            ]
+                ],
+            ],
         ];
 
         foreach ($courses as $courseData) {
@@ -64,7 +64,7 @@ class TeacherCourseSeeder extends Seeder
             unset($courseData['lessons']);
 
             $courseData['level_id'] = $level->id;
-            
+
             $course = Course::firstOrCreate(
                 ['title' => $courseData['title']],
                 $courseData
@@ -77,10 +77,40 @@ class TeacherCourseSeeder extends Seeder
 
             foreach ($lessonsData as $index => $lessonData) {
                 $lessonData['order'] = $index + 1;
-                $course->lessons()->firstOrCreate(
+                $lessonData['slug'] = \Illuminate\Support\Str::slug($lessonData['title']);
+                
+                $lesson = $course->lessons()->updateOrCreate(
                     ['title' => $lessonData['title']],
                     $lessonData
                 );
+
+                // Generate 5 Trivia (Text) and 5 Quizzes (Quiz) per lesson
+                for ($i = 1; $i <= 5; $i++) {
+                    // Text Slide (Trivia)
+                    $lesson->slides()->updateOrCreate(
+                        ['order' => ($i * 2) - 1], // Orders: 1, 3, 5, 7, 9
+                        [
+                            'type' => 'text',
+                            'title' => "Konsep {$i}: " . $lesson->title,
+                            'content' => "Tahap {$i} dalam memahami {$lesson->title}. Dalam konteks {$course->title}, bagian ini sangat penting untuk dikuasai oleh pengajar agar penyampaian materi menjadi lebih efektif dan menarik bagi siswa.",
+                        ]
+                    );
+
+                    // Quiz Slide
+                    $lesson->slides()->updateOrCreate(
+                        ['order' => $i * 2], // Orders: 2, 4, 6, 8, 10
+                        [
+                            'type' => 'quiz',
+                            'title' => "Kuis {$i}: " . $lesson->title,
+                            'content' => "Berdasarkan materi Konsep {$i} yang baru saja dipelajari, manakah langkah terbaik untuk menerapkan {$lesson->title} di dalam kelas?",
+                            'options' => [
+                                ['id' => 'A', 'text' => 'Mengabaikan teori andragogi', 'correct' => false],
+                                ['id' => 'B', 'text' => 'Menerapkan metode interaktif', 'correct' => true],
+                                ['id' => 'C', 'text' => 'Hanya memberikan ceramah satu arah', 'correct' => false],
+                            ],
+                        ]
+                    );
+                }
             }
         }
     }
