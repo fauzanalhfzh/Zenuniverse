@@ -3,9 +3,9 @@
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\PageController;
+use App\Livewire\Hub\LearningCenter;
 use App\Livewire\LessonPlayer;
 use App\Livewire\StudentDashboard;
-use App\Livewire\Hub\LearningCenter;
 use App\Livewire\Welcome;
 
 Route::get('/', Welcome::class)->name('home');
@@ -47,5 +47,15 @@ Route::get('profile', [ProfileController::class, 'index'])
     ->name('profile');
 
 Route::post('logout', LogoutController::class)->name('logout');
+
+// Route::get('/setup-db', function() {
+//     Artisan::call('optimize:clear');
+//     Artisan::call('storage:link');
+//     Artisan::call('migrate:fresh', [
+//         '--force' => true,
+//         '--seed' => true
+//     ]);
+//     return 'Setup server selesai! Hapus route ini sekarang!';
+// });
 
 require __DIR__.'/auth.php';
