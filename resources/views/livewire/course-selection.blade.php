@@ -31,7 +31,7 @@
                         </div>
                         
                         <h3 class="text-xl font-black text-slate-800 mb-2 leading-tight">{{ $course->title }}</h3>
-                        <p class="text-slate-500 text-sm font-medium mb-6 line-clamp-2">Mulai petualangan belajarmu di sini. Kuasai dasar-dasar pemrograman web dari nol.</p>
+                        <p class="text-slate-500 text-sm font-medium mb-6 line-clamp-2">{{ $course->description }}</p>
                         
                         <div class="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
                             <div class="flex items-center gap-2">

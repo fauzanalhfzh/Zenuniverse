@@ -77,72 +77,50 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-                {{-- Master Keyboard --}}
-                <div class="bg-white p-6 rounded-[2rem] border-4 border-slate-50 flex flex-col items-center text-center gap-4 card-hover shadow-sm group">
-                    <div class="relative size-24 rounded-full bg-yellow-50 flex items-center justify-center mb-2">
-                        <div class="absolute -top-1 -right-1 size-8 rounded-full bg-green-500 border-4 border-white flex items-center justify-center">
-                            <span class="material-symbols-outlined font-black text-white text-xs">check</span>
-                        </div>
-                        <span class="material-symbols-outlined text-4xl text-yellow-500 font-fill-1">keyboard</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-black text-slate-800 group-hover:text-primary transition-colors">Master Keyboard</p>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Langka</p>
-                    </div>
-                </div>
+                @foreach($badges as $badge)
+                    @php
+                        $isUnlocked = in_array($badge->id, $unlockedBadgeIds);
+                        
+                        // Theme mapping for unlocked badges
+                        $themeWrapper = '';
+                        $iconColor = '';
+                        switch ($badge->color_theme) {
+                            case 'yellow': $themeWrapper = 'bg-yellow-50'; $iconColor = 'text-yellow-500'; break;
+                            case 'blue': $themeWrapper = 'bg-blue-50'; $iconColor = 'text-blue-500'; break;
+                            case 'purple': $themeWrapper = 'bg-purple-50'; $iconColor = 'text-purple-500'; break;
+                            case 'orange': $themeWrapper = 'bg-orange-50'; $iconColor = 'text-orange-500'; break;
+                            case 'slate': $themeWrapper = 'bg-slate-50'; $iconColor = 'text-slate-500'; break;
+                            default: $themeWrapper = 'bg-blue-50'; $iconColor = 'text-blue-500'; break;
+                        }
+                    @endphp
 
-                {{-- Pahlawan Coding --}}
-                <div class="bg-white p-6 rounded-[2rem] border-4 border-slate-50 flex flex-col items-center text-center gap-4 card-hover shadow-sm group">
-                    <div class="relative size-24 rounded-full bg-blue-50 flex items-center justify-center mb-2">
-                        <div class="absolute -top-1 -right-1 size-8 rounded-full bg-green-500 border-4 border-white flex items-center justify-center">
-                            <span class="material-symbols-outlined font-black text-white text-xs">check</span>
+                    @if($isUnlocked)
+                        {{-- Unlocked Badge Option --}}
+                        <div class="bg-white p-6 rounded-[2rem] border-4 border-slate-50 flex flex-col items-center text-center gap-4 card-hover shadow-sm group">
+                            <div class="relative size-24 rounded-full {{ $themeWrapper }} flex items-center justify-center mb-2">
+                                <div class="absolute -top-1 -right-1 size-8 rounded-full bg-green-500 border-4 border-white flex items-center justify-center">
+                                    <span class="material-symbols-outlined font-black text-white text-xs">check</span>
+                                </div>
+                                <span class="material-symbols-outlined text-4xl {{ $iconColor }} font-fill-1">{{ $badge->icon }}</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-black text-slate-800 group-hover:text-primary transition-colors hover:cursor-help" title="{{ $badge->description }}">{{ $badge->name }}</p>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ $badge->rarity }}</p>
+                            </div>
                         </div>
-                        <span class="material-symbols-outlined text-4xl text-blue-500 font-fill-1">code</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-black text-slate-800 group-hover:text-primary transition-colors">Pahlawan Coding</p>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Umum</p>
-                    </div>
-                </div>
-
-                {{-- Jenius Logika --}}
-                <div class="bg-white p-6 rounded-[2rem] border-4 border-slate-50 flex flex-col items-center text-center gap-4 card-hover shadow-sm group">
-                    <div class="relative size-24 rounded-full bg-purple-50 flex items-center justify-center mb-2">
-                        <div class="absolute -top-1 -right-1 size-8 rounded-full bg-green-500 border-4 border-white flex items-center justify-center">
-                            <span class="material-symbols-outlined font-black text-white text-xs">check</span>
+                    @else
+                        {{-- Locked Badge Option --}}
+                        <div class="bg-slate-50 p-6 rounded-[2rem] border-4 border-slate-100 flex flex-col items-center text-center gap-4 opacity-40 group filter grayscale">
+                            <div class="size-24 rounded-full bg-slate-200 flex items-center justify-center mb-2">
+                                <span class="material-symbols-outlined text-4xl text-slate-400 font-fill-1">{{ $badge->icon }}</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-black text-slate-400 hover:cursor-help" title="{{ $badge->description }}">{{ $badge->name }}</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-red-500">Terkunci</p>
+                            </div>
                         </div>
-                        <span class="material-symbols-outlined text-4xl text-purple-500 font-fill-1">auto_fix_high</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-black text-slate-800 group-hover:text-primary transition-colors">Jenius Logika</p>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Epik</p>
-                    </div>
-                </div>
-
-                {{-- Penjelajah Web --}}
-                <div class="bg-white p-6 rounded-[2rem] border-4 border-slate-50 flex flex-col items-center text-center gap-4 card-hover shadow-sm group">
-                    <div class="relative size-24 rounded-full bg-orange-50 flex items-center justify-center mb-2">
-                        <div class="absolute -top-1 -right-1 size-8 rounded-full bg-green-500 border-4 border-white flex items-center justify-center">
-                            <span class="material-symbols-outlined font-black text-white text-xs">check</span>
-                        </div>
-                        <span class="material-symbols-outlined text-4xl text-orange-500 font-fill-1">language</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-black text-slate-800 group-hover:text-primary transition-colors">Penjelajah Web</p>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Umum</p>
-                    </div>
-                </div>
-
-                {{-- Pawang Robot (Locked) --}}
-                <div class="bg-slate-50 p-6 rounded-[2rem] border-4 border-slate-100 flex flex-col items-center text-center gap-4 opacity-40 group filter grayscale">
-                    <div class="size-24 rounded-full bg-slate-200 flex items-center justify-center mb-2">
-                        <span class="material-symbols-outlined text-4xl text-slate-400 font-fill-1">smart_toy</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-black text-slate-400">Pawang Robot</p>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-red-500">Terkunci</p>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
             </div>
         </section>
 

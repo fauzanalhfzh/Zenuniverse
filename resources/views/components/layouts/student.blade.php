@@ -44,8 +44,8 @@
             <x-student.header 
                 :title="$title" 
                 :xp="auth()->user()->total_xp" 
-                :streak="3" 
-                :level="auth()->user()->currentLevel->order ?? 1" 
+                :streak="auth()->user()->current_streak ?? 0" 
+                :hearts="auth()->user()->hearts ?? 5" 
             />
 
             <main class="flex-1 overflow-y-auto p-8 custom-scrollbar">

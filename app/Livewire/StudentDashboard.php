@@ -3,11 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Course;
-use App\Models\Level;
 use App\Models\User;
 use App\Models\UserProgress;
-use Livewire\Component;
 use Livewire\Attributes\Url;
+use Livewire\Component;
 
 class StudentDashboard extends Component
 {
@@ -26,6 +25,7 @@ class StudentDashboard extends Component
         // 2. Try to get from User Profile (persisted)
         if ($user && $user->active_course_id) {
             $this->selectedCourseId = $user->active_course_id;
+
             return;
         }
 
@@ -34,7 +34,7 @@ class StudentDashboard extends Component
         if ($firstCourse) {
             $this->selectedCourseId = $firstCourse->id;
             // Optional: Auto-save this default to user
-            if ($user && !$user->active_course_id) {
+            if ($user && ! $user->active_course_id) {
                 $user->update(['active_course_id' => $firstCourse->id]);
             }
         }
@@ -53,7 +53,7 @@ class StudentDashboard extends Component
         $availableCourses = Course::orderBy('order')->get();
 
         // 2. Determine Current Course based on selection
-        $currentCourse = $availableCourses->first(fn($c) => $c->id == $this->selectedCourseId);
+        $currentCourse = $availableCourses->first(fn ($c) => $c->id == $this->selectedCourseId);
 
         // Fallback if selection invalid or empty
         if (! $currentCourse && $availableCourses->isNotEmpty()) {
@@ -100,6 +100,47 @@ class StudentDashboard extends Component
             ->where('status', 'completed')
             ->count();
 
+        // --- Handle Heart Regeneration Internally within the Component ---
+        if ($user->hearts < 5) {
+            if (! $user->last_heart_replenished_at) {
+                $user->last_heart_replenished_at = now();
+                $user->save();
+            } else {
+                $secondsPassed = abs(now()->diffInSeconds($user->last_heart_replenished_at));
+                if ($secondsPassed >= 300) {
+                    $heartsToAdd = floor($secondsPassed / 300);
+                    $newHearts = min(5, $user->hearts + $heartsToAdd);
+                    $remainderSeconds = $secondsPassed % 300;
+
+                    $user->hearts = $newHearts;
+                    if ($newHearts >= 5) {
+                        $user->last_heart_replenished_at = null;
+                    } else {
+                        // Advance the timer forward by however many full cycles have passed
+                        $user->last_heart_replenished_at = now()->subSeconds($remainderSeconds);
+                    }
+                    $user->save();
+                }
+            }
+        }
+
+        // --- Calculate display time remaining ---
+        $remainingSeconds = 0;
+        if ($user->hearts < 5) {
+            if ($user->last_heart_replenished_at) {
+                // How many seconds since the last recorded replenish?
+                $secondsElapsed = abs(now()->diffInSeconds($user->last_heart_replenished_at));
+                // A new heart spawns every 5 mins (300 secs).
+                // Any overflow beyond 300s should have been processed by middleware,
+                // but if not, modulo 300 gives us the progress into the *current* cycle.
+                $secondsIntoCurrentCycle = $secondsElapsed % 300;
+                // Remaining is the cycle length minus the progress
+                $remainingSeconds = 300 - $secondsIntoCurrentCycle;
+            } else {
+                $remainingSeconds = 300;
+            }
+        }
+
         return view('livewire.student-dashboard', [
             'user' => $user,
             'availableCourses' => $availableCourses,
@@ -110,6 +151,7 @@ class StudentDashboard extends Component
             'leaderboardRank' => $leaderboardRank,
             'todayXpEarned' => $todayXpEarned,
             'lessonsDoneToday' => $lessonsDoneToday,
+            'remainingSeconds' => $remainingSeconds,
         ])->layout('components.layouts.student');
     }
 }

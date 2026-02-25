@@ -37,12 +37,18 @@ class ProfileController extends Controller
         $xpTarget = max(1, $nextLevelXp - $baseLevelXp); // Prevent division by zero
         $xpPercent = min(100, ($xpProgress / $xpTarget) * 100);
 
+        // Badges Data
+        $badges = \App\Models\Badge::all();
+        $unlockedBadgeIds = $user->badges()->pluck('badges.id')->toArray();
+
         return view('profile', compact(
             'completedCount',
             'currentXp',
             'nextLevelXp',
             'xpPercent',
-            'rankTitle'
+            'rankTitle',
+            'badges',
+            'unlockedBadgeIds'
         ));
     }
 }

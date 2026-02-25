@@ -32,11 +32,18 @@ class User extends Authenticatable implements FilamentUser
         'longest_streak',
         'last_activity_at',
         'active_course_id',
+        'hearts',
+        'last_heart_replenished_at',
     ];
 
     public function currentLevel()
     {
         return $this->belongsTo(Level::class, 'current_level_id');
+    }
+
+    public function badges()
+    {
+        return $this->belongsToMany(Badge::class)->withPivot('unlocked_at')->withTimestamps();
     }
 
     public function progress()
@@ -64,6 +71,7 @@ class User extends Authenticatable implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'last_activity_at' => 'datetime',
+            'last_heart_replenished_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

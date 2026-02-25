@@ -102,32 +102,33 @@
         @endif
 
         @if($currentSlide['type'] === 'quiz')
-            <div wire:key="slide-quiz-{{ $step }}" class="flex flex-col items-center space-y-8 animate-fade-in-up w-full max-w-2xl">
+            <div wire:key="slide-quiz-{{ $step }}" x-data="{}" class="flex flex-col items-center space-y-8 animate-fade-in-up w-full max-w-2xl">
                 <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-white/50 dark:border-slate-700 w-full">
                     <h2 class="text-3xl font-display font-bold text-slate-800 dark:text-white mb-8">{{ $currentSlide['title'] }}</h2>
                     <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">{{ $currentSlide['content'] }}</p>
                     
                     <div class="space-y-4">
                         @foreach($currentSlide['options'] as $option)
+                            @php $isCorrectStr = $option['correct'] ? 'true' : 'false'; @endphp
                             <button 
-                                wire:click="selectAnswer('{{ $option['id'] }}')"
-                                @class([
-                                    'w-full p-6 rounded-2xl border-2 flex items-center gap-4 text-xl font-bold transition-all transform active:scale-95 text-left relative overflow-hidden',
-                                    'bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600' => $selectedAnswer !== $option['id'],
-                                    'bg-blue-50 dark:bg-blue-900/30 border-blue-400 text-blue-500 dark:text-blue-300 ring-2 ring-blue-400 ring-offset-2 dark:ring-offset-slate-800' => $selectedAnswer === $option['id'] && !$isChecked,
-                                    'bg-green-100 dark:bg-green-900/30 border-green-500 text-green-700 dark:text-green-300' => $isChecked && $option['correct'],
-                                    'bg-red-100 dark:bg-red-900/30 border-red-500 text-red-700 dark:text-red-300' => $isChecked && $selectedAnswer === $option['id'] && !$option['correct'],
-                                    'opacity-50 cursor-not-allowed' => $isChecked && $selectedAnswer !== $option['id'] && !$option['correct']
-                                ])
-                                {{ $isChecked ? 'disabled' : '' }}
+                                x-on:click="if(!$wire.isChecked) $wire.selectedAnswer = '{{ $option['id'] }}'"
+                                class="w-full p-6 rounded-2xl border-2 flex items-center gap-4 text-xl font-bold transition-all transform active:scale-95 text-left relative overflow-hidden"
+                                :class="{
+                                    'bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600': $wire.selectedAnswer !== '{{ $option['id'] }}' && (!($wire.isChecked) || ($wire.isChecked && !{{ $isCorrectStr }})),
+                                    'bg-blue-50 dark:bg-blue-900/30 border-blue-400 text-blue-500 dark:text-blue-300 ring-2 ring-blue-400 ring-offset-2 dark:ring-offset-slate-800': $wire.selectedAnswer === '{{ $option['id'] }}' && !$wire.isChecked,
+                                    'bg-green-100 dark:bg-green-900/30 border-green-500 text-green-700 dark:text-green-300': $wire.isChecked && {{ $isCorrectStr }},
+                                    'bg-red-100 dark:bg-red-900/30 border-red-500 text-red-700 dark:text-red-300': $wire.isChecked && $wire.selectedAnswer === '{{ $option['id'] }}' && !{{ $isCorrectStr }},
+                                    'opacity-50 cursor-not-allowed': $wire.isChecked && $wire.selectedAnswer !== '{{ $option['id'] }}' && !{{ $isCorrectStr }}
+                                }"
+                                :disabled="$wire.isChecked"
                             >
-                                <div @class([
-                                    'w-10 h-10 rounded-xl border-2 flex items-center justify-center text-lg font-black shrink-0',
-                                    'border-slate-200 dark:border-slate-500 text-slate-400 dark:text-slate-500' => $selectedAnswer !== $option['id'] && !$isChecked,
-                                    'border-blue-400 text-blue-400' => $selectedAnswer === $option['id'] && !$isChecked,
-                                    'border-green-600 bg-green-500 text-white border-none' => $isChecked && $option['correct'],
-                                    'border-red-500 bg-red-500 text-white border-none' => $isChecked && $selectedAnswer === $option['id'] && !$option['correct']
-                                ])>
+                                <div class="w-10 h-10 rounded-xl border-2 flex items-center justify-center text-lg font-black shrink-0"
+                                     :class="{
+                                        'border-slate-200 dark:border-slate-500 text-slate-400 dark:text-slate-500': $wire.selectedAnswer !== '{{ $option['id'] }}' && (!($wire.isChecked) || ($wire.isChecked && !{{ $isCorrectStr }})),
+                                        'border-blue-400 text-blue-400': $wire.selectedAnswer === '{{ $option['id'] }}' && !$wire.isChecked,
+                                        'border-green-600 bg-green-500 text-white border-none': $wire.isChecked && {{ $isCorrectStr }},
+                                        'border-red-500 bg-red-500 text-white border-none': $wire.isChecked && $wire.selectedAnswer === '{{ $option['id'] }}' && !{{ $isCorrectStr }}
+                                     }">
                                     {{ $option['id'] }}
                                 </div>
                                 <span>{{ $option['text'] }}</span>
@@ -150,12 +151,17 @@
                                 <button wire:click="nextStep" class="w-full py-4 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-xl transition-all shadow-lg active:scale-95">Lanjut</button>
                             </div>
                         @else
-                             <button wire:click="checkAnswer" @class([
-                                    'w-full py-4 rounded-xl font-bold text-xl transition-all shadow-lg active:scale-95',
-                                    'bg-green-500 hover:bg-green-600 text-white' => $selectedAnswer !== null,
-                                    'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed' => $selectedAnswer === null
-                                ]) {{ $selectedAnswer === null ? 'disabled' : '' }}>
-                                Periksa Jawaban
+                             <button wire:click="checkAnswer" 
+                                class="w-full py-4 rounded-xl font-bold text-xl transition-all shadow-lg active:scale-95"
+                                :class="{
+                                    'bg-green-500 hover:bg-green-600 text-white': $wire.selectedAnswer !== null,
+                                    'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed': $wire.selectedAnswer === null
+                                }"
+                                :disabled="$wire.selectedAnswer === null">
+                                <span wire:loading.remove wire:target="checkAnswer">Periksa Jawaban</span>
+                                <span wire:loading wire:target="checkAnswer" class="flex items-center justify-center gap-2">
+                                    <span class="animate-spin material-symbols-outlined">refresh</span> Memeriksa...
+                                </span>
                             </button>
                         @endif
                     </div>

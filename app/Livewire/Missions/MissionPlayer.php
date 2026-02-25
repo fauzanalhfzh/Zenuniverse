@@ -22,10 +22,13 @@ class MissionPlayer extends Component
 
     public $isCorrect = false;
 
-    public $hearts = 5;
-
     public function mount($slug)
     {
+        if (auth()->check() && auth()->user()->hearts <= 0) {
+            $this->redirectRoute('dashboard', navigate: true);
+            return;
+        }
+
         $this->mission = Lesson::where('slug', $slug)->with('slides')->firstOrFail();
         $this->slides = $this->mission->slides->toArray();
 
@@ -36,13 +39,6 @@ class MissionPlayer extends Component
         }
     }
 
-    public function selectAnswer($optionId)
-    {
-        if ($this->isChecked) {
-            return;
-        }
-        $this->selectedAnswer = $optionId;
-    }
 
     public function checkAnswer()
     {
@@ -58,7 +54,23 @@ class MissionPlayer extends Component
         $this->isCorrect = ($this->selectedAnswer == ($correctOption['id'] ?? null));
 
         if (! $this->isCorrect) {
-            $this->hearts = max(0, $this->hearts - 1);
+            $user = auth()->user();
+            if ($user && $user->hearts > 0) {
+                // If hearts are currently full, start the regeneration timer
+                if ($user->hearts >= 5 || is_null($user->last_heart_replenished_at)) {
+                    $user->last_heart_replenished_at = now();
+                }
+                
+                // Decrement global hearts
+                $user->hearts--;
+                $user->save();
+                
+                if ($user->hearts <= 0) {
+                    // Game Over: Redirect to dashboard with an error message
+                    $this->redirectRoute('dashboard', navigate: true);
+                    return;
+                }
+            }
         }
     }
 
@@ -89,6 +101,7 @@ class MissionPlayer extends Component
         return view('livewire.missions.mission-player', [
             'currentSlide' => $this->slides[$this->step],
             'progress' => (($this->step + 1) / count($this->slides)) * 100,
+            'hearts' => auth()->user() ? auth()->user()->hearts : 5,
         ]);
     }
 }

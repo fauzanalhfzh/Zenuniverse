@@ -80,11 +80,19 @@
                             </a>
                         @elseif($isCurrent)
                             {{-- Current: orange, highlighted, bouncing --}}
-                            <a href="{{ route('missions.player', $lesson->slug ?? 'temp-'.$lesson->id) }}" 
-                               class="group size-20 rounded-full bg-primary border-4 border-orange-300 shadow-xl shadow-orange-300/40 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer animate-bounce" style="animation-duration: 2s;"
-                               title="{{ $lesson->title }}">
-                                <span class="material-symbols-outlined text-white text-3xl font-fill-1">{{ $lesson->icon ?? 'star' }}</span>
-                            </a>
+                            @if($user->hearts > 0)
+                                <a href="{{ route('missions.player', $lesson->slug ?? 'temp-'.$lesson->id) }}" 
+                                   class="group size-20 rounded-full bg-primary border-4 border-orange-300 shadow-xl shadow-orange-300/40 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer animate-bounce" style="animation-duration: 2s;"
+                                   title="{{ $lesson->title }}">
+                                    <span class="material-symbols-outlined text-white text-3xl font-fill-1">{{ $lesson->icon ?? 'star' }}</span>
+                                </a>
+                            @else
+                                <button x-data x-on:click="$dispatch('open-modal', 'empty-hearts')" 
+                                   class="group size-20 rounded-full bg-primary border-4 border-orange-300 shadow-xl shadow-orange-300/40 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer animate-bounce grayscale" style="animation-duration: 2s;"
+                                   title="Nyawa Habis">
+                                    <span class="material-symbols-outlined text-white text-3xl font-fill-1">{{ $lesson->icon ?? 'star' }}</span>
+                                </button>
+                            @endif
                         @else
                             {{-- Locked: gray --}}
                             <div class="size-16 rounded-full bg-slate-200 border-4 border-slate-100 flex items-center justify-center cursor-not-allowed" title="Terkunci">
@@ -202,4 +210,30 @@
 
         </div>
     </div>
+
+    {{-- Empty Hearts Modal --}}
+    <x-modal name="empty-hearts" maxWidth="md">
+        <div class="p-8 text-center space-y-6 bg-white transition-colors">
+            <div class="size-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-2">
+                <span class="material-symbols-outlined text-6xl text-red-500 font-variation-settings: 'FILL' 1">heart_broken</span>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800">Nyawa Kamu Habis!</h3>
+            <p class="text-slate-500 font-medium">Jangan sedih, <strong class="text-slate-700">1 nyawa</strong> akan otomatis terisi setiap <strong class="text-slate-700">5 menit</strong>. Istirahat sejenak dan kembali lagi nanti!</p>
+            
+            <div class="bg-blue-50 p-4 rounded-xl flex items-center justify-center gap-3 border border-blue-100">
+                <span class="material-symbols-outlined text-blue-500">timer</span>
+                <span class="font-bold text-blue-700" 
+                      x-data="{ seconds: Math.min({{ $remainingSeconds }}, 300) }" 
+                      x-init="setInterval(() => { if(seconds > 0) seconds-- }, 1000)">
+                    Waktu Tunggu Tersisa: 
+                    <span x-text="Math.floor(seconds / 60)"></span> menit 
+                    <span x-text="seconds % 60"></span> detik
+                </span>
+            </div>
+
+            <button x-on:click="$dispatch('close-modal', 'empty-hearts')" class="w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors active:scale-95">
+                Mengerti
+            </button>
+        </div>
+    </x-modal>
 </div>
