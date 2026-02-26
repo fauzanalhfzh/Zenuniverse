@@ -41,26 +41,27 @@
     }
 @endphp
 
-<header class="h-20 bg-white/80 backdrop-blur-md border-b-4 border-orange-50 flex items-center justify-between px-8 z-40 sticky top-0 transition-colors">
-    <div class="flex items-center gap-6">
-        <h2 class="text-2xl font-black text-slate-800">{{ $title }}</h2>
+<header class="h-14 md:h-20 bg-white/80 backdrop-blur-md border-b-4 border-orange-50 flex items-center justify-between px-4 md:px-8 z-40 sticky top-0 transition-colors">
+    <div class="flex items-center gap-3 md:gap-6">
+        {{-- Hamburger menu removed: replaced by bottom navigation --}}
+        <h2 class="text-lg md:text-2xl font-black text-slate-800 truncate">{{ $title }}</h2>
     </div>
     
-    <div class="flex items-center gap-6">
-        <div class="flex items-center gap-6 bg-white px-6 py-2 rounded-full shadow-sm border-2 border-slate-50 transition-colors">
-            <div class="flex items-center gap-2" title="Total XP">
-                <span class="material-symbols-outlined text-primary font-fill-1">star</span>
-                <span class="font-bold text-slate-700">{{ number_format($xp) }}</span>
+    <div class="flex items-center gap-3 md:gap-6">
+        <div class="flex items-center gap-3 md:gap-6 bg-white px-3 md:px-6 py-1.5 md:py-2 rounded-full shadow-sm border-2 border-slate-50 transition-colors">
+            <div class="flex items-center gap-1 md:gap-2" title="Total XP">
+                <span class="material-symbols-outlined text-primary font-fill-1 text-lg md:text-[24px]">star</span>
+                <span class="font-bold text-slate-700 text-sm md:text-base">{{ number_format($xp) }}</span>
             </div>
-            <div class="w-px h-6 bg-slate-200"></div>
-            <div class="flex items-center gap-2" title="Streak Belajar">
-                <span class="material-symbols-outlined text-orange-600 font-fill-1">local_fire_department</span>
-                <span class="font-bold text-slate-700">{{ $streak }} Hari</span>
+            <div class="w-px h-4 md:h-6 bg-slate-200"></div>
+            <div class="flex items-center gap-1 md:gap-2" title="Streak Belajar">
+                <span class="material-symbols-outlined text-orange-600 font-fill-1 text-lg md:text-[24px]">local_fire_department</span>
+                <span class="font-bold text-slate-700 text-sm md:text-base">{{ $streak }}<span class="hidden sm:inline"> Hari</span></span>
             </div>
-            <div class="w-px h-6 bg-slate-200"></div>
-            <div class="flex items-center gap-2 relative group cursor-help">
-                <span class="material-symbols-outlined text-red-500 font-variation-settings: 'FILL' 1">favorite</span>
-                <span class="font-bold text-red-600 dark:text-red-400">{{ $hearts }}</span>
+            <div class="w-px h-4 md:h-6 bg-slate-200"></div>
+            <div class="flex items-center gap-1 md:gap-2 relative group cursor-help">
+                <span class="material-symbols-outlined text-red-500 text-lg md:text-[24px] font-variation-settings: 'FILL' 1">favorite</span>
+                <span class="font-bold text-red-600 dark:text-red-400 text-sm md:text-base">{{ $hearts }}</span>
                 
                 @if($user && $hearts < 5)
                 <div class="absolute top-full right-0 mt-4 whitespace-nowrap bg-white text-slate-700 text-xs font-bold py-2 px-4 rounded-xl border-2 border-slate-100 opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 shadow-xl flex items-center gap-2 translate-y-2 group-hover:translate-y-0" 

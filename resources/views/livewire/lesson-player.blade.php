@@ -1,24 +1,24 @@
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
     {{-- Header Navigation --}}
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between sticky top-0 z-50">
+    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-3 md:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sticky top-0 z-50">
         <a href="{{ route('dashboard') }}" class="flex items-center text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
-            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            <span class="font-bold">Kembali ke Dashboard</span>
+            <svg class="w-5 h-5 md:w-6 md:h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <span class="font-bold text-sm md:text-base">Kembali</span>
         </a>
-        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
+        <div class="text-xs md:text-sm font-medium text-gray-500 dark:text-gray-400">
             {{ $lesson->course->title }} • Pelajaran {{ $lesson->order }}
         </div>
     </div>
 
     {{-- Content Area --}}
-    <main class="flex-grow max-w-4xl mx-auto w-full p-6 md:p-10">
+    <main class="flex-grow max-w-4xl mx-auto w-full p-4 md:p-6 lg:p-10">
         <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden">
             
             {{-- Result Screen --}}
             @if($quizCompleted)
-                <div class="p-8 text-center space-y-6">
+                <div class="p-5 md:p-8 text-center space-y-4 md:space-y-6">
                     <div class="text-6xl">{{ $score >= 70 ? '🎉' : '😢' }}</div>
-                    <h2 class="text-3xl font-bold {{ $score >= 70 ? 'text-green-600' : 'text-red-500' }}">
+                    <h2 class="text-2xl md:text-3xl font-bold {{ $score >= 70 ? 'text-green-600' : 'text-red-500' }}">
                         Nilai Kamu: {{ $score }}
                     </h2>
                     
@@ -41,8 +41,8 @@
 
             {{-- Quiz Mode --}}
             @elseif($isQuizMode)
-                <div class="p-8">
-                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Kuis: {{ $lesson->title }}</h2>
+                <div class="p-5 md:p-8">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 md:mb-6">Kuis: {{ $lesson->title }}</h2>
                     
                     <div class="space-y-8">
                         @foreach($lesson->questions as $questions)
@@ -77,9 +77,9 @@
                 @endif
 
                 {{-- Text Content --}}
-                <div class="p-8 prose dark:prose-invert max-w-none">
-                    <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-4">{{ $lesson->title }}</h1>
-                    <div class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                <div class="p-5 md:p-8 prose dark:prose-invert max-w-none">
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mb-4">{{ $lesson->title }}</h1>
+                    <div class="text-gray-600 dark:text-gray-300 leading-relaxed text-base md:text-lg">
                         {!! nl2br(e($lesson->content)) !!}
                     </div>
                 </div>
@@ -87,7 +87,7 @@
 
             {{-- Navigation Footer (Only show in Learning Mode) --}}
             @if(!$isQuizMode && !$quizCompleted)
-                <div class="bg-gray-50 dark:bg-gray-700/50 p-6 flex justify-between items-center border-t border-gray-100 dark:border-gray-700">
+                <div class="bg-gray-50 dark:bg-gray-700/50 p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center gap-3 border-t border-gray-100 dark:border-gray-700">
                     
                     {{-- Previous Button --}}
                     @if($this->prevLesson)

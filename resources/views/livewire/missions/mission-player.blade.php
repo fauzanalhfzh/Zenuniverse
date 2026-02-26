@@ -47,12 +47,12 @@
     </div>
 
     {{-- Header --}}
-    <header class="relative z-20 w-full max-w-5xl px-6 py-8 flex items-center justify-between">
+    <header class="relative z-20 w-full max-w-5xl px-4 md:px-6 py-4 md:py-8 flex items-center justify-between">
         <a href="{{ route('dashboard') }}" wire:navigate class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
             <span class="material-symbols-outlined text-4xl">close</span>
         </a>
         
-        <div class="flex-1 mx-8 h-4 bg-blue-100 dark:bg-slate-800 rounded-full relative">
+        <div class="flex-1 mx-4 md:mx-8 h-3 md:h-4 bg-blue-100 dark:bg-slate-800 rounded-full relative">
             <div class="rocket-path absolute left-0 top-0 h-full bg-green-500 rounded-full transition-all duration-500 ease-out" style="width: {{ $progress }}%;"></div>
         </div>
 
@@ -63,7 +63,7 @@
     </header>
 
     {{-- Main Content --}}
-    <main class="relative z-10 w-full max-w-4xl flex-1 flex flex-col items-center justify-center p-8 text-center space-y-10">
+    <main class="relative z-10 w-full max-w-4xl flex-1 flex flex-col items-center justify-center p-4 md:p-8 text-center space-y-6 md:space-y-10">
         
         @if($currentSlide['type'] === 'intro' || $currentSlide['type'] === 'text')
             <div wire:key="slide-intro-{{ $step }}" class="flex flex-col items-center space-y-6 animate-fade-in-up w-full">
@@ -74,10 +74,10 @@
                 @endif
 
                 <div class="space-y-6 max-w-2xl">
-                    <h1 class="font-display text-4xl md:text-6xl font-bold text-slate-800 dark:text-white leading-tight">
+                    <h1 class="font-display text-3xl md:text-4xl lg:text-6xl font-bold text-slate-800 dark:text-white leading-tight">
                         {!! nl2br(e($currentSlide['title'])) !!}
                     </h1>
-                    <div class="space-y-4 text-slate-600 dark:text-slate-300 text-lg md:text-2xl leading-relaxed prose-custom">
+                    <div class="space-y-4 text-slate-600 dark:text-slate-300 text-base md:text-lg lg:text-2xl leading-relaxed prose-custom">
                         {!! \Illuminate\Support\Str::markdown($currentSlide['content']) !!}
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                         type="button"
                         wire:click="nextStep"
                         wire:loading.attr="disabled"
-                        class="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white font-display text-2xl font-bold py-5 px-20 rounded-2xl transition-all duration-200 active:scale-95 uppercase tracking-wide shadow-lg shadow-green-500/30">
+                        class="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white font-display text-lg md:text-2xl font-bold py-4 px-10 md:py-5 md:px-20 rounded-2xl transition-all duration-200 active:scale-95 uppercase tracking-wide shadow-lg shadow-green-500/30">
                         <span wire:loading.remove wire:target="nextStep" class="flex items-center gap-3">
                             {{ $currentSlide['button_text'] ?? 'Lanjut' }}
                             <span class="material-symbols-outlined">arrow_forward</span>
@@ -102,17 +102,17 @@
         @endif
 
         @if($currentSlide['type'] === 'quiz')
-            <div wire:key="slide-quiz-{{ $step }}" x-data="{}" class="flex flex-col items-center space-y-8 animate-fade-in-up w-full max-w-2xl">
-                <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-white/50 dark:border-slate-700 w-full">
-                    <h2 class="text-3xl font-display font-bold text-slate-800 dark:text-white mb-8">{{ $currentSlide['title'] }}</h2>
-                    <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">{{ $currentSlide['content'] }}</p>
+            <div wire:key="slide-quiz-{{ $step }}" x-data="{}" class="flex flex-col items-center space-y-6 md:space-y-8 animate-fade-in-up w-full max-w-2xl">
+                <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-5 md:p-8 rounded-2xl md:rounded-3xl shadow-xl border border-white/50 dark:border-slate-700 w-full">
+                    <h2 class="text-xl md:text-3xl font-display font-bold text-slate-800 dark:text-white mb-4 md:mb-8">{{ $currentSlide['title'] }}</h2>
+                    <p class="text-base md:text-xl text-slate-600 dark:text-slate-300 mb-4 md:mb-8">{{ $currentSlide['content'] }}</p>
                     
                     <div class="space-y-4">
                         @foreach($currentSlide['options'] as $option)
                             @php $isCorrectStr = $option['correct'] ? 'true' : 'false'; @endphp
                             <button 
                                 x-on:click="if(!$wire.isChecked) $wire.selectedAnswer = '{{ $option['id'] }}'"
-                                class="w-full p-6 rounded-2xl border-2 flex items-center gap-4 text-xl font-bold transition-all transform active:scale-95 text-left relative overflow-hidden"
+                                class="w-full p-4 md:p-6 rounded-xl md:rounded-2xl border-2 flex items-center gap-3 md:gap-4 text-base md:text-xl font-bold transition-all transform active:scale-95 text-left relative overflow-hidden"
                                 :class="{
                                     'bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600': $wire.selectedAnswer !== '{{ $option['id'] }}' && (!($wire.isChecked) || ($wire.isChecked && !{{ $isCorrectStr }})),
                                     'bg-blue-50 dark:bg-blue-900/30 border-blue-400 text-blue-500 dark:text-blue-300 ring-2 ring-blue-400 ring-offset-2 dark:ring-offset-slate-800': $wire.selectedAnswer === '{{ $option['id'] }}' && !$wire.isChecked,
@@ -122,7 +122,7 @@
                                 }"
                                 :disabled="$wire.isChecked"
                             >
-                                <div class="w-10 h-10 rounded-xl border-2 flex items-center justify-center text-lg font-black shrink-0"
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl border-2 flex items-center justify-center text-base md:text-lg font-black shrink-0"
                                      :class="{
                                         'border-slate-200 dark:border-slate-500 text-slate-400 dark:text-slate-500': $wire.selectedAnswer !== '{{ $option['id'] }}' && (!($wire.isChecked) || ($wire.isChecked && !{{ $isCorrectStr }})),
                                         'border-blue-400 text-blue-400': $wire.selectedAnswer === '{{ $option['id'] }}' && !$wire.isChecked,
@@ -136,7 +136,7 @@
                         @endforeach
                     </div>
 
-                    <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <div class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-slate-100 dark:border-slate-700">
                          @if($isChecked)
                             <div class="space-y-4">
                                 <div @class([

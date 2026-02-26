@@ -1,7 +1,21 @@
 @props(['title' => 'Beranda', 'active' => 'dashboard'])
 
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    x-data="{ 
+        darkMode: localStorage.getItem('darkMode') === 'true',
+        toggleTheme() {
+            this.darkMode = !this.darkMode;
+            localStorage.setItem('darkMode', this.darkMode);
+            if (this.darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+    }"
+    x-init="$watch('darkMode', val => val ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')); if(darkMode) document.documentElement.classList.add('dark');"
+>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,21 +37,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="font-fredoka antialiased text-soft-text selection:bg-primary/20 flex h-screen overflow-hidden bg-slate-50/50"
-        x-data="{ 
-            darkMode: localStorage.getItem('darkMode') === 'true',
-            toggleTheme() {
-                this.darkMode = !this.darkMode;
-                localStorage.setItem('darkMode', this.darkMode);
-                if (this.darkMode) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            }
-        }"
-        x-init="$watch('darkMode', val => val ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')); if(darkMode) document.documentElement.classList.add('dark');"
-    >
+    <body class="font-fredoka antialiased text-soft-text selection:bg-primary/20 flex h-screen overflow-hidden bg-slate-50/50">
+        {{-- Mobile Bottom Navigation --}}
+        <x-student.bottom-nav :active="$active" />
+
         <x-student.sidebar :active="$active" />
 
         <div class="flex-1 flex flex-col overflow-hidden">
@@ -48,7 +51,8 @@
                 :hearts="auth()->user()->hearts ?? 5" 
             />
 
-            <main class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            {{-- Added pb-24 to prevent content from hiding behind the bottom nav on mobile --}}
+            <main class="flex-1 overflow-y-auto p-4 md:p-8 pb-24 lg:pb-8 custom-scrollbar">
                 {{ $slot }}
             </main>
         </div>

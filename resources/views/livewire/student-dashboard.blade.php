@@ -4,16 +4,16 @@
         {{-- MAIN: Lesson Path --}}
         <div class="flex-1">
             {{-- Course Selection Header --}}
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 gap-3">
                 <div class="flex items-center gap-4">
                      {{-- Current Course Indicator --}}
-                     <div class="flex items-center gap-3 px-5 py-3 rounded-2xl bg-primary text-white shadow-lg shadow-orange-500/30 transition-transform hover:scale-105 cursor-default">
-                        <div class="size-8 rounded-lg bg-white/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-white">{{ $currentCourse->title == 'Dasar Pemrograman Web' ? 'language' : ($currentCourse->icon ?? 'school') }}</span>
+                     <div class="flex items-center gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-2xl bg-primary text-white shadow-lg shadow-orange-500/30 transition-transform hover:scale-105 cursor-default">
+                        <div class="size-7 md:size-8 rounded-lg bg-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-lg md:text-[24px]">{{ $currentCourse->title == 'Dasar Pemrograman Web' ? 'language' : ($currentCourse->icon ?? 'school') }}</span>
                         </div>
                         <div class="text-left">
                             <p class="text-[10px] font-bold uppercase tracking-wider opacity-80">Track Saat Ini</p>
-                            <p class="font-black text-sm whitespace-nowrap">{{ $currentCourse->title }}</p>
+                            <p class="font-black text-xs md:text-sm">{{ $currentCourse->title }}</p>
                         </div>
                     </div>
                 </div>
@@ -26,20 +26,20 @@
 
             {{-- Greeting --}}
             <div class="mb-6">
-                <h1 class="text-2xl font-black text-slate-800">Halo, {{ explode(' ', $user->name)[0] }}! 👋</h1>
-                <p class="text-sm text-slate-400 mt-1 font-medium">Yuk lanjutkan petualangan belajarmu hari ini!</p>
+                <h1 class="text-xl md:text-2xl font-black text-slate-800">Halo, {{ explode(' ', $user->name)[0] }}! 👋</h1>
+                <p class="text-xs md:text-sm text-slate-400 mt-1 font-medium">Yuk lanjutkan petualangan belajarmu hari ini!</p>
             </div>
 
             {{-- Section Header --}}
-            <div class="flex items-center justify-between bg-primary rounded-2xl px-6 py-4 mb-8 shadow-sm">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-primary rounded-2xl px-4 md:px-6 py-3 md:py-4 mb-6 md:mb-8 shadow-sm gap-2 sm:gap-0">
                 <div>
-                    <p class="text-orange-100 text-xs font-bold uppercase tracking-wider">
+                    <p class="text-orange-100 text-[10px] md:text-xs font-bold uppercase tracking-wider">
                         BAGIAN {{ $user->currentLevel->order ?? 1 }}, UNIT 1
                     </p>
-                    <h2 class="text-white text-lg font-black mt-0.5">{{ $currentCourse->title ?? 'Mulai Belajar' }}</h2>
+                    <h2 class="text-white text-base md:text-lg font-black mt-0.5">{{ $currentCourse->title ?? 'Mulai Belajar' }}</h2>
                 </div>
-                <a href="{{ route('dashboard') }}" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-xl transition-colors flex items-center gap-2">
-                    <span class="material-symbols-outlined text-base">menu_book</span>
+                <a href="{{ route('dashboard') }}" class="bg-white/20 hover:bg-white/30 text-white text-[10px] md:text-xs font-bold uppercase tracking-wider px-3 md:px-4 py-1.5 md:py-2 rounded-xl transition-colors flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm md:text-base">menu_book</span>
                     Buku Panduan
                 </a>
             </div>
@@ -54,21 +54,23 @@
 
                         // Zigzag offset: alternate left/center/right
                         $positions = [0, 50, 70, 50, 0, -50, -70, -50];
+                        $positionsMobile = [0, 25, 35, 25, 0, -25, -35, -25];
                         $offset = $positions[$index % count($positions)];
+                        $offsetMobile = $positionsMobile[$index % count($positionsMobile)];
                     @endphp
 
-                    <div wire:key="lesson-{{ $lesson->id }}" class="relative flex flex-col items-center" style="transform: translateX({{ $offset }}px);">
+                    <div wire:key="lesson-{{ $lesson->id }}" class="relative flex flex-col items-center">
+                        <style>
+                            @media (max-width: 639px) { [data-lesson-id="{{ $lesson->id }}"] { transform: translateX({{ $offsetMobile }}px) !important; } }
+                            @media (min-width: 640px) { [data-lesson-id="{{ $lesson->id }}"] { transform: translateX({{ $offset }}px) !important; } }
+                        </style>
+                        <div data-lesson-id="{{ $lesson->id }}">
                         {{-- Connector line (not on first item) --}}
                         @if($index > 0)
                             <div class="w-1 h-6 {{ $isLocked ? 'bg-slate-200' : 'bg-green-400' }} -mt-6 mb-1 rounded-full"></div>
                         @endif
 
-                        {{-- "MULAI" label for current lesson --}}
-                        @if($isCurrent)
-                            <div class="mb-2 px-4 py-1 bg-white border-2 border-primary rounded-xl shadow-sm">
-                                <span class="text-primary text-xs font-black uppercase tracking-wider">Mulai</span>
-                            </div>
-                        @endif
+
 
                         {{-- Lesson Node --}}
                         @if($isCompleted)
@@ -104,6 +106,7 @@
                         @if($isCurrent)
                             <p class="mt-2 text-sm font-bold text-slate-700 text-center max-w-[160px]">{{ $lesson->title }}</p>
                         @endif
+                        </div>
                     </div>
                 @endforeach
 

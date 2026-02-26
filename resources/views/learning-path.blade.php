@@ -164,7 +164,7 @@
             </div>
         </div>
 
-        <div class="mt-24 p-12 bg-white rounded-[3rem] border-8 border-blue-50 shadow-2xl text-center relative overflow-hidden">
+        <div class="mt-24 p-6 md:p-12 bg-white rounded-3xl md:rounded-[3rem] border-8 border-blue-50 shadow-2xl text-center relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
             <div class="relative z-10">
                 <h2 class="text-4xl font-black text-slate-800 mb-4">Sistem Hadiah Bintang</h2>

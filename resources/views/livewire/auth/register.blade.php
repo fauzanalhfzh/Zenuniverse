@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto px-6 w-full">
+<div class="max-w-4xl mx-auto px-4 md:px-6 w-full py-8">
     <!-- Progress Header -->
     <div class="mb-8">
         <div class="flex justify-between items-center text-sm font-bold text-slate-400 mb-2 px-2">
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-[3rem] p-8 md:p-12 shadow-2xl border-4 border-blue-50 relative overflow-hidden transition-all duration-500">
+    <div class="bg-white rounded-3xl md:rounded-[3rem] p-6 md:p-12 shadow-2xl border-4 border-blue-50 relative overflow-hidden transition-all duration-500">
         <!-- Floating Elements -->
         <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-100 rounded-full blur-2xl opacity-60"></div>
         <div class="absolute bottom-10 -left-10 w-24 h-24 bg-purple-100 rounded-full blur-xl opacity-60"></div>

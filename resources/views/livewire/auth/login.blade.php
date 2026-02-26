@@ -1,4 +1,4 @@
-<div class="max-w-6xl mx-auto px-6 w-full">
+<div class="max-w-6xl mx-auto px-4 md:px-6 w-full py-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div class="hidden lg:flex flex-col items-center text-center space-y-8 relative">
             <div class="relative w-full max-w-md aspect-square">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
-            <div class="bg-white rounded-[3rem] p-8 md:p-12 shadow-2xl border-4 border-blue-50 relative overflow-hidden">
+            <div class="bg-white rounded-3xl md:rounded-[3rem] p-6 md:p-12 shadow-2xl border-4 border-blue-50 relative overflow-hidden">
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-orange-100 rounded-full blur-2xl opacity-60"></div>
                 <div class="text-center mb-8 relative z-10">
                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-primary mb-4">

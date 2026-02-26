@@ -15,7 +15,7 @@ class RegenerateHearts
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = clone $request->user();
+        $user = $request->user();
 
         if ($user && $user->hearts < 5) {
             if (!$user->last_heart_replenished_at) {

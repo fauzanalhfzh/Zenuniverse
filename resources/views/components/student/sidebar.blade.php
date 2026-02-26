@@ -1,15 +1,18 @@
 @props(['active' => 'dashboard'])
 
-<aside class="w-64 bg-white border-r-4 border-orange-50 flex flex-col z-50 h-screen sticky top-0">
-    <div class="p-6 flex items-center gap-3">
-        <div class="relative logo-orbit">
-            <div class="bg-primary size-9 rounded-xl shadow-md flex items-center justify-center">
-                <span class="material-symbols-outlined text-white text-2xl">rocket_launch</span>
+<aside class="w-64 bg-white border-r-4 border-orange-50 hidden lg:flex flex-col z-50 h-screen sticky top-0">
+    <div class="p-6 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="relative logo-orbit">
+                <div class="bg-primary size-9 rounded-xl shadow-md flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-2xl">rocket_launch</span>
+                </div>
+                <div class="orbit-z text-[8px]">Z</div>
+                <div class="orbit-u text-[8px]">U</div>
             </div>
-            <div class="orbit-z text-[8px]">Z</div>
-            <div class="orbit-u text-[8px]">U</div>
+            <h1 class="text-xl font-bold tracking-tight text-primary">ZenUniverse</h1>
         </div>
-        <h1 class="text-xl font-bold tracking-tight text-primary">ZenUniverse</h1>
+        {{-- Close button removed: sidebar is desktop-only now --}}
     </div>
 
     <nav class="flex-1 mt-4 px-4 space-y-2 overflow-y-auto custom-scrollbar">
