@@ -1,9 +1,7 @@
 <footer class="relative z-10 bg-blue-50/50 dark:bg-slate-900 border-t-4 border-blue-100 dark:border-slate-800 py-16 px-6 transition-colors">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
         <div class="flex items-center gap-3">
-            <div class="bg-primary/20 dark:bg-primary/10 p-2 rounded-2xl">
-                <span class="material-symbols-outlined text-primary text-3xl">rocket_launch</span>
-            </div>
+            <img src="{{ asset('images/logo.jpeg') }}" alt="ZenUniverse Logo" class="h-12 md:h-16 w-auto object-contain rounded-xl">
             <h2 class="text-3xl font-bold text-primary">ZenUniverse</h2>
         </div>
         

@@ -10,11 +10,8 @@
         }
     </style>
     <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
-        <div class="flex items-center gap-3 cursor-pointer" onclick="Livewire.navigate('{{ route('home') }}')">
-            <div class="bg-primary p-2 rounded-2xl shadow-lg">
-                <span class="material-symbols-outlined text-white text-2xl md:text-3xl">rocket_launch</span>
-            </div>
-            <!-- Text Color fixed for dark mode -->
+        <div class="flex items-center gap-3 cursor-pointer py-1" onclick="Livewire.navigate('{{ route('home') }}')">
+            <img src="{{ asset('images/logo.jpeg') }}" alt="ZenUniverse Logo" class="h-10 md:h-12 w-auto object-contain rounded-xl">
             <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-primary">ZenUniverse</h2>
         </div>
         

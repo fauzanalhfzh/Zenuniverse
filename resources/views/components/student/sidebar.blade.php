@@ -3,13 +3,7 @@
 <aside class="w-64 bg-white border-r-4 border-orange-50 hidden lg:flex flex-col z-50 h-screen sticky top-0">
     <div class="p-6 flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <div class="relative logo-orbit">
-                <div class="bg-primary size-9 rounded-xl shadow-md flex items-center justify-center">
-                    <span class="material-symbols-outlined text-white text-2xl">rocket_launch</span>
-                </div>
-                <div class="orbit-z text-[8px]">Z</div>
-                <div class="orbit-u text-[8px]">U</div>
-            </div>
+            <img src="{{ asset('images/logo.jpeg') }}" alt="ZenUniverse Logo" class="h-10 w-auto object-contain rounded-xl">
             <h1 class="text-xl font-bold tracking-tight text-primary">ZenUniverse</h1>
         </div>
         {{-- Close button removed: sidebar is desktop-only now --}}
