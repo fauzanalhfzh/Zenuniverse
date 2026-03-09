@@ -30,6 +30,10 @@
         .prose-custom p { margin-bottom: 1rem; }
     </style>
 
+
+
+
+
     {{-- Background --}}
     <div class="fixed inset-0 pointer-events-none space-bg z-0" wire:ignore>
         <div class="absolute top-40 left-[10%] opacity-20 dark:opacity-40 floating" style="animation-delay: 0s;">
@@ -81,6 +85,15 @@
                         {!! \Illuminate\Support\Str::markdown($currentSlide['content']) !!}
                     </div>
                 </div>
+
+                {{-- Player Audio --}}
+                @if($currentSlide['audio_url'])
+                    <div class="w-full max-w-md bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-2xl p-4 md:p-6 shadow-xl border border-white/50 dark:border-slate-700 animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <audio controls class="w-full h-12" src="{{ asset('storage/' . $currentSlide['audio_url']) }}">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                @endif
 
                 <div class="pt-8 w-full flex justify-center">
                     <button 
@@ -168,6 +181,21 @@
                 </div>
             </div>
         @endif
+
+        @if($currentSlide['type'] === 'code_arrange' || $currentSlide['type'] === 'code_fillblank' || $currentSlide['type'] === 'block_code')
+            <div wire:key="minigame-container-{{ $step }}" 
+                 x-data="minigameHandler(@json(count($minigameData['workspaceBlocks'] ?? [])))" 
+                 class="w-full flex flex-col items-center">
+                
+                @if($currentSlide['type'] === 'code_arrange')
+                    @include('livewire.partials._minigame-code-arrange')
+                @elseif($currentSlide['type'] === 'code_fillblank')
+                    @include('livewire.partials._minigame-code-fillblank')
+                @elseif($currentSlide['type'] === 'block_code')
+                    @include('livewire.partials._minigame-block-code')
+                @endif
+            </div>
+        @endif
     </main>
 
     {{-- Dark Mode Toggle --}}
@@ -197,4 +225,115 @@
             </span>
         </button>
     </div>
+    @once
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+        window.minigameHandler = (initialCount = 0) => ({
+            workspaceCount: initialCount,
+
+            init() {
+                if (typeof updateStepNumbers === 'function') updateStepNumbers();
+                // Ensure workspaceCount is at least initialized to 0 if not provided
+                if (this.workspaceCount === undefined) this.workspaceCount = 0;
+            },
+
+            initSortable(el, type) {
+                if (!el) return;
+                if (el._sortable) return; // Prevent double initialization
+
+                if (typeof Sortable === 'undefined') {
+                    setTimeout(() => this.initSortable(el, type), 300);
+                    return;
+                }
+
+                if (type === 'arrange') {
+                    el._sortable = new Sortable(el, {
+                        animation: 150,
+                        ghostClass: 'opacity-50',
+                        dragClass: 'scale-105',
+                        onEnd: (evt) => {
+                            const ids = Array.from(el.querySelectorAll('[data-id]'))
+                                .map(item => item.dataset.id);
+                            @this.call('updateBlockOrder', ids);
+                            if (typeof updateStepNumbers === 'function') updateStepNumbers();
+                        }
+                    });
+                } else if (type === 'block-palette') {
+                    el._sortable = new Sortable(el, {
+                        group: {
+                            name: 'shared',
+                            pull: 'clone',
+                            put: false
+                        },
+                        animation: 150,
+                        sort: false,
+                        ghostClass: 'opacity-50'
+                    });
+                } else if (type === 'block-workspace') {
+                    el._sortable = new Sortable(el, {
+                        group: 'shared',
+                        animation: 150,
+                        ghostClass: 'opacity-50',
+                        onAdd: () => this.syncWorkspace(),
+                        onUpdate: () => this.syncWorkspace(),
+                        onRemove: () => this.syncWorkspace()
+                    });
+                } else if (type === 'block-trash') {
+                     el._sortable = new Sortable(el, {
+                        group: 'shared',
+                        onAdd: (evt) => {
+                            evt.item.remove();
+                            this.syncWorkspace();
+                        }
+                    });
+                }
+            },
+
+            syncWorkspace() {
+                const workspace = this.$refs.workspaceList || document.querySelector('[x-ref="workspaceList"]');
+                if (!workspace) return;
+                
+                const items = workspace.querySelectorAll('[data-id]');
+                const ids = Array.from(items).map(el => el.dataset.id);
+                
+                this.workspaceCount = ids.length;
+                @this.call('updateWorkspaceOrder', ids);
+
+                const hint = document.getElementById('workspace-hint');
+                if (hint) {
+                    if (this.workspaceCount > 0) hint.classList.add('hidden');
+                    else hint.classList.remove('hidden');
+                }
+            },
+
+            removeBlock(el) {
+                if (el) el.remove();
+                this.syncWorkspace();
+            },
+
+            selectFillAnswer(optionId) {
+                @this.call('selectFillAnswer', optionId);
+            },
+
+            removeFillAnswer(blankId) {
+                @this.call('removeFillAnswer', blankId);
+            }
+        });
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('minigameHandler', window.minigameHandler);
+        });
+
+        // Ensure step numbers are updated correctly
+        document.addEventListener('livewire:navigated', () => {
+            if (typeof updateStepNumbers === 'function') updateStepNumbers();
+        });
+
+        function updateStepNumbers() {
+            document.querySelectorAll('.step-number').forEach((span, i) => {
+                span.innerText = i + 1;
+            });
+        }
+    </script>
+    @endonce
 </div>

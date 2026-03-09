@@ -77,6 +77,61 @@ class LessonSeeder extends Seeder
         $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Pentingnya Logika', 'content' => 'Sebelum menulis kode (coding), kita harus menyusun algoritmanya terlebih dahulu.']);
         // 10. Quiz
         $this->createQuiz($lesson, 10, 'Urutan yang benar adalah?', [['id' => 'A', 'text' => 'Coding dulu, baru mikir', 'correct' => false], ['id' => 'B', 'text' => 'Algoritma dulu, baru coding', 'correct' => true]]);
+
+        // MINIGAMES SAMPLES -> Order 11, 12, 13
+        // 11. Code Arrange
+        $lesson->slides()->firstOrCreate(['order' => 11], [
+            'type' => 'code_arrange',
+            'title' => 'Puzzle: Menyeduh Teh ☕',
+            'content' => 'Susun langkah-langkah membuat teh manis yang benar dari atas ke bawah!',
+            'options' => [
+                ['id' => 0, 'text' => 'Siapkan gelas dan kantong teh'],
+                ['id' => 1, 'text' => 'Tuang air panas ke dalam gelas'],
+                ['id' => 2, 'text' => 'Masukkan gula secukupnya'],
+                ['id' => 3, 'text' => 'Aduk hingga gula larut'],
+                ['id' => 4, 'text' => 'Teh siap diminum!'],
+            ],
+            'correct_answer' => null, // validation is by id order
+            'explanation' => 'Algoritma harus urut! Jika air panas dituang terakhir, teh tidak akan larut dengan sempurna.',
+        ]);
+
+        // 12. Code Fill in the Blank
+        $lesson->slides()->firstOrCreate(['order' => 12], [
+            'type' => 'code_fillblank',
+            'title' => 'Lengkapi Algoritma 📝',
+            'content' => 'Lengkapi kalimat algoritma sederhana tentang lampu lalu lintas di bawah ini.',
+            'options' => [
+                ['type' => 'text', 'value' => 'Jika lampu '],
+                ['type' => 'blank', 'id' => 0, 'answer_id' => 1], // Merah
+                ['type' => 'text', 'value' => ' menyala, maka kendaraan harus '],
+                ['type' => 'blank', 'id' => 1, 'answer_id' => 2], // Berhenti
+                ['type' => 'text', 'value' => '.\nNamun jika lampu Hijau menyala, kendaraan boleh '],
+                ['type' => 'blank', 'id' => 2, 'answer_id' => 3], // Jalan
+                ['type' => 'text', 'value' => '.'],
+            ],
+            'correct_answer' => json_encode([
+                ['id' => 1, 'text' => 'Merah', 'color' => 'red'],
+                ['id' => 3, 'text' => 'Jalan', 'color' => 'green'],
+                ['id' => 4, 'text' => 'Terbang', 'color' => 'blue'], // distractor
+                ['id' => 2, 'text' => 'Berhenti', 'color' => 'purple'],
+            ]),
+            'explanation' => 'Kondisi lampu merah mengharuskan kita berhenti, sedangkan hijau mengizinkan kita jalan. Ini contoh logika IF-ELSE di dunia nyata.',
+        ]);
+
+        // 13. Block Code
+        $lesson->slides()->firstOrCreate(['order' => 13], [
+            'type' => 'block_code',
+            'title' => 'Robot Berjalan 🤖',
+            'content' => 'Tarik blok logika dari kiri ke Area Kerja untuk membuat robot maju 2 langkah lalu belok kanan.',
+            'options' => [
+                ['id' => 1, 'type' => 'action', 'text' => 'Maju 1 Langkah'],
+                ['id' => 2, 'type' => 'action', 'text' => 'Maju 2 Langkah'],
+                ['id' => 3, 'type' => 'logic', 'text' => 'Belok Kanan'],
+                ['id' => 4, 'type' => 'logic', 'text' => 'Belok Kiri'],
+            ],
+            'correct_answer' => '2,3',
+            'explanation' => 'Robot harus bergerak lurus dahulu (Maju 2 Langkah) sebelum dieksekusi perintah Belok Kanan.',
+        ]);
     }
 
     private function createLogicLesson2($course)

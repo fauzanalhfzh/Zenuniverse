@@ -37,19 +37,14 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="font-fredoka antialiased text-soft-text selection:bg-primary/20 flex h-screen overflow-hidden bg-slate-50/50">
+    <body class="font-fredoka antialiased text-soft-text dark:text-slate-300 selection:bg-primary/20 flex h-screen overflow-hidden bg-slate-50/50 dark:bg-slate-900 transition-colors duration-300">
         {{-- Mobile Bottom Navigation --}}
         <x-student.bottom-nav :active="$active" />
 
         <x-student.sidebar :active="$active" />
 
         <div class="flex-1 flex flex-col overflow-hidden">
-            <x-student.header 
-                :title="$title" 
-                :xp="auth()->user()->total_xp" 
-                :streak="auth()->user()->current_streak ?? 0" 
-                :hearts="auth()->user()->hearts ?? 5" 
-            />
+
 
             {{-- Added pb-24 to prevent content from hiding behind the bottom nav on mobile --}}
             <main class="flex-1 overflow-y-auto p-4 md:p-8 pb-24 lg:pb-8 custom-scrollbar">

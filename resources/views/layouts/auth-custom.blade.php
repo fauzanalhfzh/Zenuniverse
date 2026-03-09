@@ -27,7 +27,6 @@
         }
         body {
             font-family: 'Fredoka', sans-serif;
-            background: linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%);
             overflow-x: hidden;
             min-height: 100vh;
         }
@@ -57,37 +56,38 @@
         }
     </style>
 </head>
-<body class="text-soft-text selection:bg-primary/20 flex flex-col min-h-screen">
+<body class="text-soft-text selection:bg-primary/20 flex flex-col min-h-screen bg-gradient-to-b from-sky-100 to-white dark:from-slate-900 dark:to-slate-800 transition-colors duration-300"
+    x-data="{ 
+        darkMode: localStorage.getItem('darkMode') === 'true',
+        toggleTheme() {
+            this.darkMode = !this.darkMode;
+            localStorage.setItem('darkMode', this.darkMode);
+            if (this.darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+    }"
+    x-init="$watch('darkMode', val => val ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')); if(darkMode) document.documentElement.classList.add('dark');"
+>
     <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="floating-cloud w-64 h-32 top-10 -left-10 bg-white"></div>
-        <div class="floating-cloud w-80 h-40 top-1/4 -right-20 bg-blue-100"></div>
-        <div class="floating-cloud w-96 h-48 bottom-10 left-1/4 bg-blue-50"></div>
-        <div class="absolute top-20 right-[15%] w-16 h-16 rounded-full bg-pink-200 border-4 border-pink-100 opacity-60 animate-pulse"></div>
-        <div class="absolute bottom-40 left-[10%] w-12 h-12 rounded-full bg-green-200 border-4 border-green-100 opacity-60"></div>
+        <div class="floating-cloud w-64 h-32 top-10 -left-10 bg-white dark:bg-slate-800 transition-colors duration-300"></div>
+        <div class="floating-cloud w-80 h-40 top-1/4 -right-20 bg-blue-100 dark:bg-blue-900/30 transition-colors duration-300"></div>
+        <div class="floating-cloud w-96 h-48 bottom-10 left-1/4 bg-blue-50 dark:bg-slate-800/50 transition-colors duration-300"></div>
+        <div class="absolute top-20 right-[15%] w-16 h-16 rounded-full bg-pink-200 dark:bg-pink-900/40 border-4 border-pink-100 dark:border-pink-800/50 opacity-60 animate-pulse transition-colors duration-300"></div>
+        <div class="absolute bottom-40 left-[10%] w-12 h-12 rounded-full bg-green-200 dark:bg-green-900/40 border-4 border-green-100 dark:border-green-800/50 opacity-60 transition-colors duration-300"></div>
     </div>
 
-    <header class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-lg border-b-4 border-blue-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='{{ route('home') }}'">
-                <div class="bg-primary p-2 rounded-2xl shadow-lg">
-                    <span class="material-symbols-outlined text-white text-3xl">rocket_launch</span>
-                </div>
-                <h2 class="text-3xl font-bold tracking-tight text-primary">ZenUniverse</h2>
-            </div>
-            <a class="text-lg font-bold text-slate-500 hover:text-primary transition-colors flex items-center gap-2" href="{{ route('home') }}">
-                <span class="material-symbols-outlined">arrow_back</span>
-                Kembali ke Beranda
-            </a>
-        </div>
-    </header>
+    <x-welcome.header />
 
     <main class="flex-grow pt-24 pb-10 relative z-10 flex items-center justify-center">
         {{ $slot }}
     </main>
 
-    <footer class="bg-white/50 border-t-4 border-blue-50 py-6 px-6 relative z-10">
+    <footer class="bg-white/50 dark:bg-slate-900/50 border-t-4 border-blue-50 dark:border-slate-800 py-6 px-6 relative z-10 transition-colors duration-300">
         <div class="max-w-7xl mx-auto flex justify-center items-center text-center">
-            <p class="text-slate-400 text-sm font-bold">© {{ date('Y') }} ZenUniverse. Misi Menjelajah Galaksi.</p>
+            <p class="text-slate-400 dark:text-slate-500 text-sm font-bold">© {{ date('Y') }} ZenUniverse. Misi Menjelajah Galaksi.</p>
         </div>
     </footer>
 </body>

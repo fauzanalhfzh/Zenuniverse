@@ -21,10 +21,6 @@ class Register extends Component
 
     public string $password_confirmation = '';
 
-    public string $role = 'student'; // Default role
-    
-    public string $age_group = '8-12'; // Default age group
-
     public int $step = 1;
 
     public function updatedEmail($value): void
@@ -40,8 +36,6 @@ class Register extends Component
         $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'role' => ['required', 'string', 'in:student,teacher,parent'],
-            'age_group' => ['required', 'string', 'in:4-7,8-12,12-16,adult'],
         ]);
 
         $this->step = 2;
@@ -56,8 +50,8 @@ class Register extends Component
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'role' => $this->role,
-            'age_group' => $this->age_group,
+            'role' => 'student',
+            'age_group' => '12-16', // Provide a default age group
             'password' => Hash::make($this->password),
         ]);
 

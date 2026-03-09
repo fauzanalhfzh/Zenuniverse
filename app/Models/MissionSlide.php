@@ -15,6 +15,7 @@ class MissionSlide extends Model
         'title',
         'content',
         'image',
+        'audio_url',
         'button_text',
         'options',
         'correct_answer',
@@ -31,3 +32,5 @@ class MissionSlide extends Model
         return $this->belongsTo(Lesson::class);
     }
 }
+
+

@@ -9,13 +9,6 @@ use Livewire\Component;
 #[Layout('components.layouts.student')]
 class CourseSelection extends Component
 {
-    public $role = 'student'; // Default active tab
-
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
-
     public function selectCourse($courseId)
     {
         $user = auth()->user();
@@ -29,8 +22,7 @@ class CourseSelection extends Component
     public function render()
     {
         return view('livewire.course-selection', [
-            'studentCourses' => Course::where('type', 'student')->orderBy('order')->get(),
-            'teacherCourses' => Course::where('type', 'teacher')->orderBy('order')->get(),
+            'studentCourses' => Course::orderBy('order')->get(),
         ]);
     }
 }
