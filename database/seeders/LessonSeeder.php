@@ -45,7 +45,7 @@ class LessonSeeder extends Seeder
     }
 
     private function createLogicLesson1($course)
-    {
+    {x
         $lesson = Lesson::firstOrCreate(
             ['slug' => 'apa-itu-algoritma'],
             [

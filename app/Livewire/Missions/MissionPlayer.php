@@ -24,6 +24,14 @@ class MissionPlayer extends Component
 
     public $minigameData = [];
 
+    public $startTime = null;
+
+    public $showCompletion = false;
+
+    public $completionData = [];
+
+    public $showGameOver = false;
+
     public function mount($slug)
     {
         if (auth()->check() && auth()->user()->hearts <= 0) {
@@ -40,6 +48,7 @@ class MissionPlayer extends Component
             return;
         }
 
+        $this->startTime = time();
         $this->initMinigameData();
     }
 
@@ -151,7 +160,8 @@ class MissionPlayer extends Component
             $user->save();
             
             if ($user->hearts <= 0) {
-                $this->redirectRoute('dashboard', navigate: true);
+                $this->dispatch('play-sound', type: 'incorrect');
+                $this->showGameOver = true;
                 return;
             }
         }
@@ -163,14 +173,42 @@ class MissionPlayer extends Component
             $this->step++;
             $this->resetStep();
         } else {
+            // Calculate elapsed time
+            $elapsed = time() - ($this->startTime ?? time());
+            $minutes = floor($elapsed / 60);
+            $seconds = $elapsed % 60;
+            $timeFormatted = sprintf('%02d:%02d', $minutes, $seconds);
+
+            $xpEarned = $this->mission->xp_reward ?? 100;
+
             // Save Progress via Service
             if (auth()->check()) {
-                $this->dispatch('play-sound', type: 'completed');
                 app(LessonService::class)->completeMission(auth()->user(), $this->mission);
             }
 
-            return redirect()->route('dashboard');
+            // Dispatch completion sound
+            $this->dispatch('play-sound', type: 'completed');
+
+            // Show completion screen
+            $nextLesson = Lesson::where('course_id', $this->mission->course_id)
+                ->where('order', '>', $this->mission->order)
+                ->orderBy('order')
+                ->first();
+
+            $this->completionData = [
+                'xp'            => $xpEarned,
+                'time'          => $timeFormatted,
+                'title'         => $this->mission->title,
+                'nextSlug'      => $nextLesson?->slug,
+                'nextTitle'     => $nextLesson?->title,
+            ];
+            $this->showCompletion = true;
         }
+    }
+
+    public function goToDashboard()
+    {
+        return redirect()->route('dashboard');
     }
 
     private function resetStep()

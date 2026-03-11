@@ -28,6 +28,37 @@
         }
         .font-display { font-family: 'Fredoka', sans-serif; }
         .prose-custom p { margin-bottom: 1rem; }
+        .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes confetti-fall {
+            0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+        .animate-confetti-0 { animation: confetti-fall linear infinite; }
+        .animate-confetti-1 { animation: confetti-fall 1.8s linear infinite; }
+        .animate-confetti-2 { animation: confetti-fall 2.2s linear infinite; }
+        .animate-confetti-3 { animation: confetti-fall 1.5s linear infinite; }
+        .animate-confetti-4 { animation: confetti-fall 2.5s linear infinite; }
+        /* Game Over */
+        .animate-shake-heart { animation: shake-heart 0.6s ease-in-out infinite alternate; }
+        @keyframes shake-heart {
+            0%   { transform: rotate(-15deg) scale(1); }
+            50%  { transform: rotate(15deg)  scale(1.15); }
+            100% { transform: rotate(-10deg) scale(0.95); }
+        }
+        @keyframes float-up-fade {
+            0%   { transform: translateY(0);    opacity: 0.7; }
+            100% { transform: translateY(-80px); opacity: 0; }
+        }
+        .animate-float-up { animation: float-up-fade 2s ease-out infinite; }
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+            50% { box-shadow: 0 0 0 18px rgba(239,68,68,0); }
+        }
+        .animate-pulse-red { animation: pulse-red 1.5s ease-out infinite; }
     </style>
 
 
@@ -203,6 +234,180 @@
         @endif
     </main>
 
+    {{-- Lesson Completion Overlay --}}
+    @if($showCompletion)
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4"
+         x-data="completionScreen()"
+         x-init="init()">
+
+        {{-- Backdrop --}}
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-md"></div>
+
+        {{-- Confetti particles --}}
+        <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            @for($i = 0; $i < 20; $i++)
+            <div class="absolute animate-confetti-{{ $i % 5 }}"
+                 style="left: {{ rand(0, 100) }}%; top: -20px; animation-delay: {{ rand(0, 20) * 0.1 }}s; animation-duration: {{ rand(15, 30) * 0.1 }}s;"
+            >
+                <div class="w-3 h-3 rounded-sm" style="background: hsl({{ rand(0, 360) }}, 80%, 60%); transform: rotate({{ rand(0, 360) }}deg);"></div>
+            </div>
+            @endfor
+        </div>
+
+        {{-- Card --}}
+        <div class="relative z-10 w-full max-w-md mx-auto"
+             x-ref="card"
+             style="opacity: 0; transform: scale(0.85) translateY(30px); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
+
+            <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+
+                {{-- Top banner --}}
+                <div class="bg-gradient-to-br from-yellow-400 via-orange-400 to-pink-500 p-8 text-center relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-20"
+                         style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px); background-size: 30px 30px;">
+                    </div>
+                    <div class="relative text-6xl mb-3 animate-bounce-slow">🏆</div>
+                    <h1 class="relative font-display text-3xl font-bold text-white drop-shadow-lg">Misi Selesai!</h1>
+                    <p class="relative text-white/80 mt-1 text-sm">{{ $completionData['title'] }}</p>
+                </div>
+
+                {{-- Stats --}}
+                <div class="p-6 space-y-4">
+
+                    {{-- XP Earned card --}}
+                    <div class="flex items-center gap-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-2xl p-4 border-2 border-yellow-200 dark:border-yellow-700">
+                        <div class="w-14 h-14 rounded-xl bg-yellow-400 flex items-center justify-center shadow-lg shadow-yellow-300/50 shrink-0">
+                            <span class="text-2xl">⭐</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">XP Diperoleh</p>
+                            <p class="text-3xl font-display font-bold text-yellow-500 dark:text-yellow-400">
+                                +{{ $completionData['xp'] }} <span class="text-xl">XP</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    {{-- Time card --}}
+                    <div class="flex items-center gap-4 bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-4 border-2 border-blue-200 dark:border-blue-700">
+                        <div class="w-14 h-14 rounded-xl bg-blue-500 flex items-center justify-center shadow-lg shadow-blue-300/50 shrink-0">
+                            <span class="material-symbols-outlined text-white text-3xl">timer</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Waktu Pengerjaan</p>
+                            <p class="text-3xl font-display font-bold text-blue-500 dark:text-blue-400">
+                                {{ $completionData['time'] }}
+                            </p>
+                        </div>
+                    </div>
+
+                    {{-- Action Buttons --}}
+                    <div class="flex gap-3 mt-2">
+                        {{-- Back to Dashboard --}}
+                        <button
+                            wire:click="goToDashboard"
+                            wire:loading.attr="disabled"
+                            class="{{ $completionData['nextSlug'] ? 'flex-1' : 'w-full' }} py-5 rounded-2xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 active:scale-95 text-slate-700 dark:text-slate-200 font-display text-lg font-bold transition-all duration-200 flex items-center justify-center gap-2">
+                            <span wire:loading.remove wire:target="goToDashboard" class="flex items-center gap-2">
+                                <span class="material-symbols-outlined">home</span>
+                                Dashboard
+                            </span>
+                            <span wire:loading wire:target="goToDashboard" class="flex items-center gap-2">
+                                <span class="animate-spin material-symbols-outlined">refresh</span> Tunggu...
+                            </span>
+                        </button>
+
+                        {{-- Next Lesson (only if exists) --}}
+                        @if($completionData['nextSlug'])
+                        <a href="{{ route('missions.player', $completionData['nextSlug']) }}"
+                           wire:navigate
+                           class="flex-1 py-5 rounded-2xl bg-blue-500 hover:bg-blue-600 active:scale-95 text-white font-display text-lg font-bold transition-all duration-200 shadow-lg shadow-blue-400/30 flex items-center justify-center gap-2">
+                            <span class="text-center leading-tight">
+                                <span class="block text-xs font-normal opacity-80">Selanjutnya</span>
+                                {{ Str::limit($completionData['nextTitle'], 18) }}
+                            </span>
+                            <span class="material-symbols-outlined shrink-0">arrow_forward</span>
+                        </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{-- Game Over Overlay --}}
+    @if($showGameOver)
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4"
+         x-data="gameOverScreen()"
+         x-init="init()">
+
+        {{-- Dark red backdrop --}}
+        <div class="absolute inset-0 bg-red-950/90 backdrop-blur-md"></div>
+
+        {{-- Floating heart particles --}}
+        <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            @for($i = 0; $i < 8; $i++)
+            <div class="absolute text-2xl animate-float-up"
+                 style="left: {{ rand(5, 95) }}%; bottom: {{ rand(10, 40) }}%; animation-delay: {{ $i * 0.4 }}s; animation-duration: {{ rand(18, 28) * 0.1 }}s;">
+                💔
+            </div>
+            @endfor
+        </div>
+
+        {{-- Card --}}
+        <div class="relative z-10 w-full max-w-sm mx-auto"
+             x-ref="card"
+             style="opacity: 0; transform: scale(0.85) translateY(30px); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);">
+
+            <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+
+                {{-- Top banner --}}
+                <div class="bg-gradient-to-br from-red-600 via-rose-600 to-pink-700 p-8 text-center relative overflow-hidden">
+                    {{-- subtle dot pattern --}}
+                    <div class="absolute inset-0 opacity-10"
+                         style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 24px 24px;">
+                    </div>
+
+                    {{-- Pulsing circle behind heart --}}
+                    <div class="relative flex justify-center mb-3">
+                        <div class="w-24 h-24 rounded-full bg-red-500/40 flex items-center justify-center animate-pulse-red">
+                            <div class="text-6xl animate-shake-heart">💔</div>
+                        </div>
+                    </div>
+                    <h1 class="relative font-display text-3xl font-bold text-white drop-shadow-lg">Nyawa Habis!</h1>
+                    <p class="relative text-white/70 mt-2 text-sm px-4">Jangan menyerah! Nyawamu akan pulih seiring waktu.</p>
+                </div>
+
+                {{-- Empty hearts display --}}
+                <div class="px-6 pt-5 pb-2">
+                    <p class="text-center text-slate-500 dark:text-slate-400 text-sm font-medium mb-3">Sisa nyawa</p>
+                    <div class="flex justify-center gap-3">
+                        @for($i = 0; $i < 5; $i++)
+                        <span class="text-3xl" style="animation: bounce-slow 2s ease-in-out infinite; animation-delay: {{ $i * 0.15 }}s; display: inline-block;">🤍</span>
+                        @endfor
+                    </div>
+                </div>
+
+                {{-- CTA --}}
+                <div class="p-6 pt-4">
+                    <button
+                        wire:click="goToDashboard"
+                        wire:loading.attr="disabled"
+                        class="w-full py-5 rounded-2xl bg-red-500 hover:bg-red-600 active:scale-95 text-white font-display text-xl font-bold transition-all duration-200 shadow-lg shadow-red-400/30 flex items-center justify-center gap-2">
+                        <span wire:loading.remove wire:target="goToDashboard" class="flex items-center gap-2">
+                            <span class="material-symbols-outlined">home</span>
+                            Kembali ke Dashboard
+                        </span>
+                        <span wire:loading wire:target="goToDashboard" class="flex items-center gap-2">
+                            <span class="animate-spin material-symbols-outlined">refresh</span> Tunggu...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     {{-- Dark Mode Toggle --}}
     <div class="fixed bottom-6 left-6 z-50" x-data="{ 
         darkMode: localStorage.getItem('darkMode') === 'true',
@@ -342,6 +547,30 @@
 
         document.addEventListener('alpine:init', () => {
             Alpine.data('minigameHandler', window.minigameHandler);
+
+            Alpine.data('completionScreen', () => ({
+                init() {
+                    this.$nextTick(() => {
+                        const card = this.$refs.card;
+                        if (card) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1) translateY(0)';
+                        }
+                    });
+                }
+            }));
+
+            Alpine.data('gameOverScreen', () => ({
+                init() {
+                    this.$nextTick(() => {
+                        const card = this.$refs.card;
+                        if (card) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1) translateY(0)';
+                        }
+                    });
+                }
+            }));
         });
 
         // Ensure step numbers are updated correctly
