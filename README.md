@@ -1,59 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="https://lemmes.zenstory.id" target="_blank">
+    <img src="https://github.com/user-attachments/assets/2d113284-5ca9-4c33-9958-39cb214c3152" width="400" alt="Zenuniverse Logo">
+  </a>
 </p>
 
-## About Laravel
+# Zenuniverse
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Zenuniverse** adalah sebuah platform web pembelajaran interaktif yang dirancang untuk membantu pemula memahami konsep dasar pemrograman, logika, dan matematika melalui pengalaman belajar yang gamified (berbasis permainan). Platform ini dibangun menggunakan framework **Laravel**, **Livewire**, dan **Filament PHP**.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🌟 Fitur Utama
 
-## Learning Laravel
+Zenuniverse menyajikan pengalaman belajar yang tidak membosankan berkat perpaduan konten edukasi dan interaktivitas.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+1. **Manajemen Kursus & Pelajaran (Courses & Lessons)**
+   Materi pembelajaran disusun secara hierarkis (Kursus > Pelajaran > Slide Konsep). Pengguna dapat mempelajari berbagai topik menarik seperti HTML Dasar, Logika Pemrograman, dan Matematika Dasar.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Mini-Games Pembelajaran Interaktif**
+   Sistem di Zenuniverse tidak hanya menggunakan teks, melainkan slide interaktif berupa:
+   - **Trivia & Quiz:** Pertanyaan pilihan ganda untuk menguji pemahaman konsep.
+   - **Code Arrange (Puzzle Kode):** Menyusun blok kode atau algoritma secara berurutan.
+   - **Code Fill in the Blank:** Melengkapi bagian kode atau logika yang kosong.
+   - **Block Code (Logika Visual):** Menarik dan meletakkan instruksi aksi/logika (drag-and-drop) untuk mencapai tujuan tertentu (misalnya, menggerakkan robot).
 
-## Laravel Sponsors
+3. **Sistem Gamifikasi (XP, Level, & Badge)**
+   - **Experience Points (XP):** Pengguna mendapatkan XP setiap kali menyelesaikan pelajaran atau menjawab kuis dengan benar.
+   - **Sistem Level:** Akumulasi XP akan meningkatkan level pengguna (misal: Pemula, Menengah, Mahir).
+   - **Badge (Lencana Prestasi):** Pengguna dapat memperoleh pencapaian khusus/badge ketika menyelesaikan suatu course atau mencapai target tertentu.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. **Komunitas / Forum Diskusi (Post System)**
+   Terdapat fitur komunitas yang memungkinkan antar pengguna saling berbagi pengetahuan, bertanya, dan berdiskusi seputar materi pembelajaran.
 
-### Premium Partners
+5. **Admin Panel yang Kuat (Filament)**
+   Admin memiliki kontrol penuh untuk mengatur seluruh konten pembelajaran (Kursus, Pelajaran, Slide interaktif), manajemen pengguna, serta melihat statistik melalui panel Filament.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🛠 Teknologi yang Digunakan
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Proyek ini dibangun di atas tumpukan teknologi (tech stack) berikut:
 
-## Code of Conduct
+- **Framework Utama:** [Laravel 12.x](https://laravel.com/) (PHP)
+- **Komponen Interaktif:** [Livewire 3](https://livewire.laravel.com/) & Alpine.js
+- **Admin Panel:** [Filament v3](https://filamentphp.com/)
+- **Styling:** Tailwind CSS
+- **Database:** MySQL / SQLite
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🚀 Panduan Instalasi (Development)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Jika Anda ingin menjalankan proyek **Zenuniverse** secara lokal, ikuti langkah-langkah berikut:
 
-## License
+**1. Kloning Repositori**
+```bash
+git clone https://github.com/username/Zenuniverse.git
+cd Zenuniverse
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**2. Instalasi Dependensi PHP (Composer)**
+```bash
+composer install
+```
+
+**3. Konfigurasi Environment**
+Salin file `.env.example` menjadi `.env` dan atur konfigurasi database Anda.
+```bash
+cp .env.example .env
+```
+Jangan lupa untuk membuat *Application Key*:
+```bash
+php artisan key:generate
+```
+
+**4. Instalasi Dependensi Frontend (NPM)**
+```bash
+npm install
+npm run build
+```
+
+**5. Migrasi dan Seeder Database**
+Proyek ini dilengkapi dengan seeder lengkap untuk inisialisasi Course, Lesson, minigames interaktif, Badge, Level, serta akun Admin.
+```bash
+php artisan migrate:fresh --seed
+```
+*Catatan: Akun default admin biasanya dapat menggunakan email `admin@zenuniverse.id` dengan password `password`.*
+
+**6. Jalankan Server Lokal**
+```bash
+php artisan serve
+```
+Dan jalankan Vite dev server di terminal yang berbeda (untuk hot-reload aset):
+```bash
+npm run dev
+```
+
+Anda kini dapat mengakses aplikasi di `http://localhost:8000`.
+
+---
+
+## 📜 Lisensi
+
+Proyek ini merupakan perangkat lunak *open-source* yang dilisensikan di bawah [MIT License](https://opensource.org/licenses/MIT).
+
+*(Dokumentasi dan framework dasar berjalan dengan dukungan Laravel Framework)*
