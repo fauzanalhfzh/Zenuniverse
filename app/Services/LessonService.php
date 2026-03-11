@@ -47,9 +47,12 @@ class LessonService
     /**
      * Complete a mission (slide-based lesson) and award XP.
      */
-    public function completeMission(User $user, Lesson $mission, ?int $xpOverride = null): bool
+    public function completeMission(User $user, Lesson $mission, ?int $xpOverride = null): array
     {
         $xp = $xpOverride ?? $mission->xp_reward ?? 100;
+        
+        $oldTotalXp = $user->total_xp;
+        $oldCurrentXp = $user->current_xp;
 
         UserProgress::updateOrCreate(
             [
@@ -66,18 +69,29 @@ class LessonService
 
         $user->increment('current_xp', $xp);
         $user->increment('total_xp', $xp);
+        
+        // Refresh user model after increment
+        $user->refresh();
 
-        $this->checkLevelUp($user);
+        $newLevel = $this->checkLevelUp($user);
         $this->streakService->recordActivity($user);
-        $this->checkBadges($user);
+        $newBadges = $this->checkBadges($user);
 
-        return true;
+        return [
+            'xp_earned' => $xp,
+            'old_total_xp' => $oldTotalXp,
+            'new_total_xp' => $user->total_xp,
+            'old_current_xp' => $oldCurrentXp,
+            'new_current_xp' => $user->current_xp,
+            'new_level' => $newLevel,
+            'new_badges' => $newBadges,
+        ];
     }
 
     /**
      * Simple level-up check based on XP threshold.
      */
-    protected function checkLevelUp(User $user): void
+    protected function checkLevelUp(User $user): ?\App\Models\Level
     {
         $nextLevel = \App\Models\Level::where('order', '>', $user->currentLevel?->order ?? 0)
             ->orderBy('order')
@@ -85,13 +99,16 @@ class LessonService
 
         if ($nextLevel && $user->total_xp >= $nextLevel->xp_required) {
             $user->update(['current_level_id' => $nextLevel->id]);
+            return $nextLevel;
         }
+        
+        return null;
     }
 
     /**
      * Check and award badges dynamically.
      */
-    public function checkBadges(User $user): void
+    public function checkBadges(User $user): \Illuminate\Support\Collection
     {
         $allBadges = \App\Models\Badge::all();
         $userBadges = $user->badges()->pluck('badges.id')->toArray();
@@ -104,6 +121,7 @@ class LessonService
         $streakDays = $user->current_streak;
 
         $badgesToAward = [];
+        $newBadges = collect();
 
         foreach ($allBadges as $badge) {
             if (in_array($badge->id, $userBadges)) {
@@ -125,12 +143,15 @@ class LessonService
 
             if ($unlocked) {
                 $badgesToAward[$badge->id] = ['unlocked_at' => now()];
+                $newBadges->push($badge);
             }
         }
 
         if (!empty($badgesToAward)) {
             $user->badges()->syncWithoutDetaching($badgesToAward);
         }
+        
+        return $newBadges;
     }
 }
 

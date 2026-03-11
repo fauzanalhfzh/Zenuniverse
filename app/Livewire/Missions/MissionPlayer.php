@@ -208,26 +208,47 @@ class MissionPlayer extends Component
                 $timeFormatted = sprintf('%02d:%02d', floor($elapsed / 60), $elapsed % 60);
 
                 // Save Progress via Service
+                $gamification = null;
                 if (auth()->check()) {
-                    app(LessonService::class)->completeMission(auth()->user(), $this->mission, $this->earnedXp);
+                    $user = auth()->user();
+                    $gamification = app(LessonService::class)->completeMission($user, $this->mission, $this->earnedXp);
+                    
+                    // Prepare progress bar data
+                    $currentLevel = $user->currentLevel;
+                    $nextLevel = \App\Models\Level::where('order', '>', $currentLevel?->order ?? 0)->orderBy('order')->first();
+                    
+                    if ($nextLevel) {
+                        $minXp = $currentLevel?->xp_required ?? 0;
+                        $maxXp = $nextLevel->xp_required;
+                        $range = $maxXp - $minXp;
+                        
+                        $gamification['old_percent'] = $range > 0 ? min(100, max(0, (($gamification['old_total_xp'] - $minXp) / $range) * 100)) : 100;
+                        $gamification['new_percent'] = $range > 0 ? min(100, max(0, (($gamification['new_total_xp'] - $minXp) / $range) * 100)) : 100;
+                        $gamification['next_level_name'] = $nextLevel->name;
+                        $gamification['xp_to_next'] = max(0, $maxXp - $gamification['new_total_xp']);
+                    } else {
+                        $gamification['old_percent'] = 100;
+                        $gamification['new_percent'] = 100;
+                        $gamification['next_level_name'] = 'Max Level';
+                        $gamification['xp_to_next'] = 0;
+                    }
                 }
 
                 // Dispatch completion sound
                 $this->dispatch('play-sound', type: 'completed');
 
-                // Show completion screen
-                $nextLesson = Lesson::where('course_id', $this->mission->course_id)
-                    ->where('order', '>', $this->mission->order)
-                    ->orderBy('order')
-                    ->first();
+                // Prepare Completion Data
+                $nextMission = \App\Models\Lesson::where('order', '>', $this->mission->order)->orderBy('order')->first();
 
                 $this->completionData = [
-                    'xp'        => $this->earnedXp,
-                    'time'      => $timeFormatted,
-                    'title'     => $this->mission->title,
-                    'nextSlug'  => $nextLesson?->slug,
-                    'nextTitle' => $nextLesson?->title,
+                    'title' => $this->mission->title,
+                    'xp' => $this->earnedXp,
+                    'time' => $timeFormatted,
+                    'nextSlug' => $nextMission?->slug,
+                    'nextTitle' => $nextMission?->title,
+                    'gamification' => $gamification,
                 ];
+
                 $this->showCompletion = true;
             }
         }

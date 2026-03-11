@@ -29,6 +29,17 @@
         .font-display { font-family: 'Fredoka', sans-serif; }
         .prose-custom p { margin-bottom: 1rem; }
         .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+        @keyframes pop-in {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop-in { animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        
+        .xp-bar-fill { 
+            transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1); 
+        }
+
         @keyframes bounce-slow {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-12px); }
@@ -352,6 +363,26 @@
                         </div>
                     </div>
 
+                    {{-- XP Progress Bar --}}
+                    @if(isset($completionData['gamification']))
+                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-4 border border-slate-100 dark:border-slate-700/50">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-tighter">Level Progress</span>
+                            <span class="text-xs font-bold text-slate-500" x-text="'Next: ' + '{{ $completionData['gamification']['next_level_name'] }}'"></span>
+                        </div>
+                        <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative">
+                            {{-- The bar itself --}}
+                            <div class="xp-bar-fill absolute inset-y-0 left-0 bg-gradient-to-r from-yellow-400 to-orange-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                                 :style="'width: ' + xpPercent + '%'">
+                            </div>
+                        </div>
+                        <div class="flex justify-between mt-1">
+                            <span class="text-[10px] text-slate-400 font-medium">Lvl {{ auth()->user()->currentLevel?->name ?? '1' }}</span>
+                            <span class="text-[10px] text-slate-400 font-medium text-right">{{ $completionData['gamification']['xp_to_next'] }} XP to Level Up</span>
+                        </div>
+                    </div>
+                    @endif
+
                     {{-- Time card --}}
                     <div class="flex items-center gap-4 bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-4 border-2 border-blue-200 dark:border-blue-700">
                         <div class="w-14 h-14 rounded-xl bg-blue-500 flex items-center justify-center shadow-lg shadow-blue-300/50 shrink-0">
@@ -397,6 +428,56 @@
                 </div>
             </div>
         </div>
+
+        {{-- Level Up Overlay --}}
+        @if(isset($completionData['gamification']['new_level']))
+        <template x-if="showLevelUp">
+            <div class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+                <div class="absolute inset-0 bg-yellow-400/20 backdrop-blur-sm" @click="showLevelUp = false; checkNextAchievements()"></div>
+                <div class="relative z-10 w-full max-w-sm bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden animate-pop-in">
+                    <div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-8 text-center text-white">
+                        <div class="text-6xl mb-4 animate-bounce">🆙</div>
+                        <h2 class="text-3xl font-display font-black">NAIK LEVEL!</h2>
+                        <p class="opacity-80">Kamu sekarang Level {{ $completionData['gamification']['new_level']['name'] }}</p>
+                    </div>
+                    <div class="p-6 text-center">
+                        <p class="text-slate-600 dark:text-slate-300 mb-6 font-medium">Hebat! Kamu terus berkembang. Teruskan belajarmu!</p>
+                        <button @click="showLevelUp = false; checkNextAchievements()" class="w-full py-4 rounded-xl bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-lg shadow-lg active:scale-95 transition-all">Mantap!</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        @endif
+
+        {{-- Badge Unlock Overlay --}}
+        @if(isset($completionData['gamification']['new_badges']) && count($completionData['gamification']['new_badges']) > 0)
+        <template x-if="showBadge">
+            <div class="fixed inset-0 z-[70] flex items-center justify-center p-4">
+                <div class="absolute inset-0 bg-indigo-500/20 backdrop-blur-sm" @click="showBadge = false; checkNextAchievements()"></div>
+                <div class="relative z-10 w-full max-w-sm bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden animate-pop-in">
+                    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 p-8 text-center text-white">
+                        <div class="text-6xl mb-4 animate-bounce-slow">🏅</div>
+                        <h2 class="text-2xl font-display font-black">BADGE TERBUKA!</h2>
+                        <p class="opacity-80">Pencapaian baru berhasil dibuka!</p>
+                    </div>
+                    <div class="p-6">
+                        @foreach($completionData['gamification']['new_badges'] as $badge)
+                        <div class="flex items-center gap-4 mb-4 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-600/50">
+                            <div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center text-2xl shadow-sm">
+                                {{ $badge['icon'] ?? '🏆' }}
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-slate-800 dark:text-white leading-tight font-sans">{{ $badge['name'] }}</h3>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{{ $badge['description'] }}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                        <button @click="showBadge = false; checkNextAchievements()" class="w-full py-4 mt-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-lg shadow-lg active:scale-95 transition-all">Luar Biasa!</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        @endif
     </div>
     @endif
 
@@ -614,14 +695,41 @@
             Alpine.data('minigameHandler', window.minigameHandler);
 
             Alpine.data('completionScreen', () => ({
+                xpPercent: @js($completionData['gamification']['old_percent'] ?? 0),
+                newXpPercent: @js($completionData['gamification']['new_percent'] ?? 0),
+                showLevelUp: false,
+                hasLevelUp: @js(isset($completionData['gamification']['new_level'])),
+                showBadge: false,
+                hasBadges: @js(isset($completionData['gamification']['new_badges']) && count($completionData['gamification']['new_badges']) > 0),
+                
                 init() {
                     this.$nextTick(() => {
                         const card = this.$refs.card;
                         if (card) {
                             card.style.opacity = '1';
                             card.style.transform = 'scale(1) translateY(0)';
+                            
+                            // Start XP bar animation after card pops in
+                            setTimeout(() => {
+                                this.xpPercent = this.newXpPercent;
+                                
+                                // Show achievements after XP animation
+                                setTimeout(() => {
+                                    this.checkNextAchievements();
+                                }, 1800);
+                            }, 800);
                         }
                     });
+                },
+                
+                checkNextAchievements() {
+                    if (this.hasLevelUp) {
+                        this.showLevelUp = true;
+                        this.hasLevelUp = false; // Only show once
+                    } else if (this.hasBadges) {
+                        this.showBadge = true;
+                        this.hasBadges = false; // Only show once
+                    }
                 }
             }));
 
