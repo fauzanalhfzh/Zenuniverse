@@ -32,8 +32,6 @@ Route::get('leaderboard', [LeaderboardController::class, 'index'])
     ->name('leaderboard');
 
 // Missions
-Route::get('/missions/intro-to-tech', App\Livewire\Missions\IntroToTech::class)->name('mission.intro-to-tech');
-Route::get('/missions/math/counting-adventure', App\Livewire\Missions\Math\CountingAdventure::class)->name('mission.math.counting-adventure');
 Route::get('missions/{slug}', \App\Livewire\Missions\MissionPlayer::class)->name('missions.player');
 
 Route::get('lesson/{lesson}', LessonPlayer::class)

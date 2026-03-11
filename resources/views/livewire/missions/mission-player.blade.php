@@ -64,6 +64,11 @@
             <span class="material-symbols-outlined text-red-500 font-variation-settings: 'FILL' 1">favorite</span>
             <span class="font-bold text-red-600 dark:text-red-400 text-xl">{{ $hearts }}</span>
         </div>
+
+        {{-- Audio Elements --}}
+        <audio id="sound-correct" src="{{ asset('sounds/correct-answer.mp3') }}" preload="auto"></audio>
+        <audio id="sound-incorrect" src="{{ asset('sounds/wrong-answer.mp3') }}" preload="auto"></audio>
+        <audio id="sound-completed" src="{{ asset('sounds/lesson-complete.mp3') }}" preload="auto"></audio>
     </header>
 
     {{-- Main Content --}}
@@ -317,6 +322,21 @@
 
             removeFillAnswer(blankId) {
                 @this.call('removeFillAnswer', blankId);
+            }
+        });
+
+        // Handle sound events globally
+        window.addEventListener('play-sound', (event) => {
+            const sounds = {
+                'correct': 'sound-correct',
+                'incorrect': 'sound-incorrect',
+                'completed': 'sound-completed'
+            };
+            const soundId = sounds[event.detail.type];
+            const audio = document.getElementById(soundId);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.error('Error playing sound:', e));
             }
         });
 

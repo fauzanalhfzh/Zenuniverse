@@ -58,7 +58,10 @@ class MissionPlayer extends Component
         $this->isCorrect = ($this->selectedAnswer == ($correctOption['id'] ?? null));
 
         if (! $this->isCorrect) {
+            $this->dispatch('play-sound', type: 'incorrect');
             $this->handleIncorrectAnswer();
+        } else {
+            $this->dispatch('play-sound', type: 'correct');
         }
     }
 
@@ -122,7 +125,10 @@ class MissionPlayer extends Component
         }
 
         if (! $this->isCorrect) {
+            $this->dispatch('play-sound', type: 'incorrect');
             $this->handleIncorrectAnswer();
+        } else {
+            $this->dispatch('play-sound', type: 'correct');
         }
     }
 
@@ -159,6 +165,7 @@ class MissionPlayer extends Component
         } else {
             // Save Progress via Service
             if (auth()->check()) {
+                $this->dispatch('play-sound', type: 'completed');
                 app(LessonService::class)->completeMission(auth()->user(), $this->mission);
             }
 
