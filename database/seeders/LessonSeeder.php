@@ -35,6 +35,16 @@ class LessonSeeder extends Seeder
             $this->createLogicLesson3($logicCourse); // Kondisional
             $this->createLogicLesson4($logicCourse); // Perulangan
             $this->createLogicLesson5($logicCourse); // Pseudocode
+            $this->createLogicLesson6($logicCourse); // Operator Aritmatika
+            $this->createLogicLesson7($logicCourse); // Operator Logika
+            $this->createLogicLesson8($logicCourse); // Array Dasar
+            $this->createLogicLesson9($logicCourse); // Fungsi (Function)
+            $this->createLogicLesson10($logicCourse); // Parameter dan Return
+            $this->createLogicLesson11($logicCourse); // Perulangan Lanjutan (Nested Loop)
+            $this->createLogicLesson12($logicCourse); // Pencarian Dasar
+            $this->createLogicLesson13($logicCourse); // Pengurutan Dasar
+            $this->createLogicLesson14($logicCourse); // Struktur Data
+            $this->createLogicLesson15($logicCourse); // Debugging
         }
 
         // Get Course "Matematika Dasar"
@@ -272,6 +282,460 @@ class LessonSeeder extends Seeder
         $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Jembatan', 'content' => 'Pseudocode adalah jembatan antara bahasa manusia dan bahasa pemrograman.']);
         // 10. Quiz
         $this->createQuiz($lesson, 10, 'Pseudocode menjembatani?', [['id' => 'A', 'text' => 'Manusia & Mesin', 'correct' => true], ['id' => 'B', 'text' => 'Laut & Darat', 'correct' => false]]);
+    }
+
+    private function createLogicLesson6($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'operator-aritmatika'],
+            [
+                'course_id' => $course->id, 'title' => 'Operator Aritmatika',
+                'content' => 'Kalkulasi dasar matematika dalam pemrograman.', 'video_url' => null, 'order' => 6, 'xp_reward' => 35,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Operator?', 'content' => 'Operator adalah simbol untuk melakukan operasi pada nilai atau variabel.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Fungsi operator aritmatika?', [['id' => 'A', 'text' => 'Menggambar garis', 'correct' => false], ['id' => 'B', 'text' => 'Melakukan perhitungan', 'correct' => true]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Penjumlahan & Pengurangan', 'content' => 'Gunakan tanda + untuk menambah dan - untuk mengurang.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Berapa 5 + 3?', [['id' => 'A', 'text' => '8', 'correct' => true], ['id' => 'B', 'text' => '7', 'correct' => false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Perkalian & Pembagian', 'content' => 'Dalam pemrograman, perkalian menggunakan * dan pembagian menggunakan /.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Simbol perkalian adalah?', [['id' => 'A', 'text' => 'x', 'correct' => false], ['id' => 'B', 'text' => '*', 'correct' => true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Modulus (Sisa Bagi)', 'content' => 'Modulus menggunakan tanda % dan menghasilkan sisa dari pembagian (misalnya 5 % 2 = 1).']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Berapa hasil dari 4 % 2?', [['id' => 'A', 'text' => '0', 'correct' => true], ['id' => 'B', 'text' => '2', 'correct' => false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Prioritas', 'content' => 'Sama seperti matematika, perkalian dan pembagian dilakukan sebelum penjumlahan/pengurangan.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Aturan pengerjaan didahulukan?', [['id' => 'A', 'text' => 'Kali/Bagi', 'correct' => true], ['id' => 'B', 'text' => 'Tambah/Kurang', 'correct' => false]]);
+
+        // 11. Code Arrange
+        $lesson->slides()->firstOrCreate(['order' => 11], [
+            'type' => 'code_arrange',
+            'title' => 'Puzzle: Kalkulator 🔢',
+            'content' => 'Susun langkah-langkah membuat program perhitungan sederhana.',
+            'options' => [
+                ['id' => 0, 'text' => 'Ambil angka pertama'],
+                ['id' => 1, 'text' => 'Tentukan operator matematika'],
+                ['id' => 2, 'text' => 'Ambil angka kedua'],
+                ['id' => 3, 'text' => 'Hitung hasilnya'],
+                ['id' => 4, 'text' => 'Tampilkan ke layar'],
+            ],
+            'correct_answer' => null,
+            'explanation' => 'Kita harus tahu nilai dan operatornya terlebih dahulu sebelum menghitung dan menampilkannya.',
+        ]);
+
+        // 12. Block Code
+        $lesson->slides()->firstOrCreate(['order' => 12], [
+            'type' => 'block_code',
+            'title' => 'Perhitungan Blok 🧮',
+            'content' => 'Lengkapi perhitungan agar hasilnya 10. Tarik angka dan operator!',
+            'options' => [
+                ['id' => 1, 'type' => 'action', 'text' => 'Angka 5'],
+                ['id' => 2, 'type' => 'logic', 'text' => 'Ditambah (+)'],
+                ['id' => 3, 'type' => 'action', 'text' => 'Angka 5'],
+            ],
+            'correct_answer' => '1,2,3',
+            'explanation' => '5 ditambah (+) 5 hasilnya adalah 10.',
+        ]);
+    }
+
+    private function createLogicLesson7($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'operator-logika'],
+            [
+                'course_id' => $course->id, 'title' => 'Operator Logika',
+                'content' => 'Menggabungkan beberapa kondisi.', 'video_url' => null, 'order' => 7, 'xp_reward' => 35,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Lebih Dari Satu Kondisi', 'content' => 'Operator logika membantu kita mengecek lebih dari satu syarat.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Fungsi operator logika?', [['id' => 'A', 'text' => 'Gabung kondisi', 'correct' => true], ['id' => 'B', 'text' => 'Hitung angka', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'AND (Dan)', 'content' => 'Operator AND (&&) menghasilkan True HANYA JIKA semua kondisi benar.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Syarat operator AND?', [['id' => 'A', 'text' => 'Semua harus benar', 'correct' => true], ['id' => 'B', 'text' => 'Salah satu boleh salah', 'correct' => false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'OR (Atau)', 'content' => 'Operator OR (||) menghasilkan True JIKA SALAH SATU atau lebih kondisi benar.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Jika salah satu benar, maka hasil OR?', [['id' => 'A', 'text' => 'True', 'correct' => true], ['id' => 'B', 'text' => 'False', 'correct' => false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'NOT (Tidak)', 'content' => 'Operator NOT (!) membalikkan kebenaran. True menjadi False, dan sebaliknya.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'NOT True sama dengan?', [['id' => 'A', 'text' => 'False', 'correct' => true], ['id' => 'B', 'text' => 'Benar', 'correct' => false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Pemakaian Populer', 'content' => 'Digunakan saat login: JIKA username benar AND password benar.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Login butuh operator apa agar aman?', [['id' => 'A', 'text' => 'OR', 'correct' => false], ['id' => 'B', 'text' => 'AND', 'correct' => true]]);
+
+        // 11. Code Fill in the Blank
+        $lesson->slides()->firstOrCreate(['order' => 11], [
+            'type' => 'code_fillblank',
+            'title' => 'Lengkapi Logika 📝',
+            'content' => 'Pilih operator logika yang tepat untuk masuk ke bioskop.',
+            'options' => [
+                ['type' => 'text', 'value' => 'Jika punya tiket '],
+                ['type' => 'blank', 'id' => 0, 'answer_id' => 1], // AND
+                ['type' => 'text', 'value' => ' umur sesuai batas minimal, maka boleh masuk.'],
+            ],
+            'correct_answer' => json_encode([
+                ['id' => 1, 'text' => 'AND', 'color' => 'blue'],
+                ['id' => 2, 'text' => 'OR', 'color' => 'red'],
+                ['id' => 3, 'text' => 'NOT', 'color' => 'gray'], // distractor
+            ]),
+            'explanation' => 'Kita butuh AND karena kedua syarat (punya tiket dan cukup umur) harus terpenuhi.',
+        ]);
+    }
+
+    private function createLogicLesson8($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'array-koleksi'],
+            [
+                'course_id' => $course->id, 'title' => 'Array (Koleksi Data)',
+                'content' => 'Menyimpan banyak data dalam satu tempat.', 'video_url' => null, 'order' => 8, 'xp_reward' => 45,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Array?', 'content' => 'Array adalah struktur data yang menyimpan daftar item dalam satu variabel tunggal.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Fungsi utama array?', [['id' => 'A', 'text' => 'Simpan banyak data', 'correct' => true], ['id' => 'B', 'text' => 'Hapus data', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Analogi Lemari', 'content' => 'Array seperti lemari dengan banyak laci. Tiap laci punya nomor urut unik.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Array mirip dengan apa?', [['id' => 'A', 'text' => 'Lemari berlaci', 'correct' => true], ['id' => 'B', 'text' => 'Air mengalir', 'correct' => false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Indeks Array', 'content' => 'Nomor laci (indeks) di dalam Array biasanya dimulai dari 0, bukan 1.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Indeks awal array adalah?', [['id' => 'A', 'text' => '0', 'correct' => true], ['id' => 'B', 'text' => '1', 'correct' => false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Titik Kurung', 'content' => 'Array biasanya ditandai dengan kurung siku [ ]. Contoh: [Apel, Jeruk, Pisang].']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Simbol array pada kodingan?', [['id' => 'A', 'text' => '{ }', 'correct' => false], ['id' => 'B', 'text' => '[ ]', 'correct' => true]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Akses Data', 'content' => 'Jika Buah = [Apel, Jeruk], maka Buah[0] adalah Apel.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Buah[1] pada array [Apel, Jeruk] adalah?', [['id' => 'A', 'text' => 'Jeruk', 'correct' => true], ['id' => 'B', 'text' => 'Apel', 'correct' => false]]);
+
+        // 11. Code Arrange
+        $lesson->slides()->firstOrCreate(['order' => 11], [
+            'type' => 'code_arrange',
+            'title' => 'Daftar Belanja 🛒',
+            'content' => 'Buat urutan array daftar belanja yang benar dari indeks 0 sampai 3!',
+            'options' => [
+                ['id' => 0, 'text' => '[0] Susu'],
+                ['id' => 1, 'text' => '[1] Roti'],
+                ['id' => 2, 'text' => '[2] Telur'],
+                ['id' => 3, 'text' => '[3] Keju'],
+            ],
+            'correct_answer' => null,
+            'explanation' => 'Array selalu berurutan dari indeks 0, 1, 2, dan seterusnya.',
+        ]);
+    }
+
+    private function createLogicLesson9($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'fungsi-dasar'],
+            [
+                'course_id' => $course->id, 'title' => 'Fungsi (Function)',
+                'content' => 'Membuat blok kode yang bisa dipakai ulang.', 'video_url' => null, 'order' => 9, 'xp_reward' => 45,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Fungsi?', 'content' => 'Fungsi (Function) adalah sekumpulan kode yang diberi nama dan melakukan tugas tertentu.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Fungsi berguna untuk?', [['id' => 'A', 'text' => 'Kode dipakai ulang', 'correct' => true], ['id' => 'B', 'text' => 'Macetkan program', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Mencegah Repetisi', 'content' => 'Daripada menulis 10 baris kode yang sama berulang kali, cukup buat satu fungsi dan panggil namanya.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Kelebihan fungsi?', [['id' => 'A', 'text' => 'Banyak mengetik', 'correct' => false], ['id' => 'B', 'text' => 'Cegah kode berulang', 'correct' => true]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Definisi vs Panggilan', 'content' => 'Kita \'mendefinisikan\' (membuat) fungsi dulu, baru kemudian bisa \'memanggil\' (menggunakan) fungsi tersebut.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Sebelum dipanggil, fungsi harus?', [['id' => 'A', 'text' => 'Dihapus', 'correct' => false], ['id' => 'B', 'text' => 'Didefinisikan', 'correct' => true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Penamaan Fungsi', 'content' => 'Nama fungsi biasanya menggunakan kata kerja, seperti SapaPengguna() atau HitungTotal().']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Ide nama fungsi yang baik?', [['id' => 'A', 'text' => 'HitungLuas()', 'correct' => true], ['id' => 'B', 'text' => 'Biru()', 'correct' => false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Modularitas', 'content' => 'Fungsi membagi program besar menjadi modul-modul kecil yang rapi dan mudah diatur.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Program besar lebih mudah diatur bila?', [['id' => 'A', 'text' => 'Ditulis 1000 baris acak', 'correct' => false], ['id' => 'B', 'text' => 'Dibagi jadi fungsi-fungsi', 'correct' => true]]);
+        
+        // 11. Code Fill in the Blank
+        $lesson->slides()->firstOrCreate(['order' => 11], [
+            'type' => 'code_fillblank',
+            'title' => 'Lengkapi Fungsi 📝',
+            'content' => 'Lengkapi urutan membuat dan menggunakan fungsi menyapa.',
+            'options' => [
+                ['type' => 'text', 'value' => 'Pertama, '],
+                ['type' => 'blank', 'id' => 0, 'answer_id' => 1], // Buat fungsi Sapa()
+                ['type' => 'text', 'value' => ' berisi perintah "Halo".\nLalu, '],
+                ['type' => 'blank', 'id' => 1, 'answer_id' => 2], // Panggil fungsi Sapa()
+                ['type' => 'text', 'value' => ' di tempat yang kita inginkan.'],
+            ],
+            'correct_answer' => json_encode([
+                ['id' => 1, 'text' => 'Buat fungsi Sapa()', 'color' => 'blue'],
+                ['id' => 2, 'text' => 'Panggil fungsi Sapa()', 'color' => 'purple'],
+                ['id' => 3, 'text' => 'Hapus Semua', 'color' => 'red'], // distractor
+            ]),
+            'explanation' => 'Kita mendeklarasikan atau membuat fungsi lebih dahulu sebelum bisa memanggilnya.',
+        ]);
+    }
+
+    private function createLogicLesson10($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'parameter-dan-return'],
+            [
+                'course_id' => $course->id, 'title' => 'Parameter & Return',
+                'content' => 'Input dan output dari sebuah Fucntion.', 'video_url' => null, 'order' => 10, 'xp_reward' => 50,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Parameter?', 'content' => 'Parameter adalah data atau variabel yang kita kirimkan (input) ke dalam sebuah fungsi.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Parameter sebutan lain untuk?', [['id' => 'A', 'text' => 'Input fungsi', 'correct' => true], ['id' => 'B', 'text' => 'Nama fungsi', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Contoh Parameter', 'content' => 'Pada fungsi BuatKopi(Gula, Kopi), maka "Gula" dan "Kopi" adalah parameter.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Berapa jumlah parameter pada BuatKopi(Air)?', [['id' => 'A', 'text' => 'Satu', 'correct' => true], ['id' => 'B', 'text' => 'Dua', 'correct' => false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Apa itu Return?', 'content' => 'Return digunakan untuk mengembalikan nilai (output) dari sebuah fungsi ke program utama.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Output fungsi menggunakan?', [['id' => 'A', 'text' => 'Return', 'correct' => true], ['id' => 'B', 'text' => 'Break', 'correct' => false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Beda Print dan Return', 'content' => 'Print sekadar mencetak teks ke layar, sedangkan Return memberikan kembali sebuah nilai yang bisa dihitung lagi.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Apakah Print dan Return itu sama?', [['id' => 'A', 'text' => 'Tidak', 'correct' => true], ['id' => 'B', 'text' => 'Sama persis', 'correct' => false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Mesin Pabrik', 'content' => 'Fungsi ibarat mesin. Parameter adalah bahan bakunya, Return adalah produk jadinya.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Parameter adalah?', [['id' => 'A', 'text' => 'Bahan Baku', 'correct' => true], ['id' => 'B', 'text' => 'Sisa limbah', 'correct' => false]]);
+    }
+
+    private function createLogicLesson11($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'nested-loop'],
+            [
+                'course_id' => $course->id, 'title' => 'Nested Loop',
+                'content' => 'Perulangan di dalam perulangan.', 'video_url' => null, 'order' => 11, 'xp_reward' => 50,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Loop Bersarang', 'content' => 'Nested Loop adalah kondisi dimana ada perulangan di dalam perulangan lainnya.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Apa itu Nested Loop?', [['id' => 'A', 'text' => 'Loop dalam Loop', 'correct' => true], ['id' => 'B', 'text' => 'Loop rusak', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Jam Dinding', 'content' => 'Jarum menit berputar 60 kali (loop dalam) untuk setiap 1 jam (loop luar).']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Berapa kali loop dalam berjalan dibanding loop luar?', [['id' => 'A', 'text' => 'Lebih lambat', 'correct' => false], ['id' => 'B', 'text' => 'Lebih banyak', 'correct' => true]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Pola Bintang', 'content' => 'Nested loop sering digunakan untuk membuat pola 2 dimensi, seperti kotak bintang atau segitiga bintang.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Nested loop berguna untuk membuat?', [['id' => 'A', 'text' => 'Garis lurus', 'correct' => false], ['id' => 'B', 'text' => 'Pola 2D (Kotak/Segitiga)', 'correct' => true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Cara Kerja', 'content' => 'Loop luar menunggu sampai loop dalam selesai mengulang sepenuhnya, barulah loop luar lanjut ke langkah berikutnya.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Siapa yang selesai lebih dulu?', [['id' => 'A', 'text' => 'Loop Luar', 'correct' => false], ['id' => 'B', 'text' => 'Loop Dalam', 'correct' => true]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Kombinasi Array', 'content' => 'Bisa digunakan untuk mengakses array 2 Dimensi (Matrix). Baris dan Kolom.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Array 2 Dimensi (Matrix) menggunakan?', [['id' => 'A', 'text' => 'Nested Loop', 'correct' => true], ['id' => 'B', 'text' => 'Satu Loop saja', 'correct' => false]]);
+    }
+
+    private function createLogicLesson12($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'pencarian-dasar'],
+            [
+                'course_id' => $course->id, 'title' => 'Pencarian (Searching)',
+                'content' => 'Menemukan data dalam tumpukan.', 'video_url' => null, 'order' => 12, 'xp_reward' => 55,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Linear Search', 'content' => 'Pencarian paling dasar dengan mengecek item satu persatu dari awal sampai akhir.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Bagaimana cara kerja Linear Search?', [['id' => 'A', 'text' => 'Cek satu persatu', 'correct' => true], ['id' => 'B', 'text' => 'Tebak acak', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Kapan Berhenti?', 'content' => 'Pencarian linier berhenti begitu ia menemukan angka yang dicari atau saat data sudah habis.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Jika data dicari ada di posisi paling awal, prosesnya?', [['id' => 'A', 'text' => 'Lama', 'correct' => false], ['id' => 'B', 'text' => 'Sangat cepat', 'correct' => true]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Kelemahan', 'content' => 'Mengecek satu persatu sangat lambat jika datanya ribuan atau jutaan.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Kekurangan pencarian satu-persatu?', [['id' => 'A', 'text' => 'Lambat jika data besar', 'correct' => true], ['id' => 'B', 'text' => 'Susah dipahami', 'correct' => false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Binary Search', 'content' => 'Pencarian membelah dua: mengecek bagian tengah. Syaratnya data harus sudah urut!']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Syarat menggunakan Binary Search?', [['id' => 'A', 'text' => 'Data acak', 'correct' => false], ['id' => 'B', 'text' => 'Data sudah urut', 'correct' => true]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Kamus Kata', 'content' => 'Mencari dengan Binary Search mirip mencari kata di kamus: buka tengah, cek posisinya.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Mencari di kamus memakai logika apa?', [['id' => 'A', 'text' => 'Linear Search', 'correct' => false], ['id' => 'B', 'text' => 'Binary Search (Pilah Tengan)', 'correct' => true]]);
+
+        // 11. Code Fill in the Blank
+        $lesson->slides()->firstOrCreate(['order' => 11], [
+            'type' => 'code_fillblank',
+            'title' => 'Mencari Angka 3 📝',
+            'content' => 'Data = [1, 2, 3, 4]. Lengkapi cara kerja pencarian linier.',
+            'options' => [
+                ['type' => 'text', 'value' => 'Pertama cek angka 1. Apakah 3? Bukan!\nCek angka 2. Apakah 3? Bukan!\nCek angka '],
+                ['type' => 'blank', 'id' => 0, 'answer_id' => 1], // 3
+                ['type' => 'text', 'value' => '. Apakah 3? '],
+                ['type' => 'blank', 'id' => 1, 'answer_id' => 2], // Ya, Berhenti!
+                ['type' => 'text', 'value' => ''],
+            ],
+            'correct_answer' => json_encode([
+                ['id' => 1, 'text' => '3', 'color' => 'blue'],
+                ['id' => 2, 'text' => 'Ya, Berhenti!', 'color' => 'green'],
+                ['id' => 3, 'text' => '4', 'color' => 'red'], // distractor
+                ['id' => 4, 'text' => 'Lanjut cek 4', 'color' => 'purple'], // distractor
+            ]),
+            'explanation' => 'Pencarian linier mengecek dari awal berurutan dan berhenti saat data ditemukan.',
+        ]);
+    }
+
+    private function createLogicLesson13($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'pengurutan-dasar'],
+            [
+                'course_id' => $course->id, 'title' => 'Pengurutan (Sorting)',
+                'content' => 'Mengurutkan data yang acak.', 'video_url' => null, 'order' => 13, 'xp_reward' => 55,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Mengapa Perlu Urut?', 'content' => 'Data yang urut jauh lebih mudah dibaca dan dicari (misal: mencari nomor HP di kontak).']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Manfaat mengurutkan data?', [['id' => 'A', 'text' => 'Membuat memori penuh', 'correct' => false], ['id' => 'B', 'text' => 'Mempermudah pencarian', 'correct' => true]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Ascending vs Descending', 'content' => 'Ascending artinya urut naik (A-Z / 1-10). Descending artinya urut turun (Z-A / 10-1).']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Urutan A sampai Z disebut?', [['id' => 'A', 'text' => 'Descending', 'correct' => false], ['id' => 'B', 'text' => 'Ascending', 'correct' => true]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Bubble Sort', 'content' => 'Algoritma urut paling sederhana: menukar dua angka bersebelahan jika salah urut.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Bagaimana Bubble Sort bekerja?', [['id' => 'A', 'text' => 'Ambil dari belakang', 'correct' => false], ['id' => 'B', 'text' => 'Tukar dua angka bersebelahan', 'correct' => true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Gelembung Naik', 'content' => 'Dinamakan Bubble (gelembung) karena angka terbesar akan perlahan "naik/pindah" ke posisi paling ujung secara bertahap.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Angka terbesar pada Bubble Sort akan?', [['id' => 'A', 'text' => 'Pindah ke ujung kanan', 'correct' => true], ['id' => 'B', 'text' => 'Dihapus', 'correct' => false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Efisiensi', 'content' => 'Meskipun mudah dibuat, Bubble Sort sangat lambat untuk mengurutkan jutaan data.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Apakah Bubble Sort cocok untuk data raksasa?', [['id' => 'A', 'text' => 'Ya, sangat cepat', 'correct' => false], ['id' => 'B', 'text' => 'Tidak, terlalu lambat', 'correct' => true]]);
+    }
+
+    private function createLogicLesson14($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'struktur-data-konsep'],
+            [
+                'course_id' => $course->id, 'title' => 'Struktur Data Dasar',
+                'content' => 'Antrean (Queue) dan Tumpukan (Stack).', 'video_url' => null, 'order' => 14, 'xp_reward' => 60,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Tumpukan (Stack)', 'content' => 'Kerja Stack seperti tumpukan piring. Yang terakhir ditaruh adalah yang pertama kali diambil (LIFO - Last In First Out).']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Prinsip Stack (Tumpukan)?', [['id' => 'A', 'text' => 'LIFO (Terakhir Masuk, Pertama Keluar)', 'correct' => true], ['id' => 'B', 'text' => 'Random Keluar', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Tombol Undo', 'content' => 'Tombol Undo (Ctrl+Z) di komputer menggunakan sistem Tumpukan (Stack). Ingatan terakhir yang dibatalkan duluan.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Bentuk penerapan Stack adalah?', [['id' => 'A', 'text' => 'Tombol Undo', 'correct' => true], ['id' => 'B', 'text' => 'Layar sentuh', 'correct' => false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Antrean (Queue)', 'content' => 'Kerja Queue seperti antrean kasir. Siapa yang datang duluan, ia yang dilayani duluan (FIFO - First In First Out).']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Prinsip Antrean kasir?', [['id' => 'A', 'text' => 'FIFO (Pertama Masuk, Pertama Keluar)', 'correct' => true], ['id' => 'B', 'text' => 'LIFO', 'correct' => false]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Antrean Download', 'content' => 'Sistem download file atau antrean percetakan menggunakan prinsip Queue.']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Penerapan Queue (Antrean) adalah?', [['id' => 'A', 'text' => 'Antrean Printer/Download', 'correct' => true], ['id' => 'B', 'text' => 'Bermain game', 'correct' => false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Penggabungan', 'content' => 'Dalam satu program kompleks, Stack, Queue, dan Array bisa dipakai bersamaan!']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Bisakah kita pakai banyak struktur data sekaligus?', [['id' => 'A', 'text' => 'Bisa dan Sering', 'correct' => true], ['id' => 'B', 'text' => 'Hanya boleh pilih satu', 'correct' => false]]);
+    }
+
+    private function createLogicLesson15($course)
+    {
+        $lesson = Lesson::firstOrCreate(
+            ['slug' => 'debugging-dasar'],
+            [
+                'course_id' => $course->id, 'title' => 'Debugging Dasar',
+                'content' => 'Mencari Kutu (Error) dalam program.', 'video_url' => null, 'order' => 15, 'xp_reward' => 60,
+            ]);
+
+        // 1. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 1], ['type' => 'text', 'title' => 'Apa itu Bug?', 'content' => 'Bug (Kutu) adalah kesalahan, cacat, atau error dalam program sehingga kode tidak berjalan semestinya.']);
+        // 2. Quiz
+        $this->createQuiz($lesson, 2, 'Apa arti Bug dalam kodingan?', [['id' => 'A', 'text' => 'Error/Kesalahan Program', 'correct' => true], ['id' => 'B', 'text' => 'Virus mematikan', 'correct' => false]]);
+
+        // 3. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 3], ['type' => 'text', 'title' => 'Sejarah Kata Bug', 'content' => 'Di tahun 1947, Grace Hopper menemukan ngengat (bug) asli menempel di komputer mekanik yang membuatnya mati.']);
+        // 4. Quiz
+        $this->createQuiz($lesson, 4, 'Kenapa disebut Bug?', [['id' => 'A', 'text' => 'Karena ada ngengat sungguhan masuk komputer', 'correct' => true], ['id' => 'B', 'text' => 'Singkatan dari Broken Under Ground', 'correct' => false]]);
+
+        // 5. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 5], ['type' => 'text', 'title' => 'Syntax Error', 'content' => 'Salah ketik! Lupa titik koma, salah kurung, atau typo kata kunci. Komputer tidak akan mau berjalan.']);
+        // 6. Quiz
+        $this->createQuiz($lesson, 6, 'Lupa titik koma disebut?', [['id' => 'A', 'text' => 'Logic Error', 'correct' => false], ['id' => 'B', 'text' => 'Syntax Error', 'correct' => true]]);
+
+        // 7. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 7], ['type' => 'text', 'title' => 'Logic Error', 'content' => 'Kode jalan dengan baik TANPA error merah, TAPI hasilnya salah (misal: Diskon tapi harganya malah makin mahal).']);
+        // 8. Quiz
+        $this->createQuiz($lesson, 8, 'Program tidak error, tapi hasilnya salah. Ini adalah?', [['id' => 'A', 'text' => 'Logic Error (Error Logika)', 'correct' => true], ['id' => 'B', 'text' => 'Crash Sistem', 'correct' => false]]);
+
+        // 9. Trivia
+        $lesson->slides()->firstOrCreate(['order' => 9], ['type' => 'text', 'title' => 'Proses Debugging', 'content' => 'Debugging butuh kesabaran. Baca pesan error dengan teliti karena di sanalah petunjuk utamanya berada.']);
+        // 10. Quiz
+        $this->createQuiz($lesson, 10, 'Kunci utama membasmi bug?', [['id' => 'A', 'text' => 'Hapus semua file', 'correct' => false], ['id' => 'B', 'text' => 'Baca pesan error dengan teliti', 'correct' => true]]);
     }
 
     private function createLesson1($course)

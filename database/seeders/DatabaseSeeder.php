@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
             LevelSeeder::class,
             BadgeSeeder::class,
             CourseSeeder::class,
-            TeacherCourseSeeder::class,
             LessonSeeder::class,
             PostSeeder::class,
         ]);
