@@ -47,25 +47,39 @@
     <div class="w-full max-w-2xl mx-auto pt-6 flex flex-col gap-4">
         @if($isChecked)
             <div class="space-y-4">
+                {{-- Result banner --}}
                 <div @class([
-                    'p-4 rounded-xl flex items-center gap-3 animate-fade-in-up',
-                    'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200' => $isCorrect,
-                    'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200' => !$isCorrect
+                    'p-4 rounded-xl flex items-start gap-3 animate-fade-in-up',
+                    'bg-green-50 border-2 border-green-400 dark:bg-green-900/30 dark:border-green-600' => $isCorrect,
+                    'bg-red-50 border-2 border-red-400 dark:bg-red-900/30 dark:border-red-600' => !$isCorrect
                 ])>
-                    <span class="material-symbols-outlined text-3xl">{{ $isCorrect ? 'check_circle' : 'cancel' }}</span>
-                    <p class="font-bold text-xl">{{ $isCorrect ? 'Susunan Tepat! 🎉' : 'Urutan belum tepat. Coba lagi! 💡' }}</p>
+                    <span @class([
+                        'material-symbols-outlined text-2xl mt-0.5 shrink-0',
+                        'text-green-600 dark:text-green-400' => $isCorrect,
+                        'text-red-500 dark:text-red-400' => !$isCorrect,
+                    ])>{{ $isCorrect ? 'check_circle' : 'cancel' }}</span>
+                    <div class="text-left">
+                        <p @class([
+                            'font-black text-lg',
+                            'text-green-700 dark:text-green-300' => $isCorrect,
+                            'text-red-700 dark:text-red-300' => !$isCorrect,
+                        ])>{{ $isCorrect ? 'Susunan Tepat! 🎉' : 'Urutan belum tepat. Coba lagi! 💡' }}</p>
+                        @if(!empty($currentSlide['explanation']))
+                        <div @class([
+                            'mt-1 text-sm leading-relaxed prose prose-sm max-w-none',
+                            'text-green-800 dark:text-green-200 prose-green' => $isCorrect,
+                            'text-red-800 dark:text-red-200 prose-red' => !$isCorrect,
+                        ])>
+                            {!! \Illuminate\Support\Str::markdown($currentSlide['explanation']) !!}
+                        </div>
+                        @endif
+                    </div>
                 </div>
-                
-                @if($currentSlide['explanation'] && $isCorrect)
-                     <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl text-blue-800 dark:text-blue-200">
-                        <p class="text-sm md:text-base">{{ $currentSlide['explanation'] }}</p>
-                     </div>
-                @endif
                 
                 @if($isCorrect)
                     <button wire:click="nextStep" class="w-full py-4 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-xl transition-all shadow-lg shadow-green-500/30 active:scale-95">Lanjut</button>
                 @else
-                    <button wire:click="resetMinigameCheck" class="w-full py-4 rounded-xl bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xl transition-all shadow-lg shadow-yellow-500/30 active:scale-95">Coba Lagi</button>
+                    <button wire:click="resetMinigameCheck" class="w-full py-4 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-bold text-xl transition-all shadow-lg active:scale-95">Coba Lagi</button>
                 @endif
             </div>
         @else

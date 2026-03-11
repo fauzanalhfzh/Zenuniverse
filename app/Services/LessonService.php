@@ -47,8 +47,10 @@ class LessonService
     /**
      * Complete a mission (slide-based lesson) and award XP.
      */
-    public function completeMission(User $user, Lesson $mission): bool
+    public function completeMission(User $user, Lesson $mission, ?int $xpOverride = null): bool
     {
+        $xp = $xpOverride ?? $mission->xp_reward ?? 100;
+
         UserProgress::updateOrCreate(
             [
                 'user_id' => $user->id,
@@ -57,13 +59,13 @@ class LessonService
             [
                 'mission_slug' => $mission->slug,
                 'status' => 'completed',
-                'xp_earned' => $mission->xp_reward ?? 100,
+                'xp_earned' => $xp,
                 'completed_at' => now(),
             ]
         );
 
-        $user->increment('current_xp', $mission->xp_reward ?? 100);
-        $user->increment('total_xp', $mission->xp_reward ?? 100);
+        $user->increment('current_xp', $xp);
+        $user->increment('total_xp', $xp);
 
         $this->checkLevelUp($user);
         $this->streakService->recordActivity($user);

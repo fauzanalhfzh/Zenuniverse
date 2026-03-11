@@ -32,7 +32,7 @@
                     <div class="space-y-2">
                         <label class="block text-slate-600 dark:text-slate-300 font-bold ml-2" for="email">Email</label>
                         <div class="relative">
-                            <input wire:model="form.email" id="email" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-700/50 text-slate-700 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="text" name="email" required autofocus autocomplete="username" placeholder="kapten@zenuniverse.id" />
+                            <input wire:model="form.email" id="email" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="text" name="email" required autofocus autocomplete="username" placeholder="kapten@zenuniverse.id" />
                             <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none">
                                 <span class="material-symbols-outlined">person</span>
                             </div>
@@ -43,7 +43,7 @@
                     <div class="space-y-2">
                         <label class="block text-slate-600 dark:text-slate-300 font-bold ml-2" for="password">Kata Sandi</label>
                         <div class="relative">
-                            <input wire:model="form.password" id="password" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-700/50 text-slate-700 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+                            <input wire:model="form.password" id="password" class="input-field w-full px-6 py-4 rounded-2xl bg-slate-50 text-slate-700 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-0 text-lg font-medium pl-14" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
                             <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none">
                                 <span class="material-symbols-outlined">key</span>
                             </div>

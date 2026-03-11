@@ -59,6 +59,13 @@
             50% { box-shadow: 0 0 0 18px rgba(239,68,68,0); }
         }
         .animate-pulse-red { animation: pulse-red 1.5s ease-out infinite; }
+        /* Floating XP pop */
+        @keyframes xp-float-up {
+            0%   { opacity: 1; transform: translateY(0) scale(1); }
+            60%  { opacity: 1; transform: translateY(-40px) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-70px) scale(0.9); }
+        }
+        .xp-pop { animation: xp-float-up 1.2s ease-out forwards; pointer-events: none; }
     </style>
 
 
@@ -87,13 +94,38 @@
             <span class="material-symbols-outlined text-4xl">close</span>
         </a>
         
-        <div class="flex-1 mx-4 md:mx-8 h-3 md:h-4 bg-blue-100 dark:bg-slate-800 rounded-full relative">
-            <div class="rocket-path absolute left-0 top-0 h-full bg-green-500 rounded-full transition-all duration-500 ease-out" style="width: {{ $progress }}%;"></div>
+        {{-- Step dots indicator --}}
+        <div class="flex-1 mx-4 md:mx-8 flex flex-col items-center justify-center gap-1 overflow-hidden">
+            @php $totalSteps = count($slides); @endphp
+            <div class="flex items-center justify-center gap-1.5">
+                @for($i = 0; $i < $totalSteps; $i++)
+                    @if($i === $step)
+                        <div class="h-3 w-6 rounded-full transition-all duration-300 shrink-0 {{ $isRetrying ? 'bg-orange-400' : 'bg-green-500' }}"></div>
+                    @elseif($i < $step)
+                        <div class="h-3 w-3 rounded-full shrink-0 {{ $isRetrying ? 'bg-orange-300' : 'bg-green-400' }}"></div>
+                    @else
+                        <div class="h-3 w-3 rounded-full bg-blue-100 dark:bg-slate-700 shrink-0"></div>
+                    @endif
+                @endfor
+            </div>
+            @if($isRetrying)
+            <div class="flex items-center gap-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full">
+                <span class="material-symbols-outlined text-xs">replay</span> Ulangi soal salah
+            </div>
+            @endif
         </div>
 
-        <div class="flex items-center gap-2 bg-white/50 dark:bg-red-900/20 px-4 py-2 rounded-full border border-blue-100 dark:border-red-900/30">
-            <span class="material-symbols-outlined text-red-500 font-variation-settings: 'FILL' 1">favorite</span>
-            <span class="font-bold text-red-600 dark:text-red-400 text-xl">{{ $hearts }}</span>
+        <div class="flex items-center gap-3">
+            {{-- Earned XP display --}}
+            <div class="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/20 px-3 py-2 rounded-full border border-yellow-200 dark:border-yellow-700">
+                <span class="text-sm">⭐</span>
+                <span class="font-bold text-yellow-600 dark:text-yellow-400 text-sm">{{ $earnedXp }}</span>
+            </div>
+            {{-- Hearts --}}
+            <div class="flex items-center gap-2 bg-white/50 dark:bg-red-900/20 px-4 py-2 rounded-full border border-blue-100 dark:border-red-900/30">
+                <span class="material-symbols-outlined text-red-500 font-variation-settings: 'FILL' 1">favorite</span>
+                <span class="font-bold text-red-600 dark:text-red-400 text-xl">{{ $hearts }}</span>
+            </div>
         </div>
 
         {{-- Audio Elements --}}
@@ -103,7 +135,21 @@
     </header>
 
     {{-- Main Content --}}
-    <main class="relative z-10 w-full max-w-4xl flex-1 flex flex-col items-center justify-center p-4 md:p-8 text-center space-y-6 md:space-y-10">
+    <main class="relative z-10 w-full max-w-4xl flex-1 flex flex-col items-center justify-center p-4 md:p-8 text-center space-y-6 md:space-y-10"
+          x-data="{ showXp: false }"
+          x-init="window.addEventListener('show-xp-pop', () => { showXp = true; setTimeout(() => showXp = false, 1400); });">
+        
+        {{-- Global Floating XP pop --}}
+        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[60]">
+            <div x-show="showXp"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 scale-50"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 class="xp-pop bg-yellow-400 text-white font-display font-black text-2xl px-8 py-3 rounded-full shadow-2xl shadow-yellow-400/50 whitespace-nowrap"
+                 style="display:none">
+                ⭐ +10 XP
+            </div>
+        </div>
         
         @if($currentSlide['type'] === 'intro' || $currentSlide['type'] === 'text')
             <div wire:key="slide-intro-{{ $step }}" class="flex flex-col items-center space-y-6 animate-fade-in-up w-full">
@@ -188,16 +234,35 @@
                     <div class="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-slate-100 dark:border-slate-700">
                          @if($isChecked)
                             <div class="space-y-4">
+                                {{-- Result banner --}}
                                 <div @class([
-                                    'p-4 rounded-xl flex items-center gap-3',
-                                    'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200' => $isCorrect,
-                                    'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200' => !$isCorrect
+                                    'p-4 rounded-xl flex items-start gap-3',
+                                    'bg-green-50 border-2 border-green-400 dark:bg-green-900/30 dark:border-green-600' => $isCorrect,
+                                    'bg-red-50 border-2 border-red-400 dark:bg-red-900/30 dark:border-red-600' => !$isCorrect
                                 ])>
-                                    <span class="material-symbols-outlined text-2xl">{{ $isCorrect ? 'check_circle' : 'cancel' }}</span>
-                                    <p class="font-bold text-lg">{{ $isCorrect ? 'Jawaban Tepat!' : 'Yah, kurang tepat.' }}</p>
+                                    <span @class([
+                                        'material-symbols-outlined text-2xl mt-0.5 shrink-0',
+                                        'text-green-600 dark:text-green-400' => $isCorrect,
+                                        'text-red-500 dark:text-red-400' => !$isCorrect,
+                                    ])>{{ $isCorrect ? 'check_circle' : 'cancel' }}</span>
+                                    <div class="text-left">
+                                        <p @class([
+                                            'font-black text-lg',
+                                            'text-green-700 dark:text-green-300' => $isCorrect,
+                                            'text-red-700 dark:text-red-300' => !$isCorrect,
+                                        ])>{{ $isCorrect ? 'Jawaban Tepat! 🎉' : 'Yah, kurang tepat.' }}</p>
+                                        @if(!empty($currentSlide['explanation']))
+                                        <div @class([
+                                            'mt-1 text-sm leading-relaxed prose prose-sm max-w-none',
+                                            'text-green-800 dark:text-green-200 prose-green' => $isCorrect,
+                                            'text-red-800 dark:text-red-200 prose-red' => !$isCorrect,
+                                        ])>
+                                            {!! \Illuminate\Support\Str::markdown($currentSlide['explanation']) !!}
+                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
-                                <p class="text-slate-600 dark:text-slate-400 text-sm">{{ $currentSlide['explanation'] ?? '' }}</p>
-                                <button wire:click="nextStep" class="w-full py-4 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-xl transition-all shadow-lg active:scale-95">Lanjut</button>
+                                <button wire:click="nextStep" class="w-full py-4 rounded-xl font-bold text-xl transition-all shadow-lg active:scale-95 {{ $isCorrect ? 'bg-green-500 hover:bg-green-600 text-white' : 'bg-slate-700 hover:bg-slate-800 text-white' }}">Lanjut</button>
                             </div>
                         @else
                              <button wire:click="checkAnswer" 

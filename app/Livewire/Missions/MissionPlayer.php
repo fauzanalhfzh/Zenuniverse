@@ -32,6 +32,12 @@ class MissionPlayer extends Component
 
     public $showGameOver = false;
 
+    public int $earnedXp = 0;
+
+    public array $wrongQueue = [];
+
+    public bool $isRetrying = false;
+
     public function mount($slug)
     {
         if (auth()->check() && auth()->user()->hearts <= 0) {
@@ -68,9 +74,16 @@ class MissionPlayer extends Component
 
         if (! $this->isCorrect) {
             $this->dispatch('play-sound', type: 'incorrect');
+            if (! $this->isRetrying) {
+                $this->wrongQueue[] = $currentSlide;
+            }
             $this->handleIncorrectAnswer();
         } else {
             $this->dispatch('play-sound', type: 'correct');
+            if (! $this->isRetrying) {
+                $this->earnedXp += 10;
+            }
+            $this->dispatch('show-xp-pop');
         }
     }
 
@@ -135,9 +148,16 @@ class MissionPlayer extends Component
 
         if (! $this->isCorrect) {
             $this->dispatch('play-sound', type: 'incorrect');
+            if (! $this->isRetrying) {
+                $this->wrongQueue[] = $currentSlide;
+            }
             $this->handleIncorrectAnswer();
         } else {
             $this->dispatch('play-sound', type: 'correct');
+            if (! $this->isRetrying) {
+                $this->earnedXp += 10;
+            }
+            $this->dispatch('show-xp-pop');
         }
     }
 
@@ -170,39 +190,46 @@ class MissionPlayer extends Component
     public function nextStep()
     {
         if ($this->step < count($this->slides) - 1) {
+            // Still slides left in current pass
             $this->step++;
             $this->resetStep();
         } else {
-            // Calculate elapsed time
-            $elapsed = time() - ($this->startTime ?? time());
-            $minutes = floor($elapsed / 60);
-            $seconds = $elapsed % 60;
-            $timeFormatted = sprintf('%02d:%02d', $minutes, $seconds);
+            // Current pass finished
+            if (! empty($this->wrongQueue)) {
+                // Switch to retry pass
+                $this->slides = array_values($this->wrongQueue);
+                $this->wrongQueue = [];
+                $this->isRetrying = true;
+                $this->step = 0;
+                $this->resetStep();
+            } else {
+                // All done — calculate elapsed time
+                $elapsed = time() - ($this->startTime ?? time());
+                $timeFormatted = sprintf('%02d:%02d', floor($elapsed / 60), $elapsed % 60);
 
-            $xpEarned = $this->mission->xp_reward ?? 100;
+                // Save Progress via Service
+                if (auth()->check()) {
+                    app(LessonService::class)->completeMission(auth()->user(), $this->mission, $this->earnedXp);
+                }
 
-            // Save Progress via Service
-            if (auth()->check()) {
-                app(LessonService::class)->completeMission(auth()->user(), $this->mission);
+                // Dispatch completion sound
+                $this->dispatch('play-sound', type: 'completed');
+
+                // Show completion screen
+                $nextLesson = Lesson::where('course_id', $this->mission->course_id)
+                    ->where('order', '>', $this->mission->order)
+                    ->orderBy('order')
+                    ->first();
+
+                $this->completionData = [
+                    'xp'        => $this->earnedXp,
+                    'time'      => $timeFormatted,
+                    'title'     => $this->mission->title,
+                    'nextSlug'  => $nextLesson?->slug,
+                    'nextTitle' => $nextLesson?->title,
+                ];
+                $this->showCompletion = true;
             }
-
-            // Dispatch completion sound
-            $this->dispatch('play-sound', type: 'completed');
-
-            // Show completion screen
-            $nextLesson = Lesson::where('course_id', $this->mission->course_id)
-                ->where('order', '>', $this->mission->order)
-                ->orderBy('order')
-                ->first();
-
-            $this->completionData = [
-                'xp'            => $xpEarned,
-                'time'          => $timeFormatted,
-                'title'         => $this->mission->title,
-                'nextSlug'      => $nextLesson?->slug,
-                'nextTitle'     => $nextLesson?->title,
-            ];
-            $this->showCompletion = true;
         }
     }
 
@@ -325,8 +352,10 @@ class MissionPlayer extends Component
     {
         return view('livewire.missions.mission-player', [
             'currentSlide' => $this->slides[$this->step],
-            'progress' => (($this->step + 1) / count($this->slides)) * 100,
-            'hearts' => auth()->user() ? auth()->user()->hearts : 5,
+            'progress'     => (($this->step + 1) / count($this->slides)) * 100,
+            'hearts'       => auth()->user() ? auth()->user()->hearts : 5,
+            'earnedXp'     => $this->earnedXp,
+            'isRetrying'   => $this->isRetrying,
         ]);
     }
 }

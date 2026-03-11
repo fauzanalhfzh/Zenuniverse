@@ -104,32 +104,45 @@
 
             {{-- Execution Result / Validation --}}
             <div class="w-full flex flex-col gap-4">
-                 @if($isChecked)
+                @if($isChecked)
                     <div class="space-y-4 animate-fade-in-up">
+                        {{-- Result banner --}}
                         <div @class([
-                            'p-4 md:p-6 rounded-2xl flex items-center gap-3 md:gap-4 shadow-lg',
-                            'bg-green-100/80 text-green-800 dark:bg-green-900/50 dark:text-green-200 border border-green-200 dark:border-green-800' => $isCorrect,
-                            'bg-red-100/80 text-red-800 dark:bg-red-900/50 dark:text-red-200 border border-red-200 dark:border-red-800' => !$isCorrect
+                            'p-4 md:p-6 rounded-2xl flex items-start gap-4 shadow-lg',
+                            'bg-green-50 border-2 border-green-400 dark:bg-green-900/30 dark:border-green-600' => $isCorrect,
+                            'bg-red-50 border-2 border-red-400 dark:bg-red-900/30 dark:border-red-600' => !$isCorrect
                         ])>
-                            <span class="material-symbols-outlined text-4xl md:text-5xl">{{ $isCorrect ? 'check_circle' : 'cancel' }}</span>
-                            <div>
-                                <h4 class="font-display font-bold text-xl md:text-2xl">{{ $isCorrect ? 'Program Berhasil! 🎉' : 'Oops, ada yang salah! 💡' }}</h4>
-                                <p class="text-sm md:text-base opacity-80">{{ $isCorrect ? 'Blok kode kamu tersusun dengan benar.' : 'Coba periksa lagi urutan atau blok yang kamu gunakan.' }}</p>
+                            <span @class([
+                                'material-symbols-outlined text-4xl mt-0.5 shrink-0',
+                                'text-green-600 dark:text-green-400' => $isCorrect,
+                                'text-red-500 dark:text-red-400' => !$isCorrect,
+                            ])>{{ $isCorrect ? 'check_circle' : 'cancel' }}</span>
+                            <div class="text-left">
+                                <h4 @class([
+                                    'font-black text-xl md:text-2xl',
+                                    'text-green-700 dark:text-green-300' => $isCorrect,
+                                    'text-red-700 dark:text-red-300' => !$isCorrect,
+                                ])>{{ $isCorrect ? 'Program Berhasil! 🎉' : 'Oops, ada yang salah! 💡' }}</h4>
+                                @if(!empty($currentSlide['explanation']))
+                                <div @class([
+                                    'mt-2 text-sm md:text-base leading-relaxed prose prose-sm max-w-none',
+                                    'text-green-800 dark:text-green-200 prose-green' => $isCorrect,
+                                    'text-red-800 dark:text-red-200 prose-red' => !$isCorrect,
+                                ])>
+                                    {!! \Illuminate\Support\Str::markdown($currentSlide['explanation']) !!}
+                                </div>
+                                @else
+                                <p class="text-sm md:text-base opacity-80 mt-1">{{ $isCorrect ? 'Blok kode kamu tersusun dengan benar.' : 'Coba periksa lagi urutan atau blok yang kamu gunakan.' }}</p>
+                                @endif
                             </div>
                         </div>
-                        
-                        @if($isCorrect && $currentSlide['explanation'])
-                            <div class="bg-blue-50 dark:bg-blue-900/20 p-4 md:p-5 rounded-xl text-blue-800 dark:text-blue-200 border border-blue-100 dark:border-blue-800">
-                                <p class="text-sm md:text-base">{{ $currentSlide['explanation'] }}</p>
-                             </div>
-                        @endif
                         
                         @if($isCorrect)
                             <button wire:click="nextStep" class="w-full py-4 md:py-5 rounded-2xl bg-green-500 hover:bg-green-600 text-white font-bold text-xl md:text-2xl transition-all shadow-lg shadow-green-500/30 active:scale-95 flex justify-center items-center gap-2">
                                 Lanjut <span class="material-symbols-outlined">arrow_forward</span>
                             </button>
                         @else
-                            <button wire:click="resetMinigameCheck" class="w-full py-4 md:py-5 rounded-2xl bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xl md:text-2xl transition-all shadow-lg shadow-yellow-500/30 active:scale-95 flex justify-center items-center gap-2">
+                            <button wire:click="resetMinigameCheck" class="w-full py-4 md:py-5 rounded-2xl bg-slate-700 hover:bg-slate-800 text-white font-bold text-xl md:text-2xl transition-all shadow-lg active:scale-95 flex justify-center items-center gap-2">
                                 <span class="material-symbols-outlined">refresh</span> Coba Lagi
                             </button>
                         @endif

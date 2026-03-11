@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# Zenuniverse
+# Zenuniverse Academy Web App
 
 **Zenuniverse** adalah sebuah platform web pembelajaran interaktif yang dirancang untuk membantu pemula memahami konsep dasar pemrograman, logika, dan matematika melalui pengalaman belajar yang gamified (berbasis permainan). Platform ini dibangun menggunakan framework **Laravel**, **Livewire**, dan **Filament PHP**.
 
