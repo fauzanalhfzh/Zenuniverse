@@ -397,7 +397,15 @@
                     </div>
 
                     {{-- Action Buttons --}}
-                    <div class="flex gap-3 mt-2">
+                    <div class="mt-4">
+                        {{-- Share Button --}}
+                        <button
+                            @click="openShare()"
+                            class="w-full py-4 mb-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 active:scale-95 text-white font-display text-lg font-bold transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-pink-400/30">
+                            <span class="material-symbols-outlined">share</span> Bagikan Pencapaian!
+                        </button>
+                        
+                        <div class="flex gap-3 mt-2">
                         {{-- Back to Dashboard --}}
                         <button
                             wire:click="goToDashboard"
@@ -478,6 +486,96 @@
             </div>
         </template>
         @endif
+
+        {{-- Share Modal Overlay --}}
+        <template x-if="showShare">
+            <div class="fixed inset-0 z-[80] flex items-center justify-center p-4">
+                <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md" @click="showShare = false"></div>
+                <div class="relative z-10 w-full max-w-md bg-white ml-auto mr-auto dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden animate-pop-in flex flex-col max-h-[90vh]">
+                    {{-- Header --}}
+                    <div class="flex justify-between items-center p-4 border-b border-slate-100 dark:border-slate-700">
+                        <h3 class="font-display font-bold text-lg text-slate-800 dark:text-white">Bagikan Pencapaian!</h3>
+                        <button @click="showShare = false" class="text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    </div>
+
+                    {{-- Scrollable Content --}}
+                    <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
+                        {{-- Achievement Card to Render --}}
+                        <div id="achievement-card" class="rounded-2xl p-6 text-center relative shadow-xl overflow-hidden mb-6 border-4" style="background: linear-gradient(to bottom, #312e81, #581c87, #0f172a); color: #ffffff; border-color: #ffffff;">
+                            {{-- Decorative Background Elements --}}
+                            <div class="absolute top-0 right-0 w-32 h-32 rounded-full mix-blend-screen filter blur-3xl opacity-30" style="background-color: #ec4899;"></div>
+                            <div class="absolute bottom-0 left-0 w-32 h-32 rounded-full mix-blend-screen filter blur-3xl opacity-30" style="background-color: #3b82f6;"></div>
+                            
+                            {{-- Content --}}
+                            <div class="relative z-10">
+                                <h1 class="font-display font-black text-2xl tracking-widest drop-shadow-sm mb-4" style="background: linear-gradient(to right, #fde047, #eab308); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ZENUNIVERSE</h1>
+                                
+                                <img src="/images/hero.png" alt="Mascbot" class="w-48 h-48 mx-auto mb-4 object-contain drop-shadow-lg">
+
+                                <div class="inline-block backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-2" style="background-color: rgba(255, 255, 255, 0.2);">
+                                    🏆 Visi Selesai!
+                                </div>
+                                <h2 class="font-bold text-xl mb-4 leading-snug" style="color: #ffffff;">"{{ $completionData['title'] }}"</h2>
+
+                                <div class="flex justify-center gap-4 mb-6">
+                                    <div class="rounded-xl p-3 flex-1 backdrop-blur-sm border" style="background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.1);">
+                                        <div class="text-2xl mb-1">⭐</div>
+                                        <div class="font-bold" style="color: #fde047;">+{{ $completionData['xp'] }}</div>
+                                        <div class="text-[10px] uppercase font-bold tracking-wider" style="color: rgba(255, 255, 255, 0.7);">XP</div>
+                                    </div>
+                                    <div class="rounded-xl p-3 flex-1 backdrop-blur-sm border" style="background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.1);">
+                                        <div class="text-2xl mb-1">⏱</div>
+                                        <div class="font-bold" style="color: #93c5fd;">{{ $completionData['time'] }}</div>
+                                        <div class="text-[10px] uppercase font-bold tracking-wider" style="color: rgba(255, 255, 255, 0.7);">Waktu</div>
+                                    </div>
+                                </div>
+
+                                <div class="border-t pt-4 text-left" style="border-color: rgba(255, 255, 255, 0.2);">
+                                    <p class="text-[10px] mb-0.5 uppercase tracking-widest font-bold" style="color: rgba(255, 255, 255, 0.6);">Diselesaikan Oleh</p>
+                                    <p class="font-bold text-sm mb-1" style="color: #fde047;">{{ auth()->user()->name }}</p>
+                                    <p class="text-xs" style="color: rgba(255, 255, 255, 0.8);"><span style="opacity: 0.6;">Level:</span> {{ auth()->user()->currentLevel?->name ?? '1' }}</p>
+                                </div>
+                                
+                                <div class="mt-6 pt-4 border-t text-center" style="border-color: rgba(255, 255, 255, 0.1);">
+                                    <p class="text-[10px] italic" style="color: rgba(255, 255, 255, 0.7);">"Bergabunglah di Zenuniverse — belajar coding dengan cara yang menyenangkan!"</p>
+                                    <p class="text-xs font-bold tracking-widest mt-1" style="color: rgba(255, 255, 255, 0.9);">zenuniverse.app</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Share Actions --}}
+                        <div class="grid grid-cols-2 gap-3">
+                            <button @click="downloadCard()" class="col-span-2 py-3 rounded-xl bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white font-bold flex items-center justify-center gap-2 transition-all">
+                                <span class="material-symbols-outlined text-sm" x-show="!isDownloading">download</span>
+                                <span class="material-symbols-outlined text-sm animate-spin" x-show="isDownloading" style="display: none;">refresh</span>
+                                <span x-text="isDownloading ? 'Memproses...' : 'Download Gambar'"></span>
+                            </button>
+
+                            <button @click="shareWhatsApp()" class="py-3 rounded-xl bg-[#25D366] hover:bg-[#1DA851] text-white font-bold flex items-center justify-center gap-2 transition-all">
+                                📱 WhatsApp
+                            </button>
+                            
+                            <button @click="shareInstagram()" class="py-3 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white font-bold flex items-center justify-center gap-2 transition-all">
+                                📷 Instagram
+                            </button>
+
+                            <button @click="shareTikTok()" class="py-3 rounded-xl bg-black dark:bg-slate-900 border dark:border-slate-700 hover:bg-zinc-800 text-white font-bold flex items-center justify-center gap-2 transition-all">
+                                🎵 TikTok
+                            </button>
+                            
+                            <button @click="copyLink()" class="py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-all relative">
+                                <span class="material-symbols-outlined text-sm">link</span>
+                                <span x-text="linkCopied ? 'Tersalin!' : 'Salin Link'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
     @endif
 
@@ -701,6 +799,9 @@
                 hasLevelUp: @js(isset($completionData['gamification']['new_level'])),
                 showBadge: false,
                 hasBadges: @js(isset($completionData['gamification']['new_badges']) && count($completionData['gamification']['new_badges']) > 0),
+                showShare: false,
+                isDownloading: false,
+                linkCopied: false,
                 
                 init() {
                     this.$nextTick(() => {
@@ -729,6 +830,123 @@
                     } else if (this.hasBadges) {
                         this.showBadge = true;
                         this.hasBadges = false; // Only show once
+                    }
+                },
+
+                openShare() {
+                    this.showShare = true;
+                },
+
+                getShareText() {
+                    const title = @js($completionData['title'] ?? '');
+                    const xp = @js($completionData['xp'] ?? 0);
+                    return `Saya baru saja menyelesaikan misi "${title}" di *Zenuniverse* dan mendapatkan +${xp} XP!\n\nYuk belajar coding sambil bermain sekarang: ${window.location.origin}`;
+                },
+
+                async downloadCard(andShare = false, shareTitle = '') {
+                    if (this.isDownloading) return null;
+                    this.isDownloading = true;
+                    
+                    try {
+                        const el = document.getElementById('achievement-card');
+                        
+                        // Load html2canvas if not loaded yet
+                        if (typeof html2canvas === 'undefined') {
+                            await new Promise((resolve, reject) => {
+                                const script = document.createElement('script');
+                                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                                script.onload = resolve;
+                                script.onerror = reject;
+                                document.head.appendChild(script);
+                            });
+                        }
+                        
+                        // Small delay to ensure images are loaded
+                        await new Promise(r => setTimeout(r, 200));
+
+                        const canvas = await html2canvas(el, {
+                            scale: 2,
+                            backgroundColor: '#0f172a', // slate-900 to ensure background
+                            logging: false,
+                            useCORS: true
+                        });
+                        
+                        const dataUrl = canvas.toDataURL('image/png');
+                        
+                        // If just downloading
+                        if (!andShare) {
+                            const link = document.createElement('a');
+                            link.download = 'zenuniverse-pencapaian.png';
+                            link.href = dataUrl;
+                            link.click();
+                            this.isDownloading = false;
+                            return true;
+                        } else {
+                            // If sharing (return blob for Web Share API)
+                            return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                        }
+                    } catch (error) {
+                        console.error('Error generating image:', error);
+                        alert('Gagal membuat gambar: ' + (error.message || 'Kesalahan tidak diketahui.'));
+                        this.isDownloading = false;
+                        return null;
+                    }
+                },
+
+                shareWhatsApp() {
+                    const text = encodeURIComponent(this.getShareText());
+                    window.open(`https://wa.me/?text=${text}`, '_blank');
+                },
+
+                async triggerNativeShare(platformName) {
+                    // Try to copy the caption first
+                    try {
+                        await navigator.clipboard.writeText(this.getShareText());
+                    } catch (e) {
+                        console.log('Clipboard write failed', e);
+                    }
+
+                    // Check if native Web Share API with files is supported
+                    if (navigator.canShare && typeof navigator.share === 'function') {
+                        const blob = await this.downloadCard(true);
+                        if (blob) {
+                            try {
+                                const file = new File([blob], 'zenuniverse-pencapaian.png', { type: 'image/png' });
+                                if (navigator.canShare({ files: [file] })) {
+                                    await navigator.share({
+                                        title: 'Pencapaian Zenuniverse',
+                                        text: `Pencapaian saya di Zenuniverse!`,
+                                        files: [file]
+                                    });
+                                    this.isDownloading = false;
+                                    return;
+                                }
+                            } catch (error) {
+                                console.log('Share failed or was aborted', error);
+                            }
+                        }
+                    }
+
+                    // Fallback: Download and alert
+                    this.downloadCard();
+                    alert(`Caption telah disalin ke clipboard! Buka aplikasi ${platformName} kamu, lalu upload gambar yang baru didownload dan paste caption-nya.`);
+                },
+
+                shareInstagram() {
+                    this.triggerNativeShare('Instagram');
+                },
+
+                shareTikTok() {
+                    this.triggerNativeShare('TikTok');
+                },
+
+                async copyLink() {
+                    try {
+                        await navigator.clipboard.writeText(window.location.origin);
+                        this.linkCopied = true;
+                        setTimeout(() => this.linkCopied = false, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy link: ', err);
                     }
                 }
             }));
