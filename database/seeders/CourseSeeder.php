@@ -38,5 +38,14 @@ class CourseSeeder extends Seeder
             'xp_reward' => 100,
         ]);
 
+        Course::create([
+            'level_id' => 1,
+            'title' => 'Python Development',
+            'description' => 'Belajar dasar pemrograman Python dari nol hingga mahir membuat program sederhana.',
+            'icon' => '🐍',
+            'order' => 4,
+            'xp_reward' => 150,
+        ]);
+
     }
 }
