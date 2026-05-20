@@ -17,7 +17,6 @@
         
         <nav class="desktop-only items-center gap-10">
             <a class="text-lg font-bold {{ request()->routeIs('home') ? 'text-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('home') }}" wire:navigate>Beranda</a>
-            <a class="text-lg font-bold {{ request()->routeIs('about') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('about') }}" wire:navigate>Tentang Kami</a>
             <a class="text-lg font-bold {{ request()->routeIs('learning-path') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('learning-path') }}" wire:navigate>Alur Belajar</a>
             <a class="text-lg font-bold {{ request()->routeIs('blog.*') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('blog.index') }}" wire:navigate>Blog</a>
             <a class="text-lg font-bold {{ request()->routeIs('contact') ? 'text-primary border-b-4 border-primary' : 'text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-primary' }} transition-colors" href="{{ route('contact') }}" wire:navigate>Kontak</a>
@@ -61,7 +60,6 @@
         </div>
 
         <a href="{{ route('home') }}" wire:navigate class="block px-4 py-3 rounded-xl text-lg font-bold {{ request()->routeIs('home') ? 'text-primary bg-orange-50' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }} transition-colors">Beranda</a>
-        <a href="{{ route('about') }}" wire:navigate class="block px-4 py-3 rounded-xl text-lg font-bold {{ request()->routeIs('about') ? 'text-primary bg-orange-50' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }} transition-colors">Tentang Kami</a>
         <a href="{{ route('learning-path') }}" wire:navigate class="block px-4 py-3 rounded-xl text-lg font-bold {{ request()->routeIs('learning-path') ? 'text-primary bg-orange-50' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }} transition-colors">Alur Belajar</a>
         <a href="{{ route('blog.index') }}" wire:navigate class="block px-4 py-3 rounded-xl text-lg font-bold {{ request()->routeIs('blog.*') ? 'text-primary bg-orange-50' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }} transition-colors">Blog</a>
         <a href="{{ route('contact') }}" wire:navigate class="block px-4 py-3 rounded-xl text-lg font-bold {{ request()->routeIs('contact') ? 'text-primary bg-orange-50' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }} transition-colors">Kontak</a>

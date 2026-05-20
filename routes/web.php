@@ -9,7 +9,6 @@ use App\Livewire\StudentDashboard;
 use App\Livewire\Welcome;
 
 Route::get('/', Welcome::class)->name('home');
-Route::get('about', [PageController::class, 'about'])->name('about');
 Route::get('contact', [PageController::class, 'contact'])->name('contact');
 Route::get('learning-path', [PageController::class, 'learningPath'])->name('learning-path');
 Route::get('tracks', App\Livewire\CourseSelection::class)->name('tracks');
