@@ -13,6 +13,10 @@ class LessonSeeder extends Seeder
             WebProgrammingLessonSeeder::class,
             MathLessonSeeder::class,
             PythonLessonSeeder::class,
+            JavascriptLessonSeeder::class,
+            SqlLessonSeeder::class,
+            EnglishLessonSeeder::class,
+            DsaLessonSeeder::class,
         ]);
     }
 }
