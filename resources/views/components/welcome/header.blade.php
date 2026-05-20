@@ -1,5 +1,10 @@
-<header class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/80 backdrop-blur-lg border-b-4 border-blue-50 dark:border-slate-800 transition-colors duration-300"
-    x-data="{ mobileMenu: false }">
+<header class="fixed z-50 transition-all duration-500 ease-out"
+    x-data="{ mobileMenu: false, scrolled: false }"
+    x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 50 })"
+    :class="scrolled
+        ? 'top-4 left-4 right-4 md:left-8 md:right-8 lg:left-1/2 lg:-translate-x-1/2 lg:w-[calc(100%-8rem)] xl:w-[calc(100%-12rem)] bg-white/80 dark:bg-slate-900/85 backdrop-blur-xl rounded-2xl shadow-lg shadow-black/5 dark:shadow-black/20 border border-slate-200/60 dark:border-slate-700/60'
+        : 'top-0 left-0 right-0 bg-white/70 dark:bg-slate-900/80 backdrop-blur-lg border-b-4 border-blue-50 dark:border-slate-800'"
+>
     <style>
         @media (min-width: 1024px) {
             .desktop-only { display: flex !important; }
