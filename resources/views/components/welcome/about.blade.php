@@ -13,21 +13,21 @@
                 </div>
 
                 <blockquote class="border-l-4 border-slate-200 pl-6 text-xl text-slate-500 italic font-medium">
-                    "Kenapa kita nggak ciptakan aja ruangnya — tempat di mana orang-orang dengan masalah yang sama bisa berkumpul dan berbagi ilmu?"
+                    "Kenapa kita nggak ciptakan aja ruangnya - tempat di mana orang-orang dengan masalah yang sama bisa berkumpul dan berbagi ilmu?"
                 </blockquote>
 
                 <div class="space-y-6 text-slate-600 leading-relaxed">
                     <p>
-                        Dulu, di awal masa kuliah, ada satu perasaan yang cukup familiar: bingung mau belajar dari mana, dan sama siapa. Materi sains dan teknologi tersebar di mana-mana, tapi tidak banyak tempat yang benar-benar menyatukan orang-orang yang ingin belajar bersama — yang ingin bertanya tanpa takut dihakimi, yang ingin berbagi tanpa harus jadi ahli dulu.
+                        Dulu, di awal masa kuliah, ada satu perasaan yang cukup familiar: bingung mau belajar dari mana, dan sama siapa. Materi sains dan teknologi tersebar di mana-mana, tapi tidak banyak tempat yang benar-benar menyatukan orang-orang yang ingin belajar bersama - yang ingin bertanya tanpa takut dihakimi, yang ingin berbagi tanpa harus jadi ahli dulu.
                     </p>
                     <p>
-                        Dari kebingungan itulah sebuah pertanyaan kecil muncul. Bukan keluhan, tapi sebuah ide: <em class="italic font-medium text-slate-700">bagaimana kalau kita buat sendiri ruangnya?</em> Ruang yang hangat, terbuka, dan memang dibangun untuk orang-orang yang penasaran — yang ingin tahu lebih banyak tentang sains, teknologi, dan dunia di sekitar mereka.
+                        Dari kebingungan itulah sebuah pertanyaan kecil muncul. Bukan keluhan, tapi sebuah ide: <em class="italic font-medium text-slate-700">bagaimana kalau kita buat sendiri ruangnya?</em> Ruang yang hangat, terbuka, dan memang dibangun untuk orang-orang yang penasaran - yang ingin tahu lebih banyak tentang sains, teknologi, dan dunia di sekitar mereka.
                     </p>
                     <p>
-                        Dari situ, <span class="font-bold text-primary">Zenuniverse lahir</span>. Bukan dari gedung mewah atau modal besar, tapi dari keyakinan sederhana bahwa ilmu lebih bermakna ketika dibagikan — dan bahwa belajar bersama selalu lebih menyenangkan dari belajar sendiri.
+                        Dari situ, <span class="font-bold text-primary">Zenuniverse lahir</span>. Bukan dari gedung mewah atau modal besar, tapi dari keyakinan sederhana bahwa ilmu lebih bermakna ketika dibagikan - dan bahwa belajar bersama selalu lebih menyenangkan dari belajar sendiri.
                     </p>
                     <p>
-                        Hari demi hari, komunitas ini tumbuh. Orang-orang datang dengan rasa penasaran mereka masing-masing, lalu pulang dengan teman baru, wawasan baru, dan semangat yang semakin menyala. Zenuniverse bukan hanya platform — ia adalah komunitas yang terus bergerak dan berkembang bersama anggotanya.
+                        Hari demi hari, komunitas ini tumbuh. Orang-orang datang dengan rasa penasaran mereka masing-masing, lalu pulang dengan teman baru, wawasan baru, dan semangat yang semakin menyala. Zenuniverse bukan hanya platform - ia adalah komunitas yang terus bergerak dan berkembang bersama anggotanya.
                     </p>
                 </div>
 
@@ -47,7 +47,7 @@
                 </div>
 
                 <p class="text-slate-500 pt-6 italic border-t border-slate-100">
-                    Dan perjalanan ini belum selesai. Selama masih ada yang penasaran, masih ada yang ingin belajar, dan masih ada yang mau berbagi — <span class="font-bold text-slate-700">Zenuniverse akan selalu ada di sini.</span>
+                    Dan perjalanan ini belum selesai. Selama masih ada yang penasaran, masih ada yang ingin belajar, dan masih ada yang mau berbagi - <span class="font-bold text-slate-700">Zenuniverse akan selalu ada di sini.</span>
                 </p>
             </div>
 
