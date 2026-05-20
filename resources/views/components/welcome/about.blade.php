@@ -55,17 +55,17 @@
             <div class="relative w-full h-full min-h-[600px] flex flex-col justify-center gap-6 py-10 lg:pl-10">
                 <!-- Image 1 -->
                 <div class="relative rounded-3xl overflow-hidden shadow-xl transform translate-x-4 hover:z-10 hover:scale-105 transition-all duration-500 h-56 w-full">
-                    <img loading="lazy" decoding="async" src="{{ asset('images/about/banner-1.webp') }}" alt="Team collaborating" class="absolute inset-0 w-full h-full object-cover">
+                    <img loading="lazy" decoding="async" src="{{ asset('images/about/banner-2.webp') }}" alt="Team collaborating" class="absolute inset-0 w-full h-full object-cover">
                     <div class="absolute inset-0 bg-primary/20 hover:bg-transparent transition-colors duration-300"></div>
                 </div>
                 <!-- Image 2 -->
                 <div class="relative rounded-3xl overflow-hidden shadow-xl transform -translate-x-4 hover:z-10 hover:scale-105 transition-all duration-500 h-56 w-full">
-                    <img loading="lazy" decoding="async" src="{{ asset('images/about/banner-2.webp') }}" alt="Student learning" class="absolute inset-0 w-full h-full object-cover">
+                    <img loading="lazy" decoding="async" src="{{ asset('images/about/banner-1.webp') }}" alt="Student learning" class="absolute inset-0 w-full h-full object-cover">
                     <div class="absolute inset-0 bg-blue-500/20 hover:bg-transparent transition-colors duration-300"></div>
                 </div>
                 <!-- Image 3 -->
                 <div class="relative rounded-3xl overflow-hidden shadow-xl transform translate-x-6 hover:z-10 hover:scale-105 transition-all duration-500 h-56 w-full">
-                    <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=75" alt="Coding session" class="absolute inset-0 w-full h-full object-cover">
+                    <img loading="lazy" decoding="async" src="{{ asset('images/about/banner-3.webp') }}" alt="Coding session" class="absolute inset-0 w-full h-full object-cover">
                     <div class="absolute inset-0 bg-purple-500/20 hover:bg-transparent transition-colors duration-300"></div>
                 </div>
                 
